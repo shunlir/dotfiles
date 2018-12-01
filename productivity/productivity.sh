@@ -84,6 +84,7 @@ main()
   fi
 
   if [ -f $VIMRC ]; then
+    UID=$(id -u)
     if [ "$UID" -eq 0 ]; then
       sed -i '/seg_vimrc-begin/,/seg_vimrc-end/d' ~/.zshrc
       cat $BASEDIR/seg_sys_vimrc >> $VIMRC
