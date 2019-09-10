@@ -1,9 +1,7 @@
-"seg_vimrc-begin
-
 call plug#begin('~/.vim/plugged')
 
 "General {{{
-    " Tab
+    " Tab and Space
     set tabstop=4
     set softtabstop=4
     set shiftwidth=4
@@ -11,13 +9,13 @@ call plug#begin('~/.vim/plugged')
     filetype plugin indent on
     autocmd FileType make setlocal noexpandtab
     autocmd FileType vim setlocal softtabstop=2 shiftwidth=2 expandtab
-  
+
     " Searching
     set ignorecase "case insensitive searching
     set smartcase  "case-sensitive if expresson contains a capital letter (typed only)
     set incsearch  "incremental search
     set hlsearch   "highlight search results
-  
+
     " Miscs
     set wildmenu   "vim buildin command line completion
 "    if has('mouse')
@@ -27,7 +25,7 @@ call plug#begin('~/.vim/plugged')
 "}}}
 
 "Appearence {{{
-
+"
     "LineNumber {{{
         set number
         Plug 'jeffkreeftmeijer/vim-numbertoggle'
@@ -38,7 +36,7 @@ call plug#begin('~/.vim/plugged')
         " if !has('gui_running')
         "   set t_Co=256
         " endif
- 
+
         " optionally enable true color
         if $COLORTERM == "truecolor" && has("termguicolors")
             if !(has("nvim"))
@@ -53,7 +51,7 @@ call plug#begin('~/.vim/plugged')
     "}}}
 
     "StatusLine {{{
-        set laststatus=2
+        set laststatus=2 "always display the status line
         set noshowmode
         Plug 'itchyny/lightline.vim'
         "let g:lightline = {
@@ -62,7 +60,7 @@ call plug#begin('~/.vim/plugged')
     "}}}
 
     "SignColumn {{{
-        " ToggleSignColum
+        "cmd - ToggleSignColum
         if exists("&signcolumn")
             function! Toggle_SignColumn()
                 if &signcolumn == 'yes' || &signcolumn == 'auto'
@@ -73,11 +71,24 @@ call plug#begin('~/.vim/plugged')
             endfunction
             command! -nargs=0 ToggleSignColumn call Toggle_SignColumn()
         endif
+
         Plug 'mhinz/vim-signify'
         let g:signify_vcs_list = [ 'git', 'hg' ]
-        " TODO: set highlight SignifySignAdd... here dosn't work, need to figure
-        " out why
+        autocmd ColorScheme *
+                  \ highlight clear SignColumn |
+                  \ highlight SignifySignAdd    term=bold ctermbg=none  ctermfg=green |
+                  \ highlight SignifySignDelete term=bold ctermbg=none  ctermfg=red   |
+                  \ highlight SignifySignChange term=bold ctermbg=none  ctermfg=yellow
     "}}}
+
+
+
+    "Plug 'godlygeek/tabular'
+    "Plug 'plasticboy/vim-markdown'
+"}}}
+
+"FileExplorer {{{
+    Plug 'justinmk/vim-dirvish'
 "}}}
 
 
@@ -89,7 +100,7 @@ call plug#begin('~/.vim/plugged')
     noremap <M-f> :LeaderfFunction!<cr>
     noremap <M-t> :LeaderfTag<cr>
     let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
-    let g:Lf_WildIgnore = { 'dir': ['.svn','.git','.hg'] }
+    let g:Lf_WildIgnore = { 'dir': ['.svn','.git','.hg'], 'file': [] }
     let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
     let g:Lf_WorkingDirectoryMode = 'Ac'
     let g:Lf_WindowHeight = 0.30
@@ -102,10 +113,11 @@ call plug#begin('~/.vim/plugged')
 
 
 "Mappings {{{
-    let mapleader = ","
+    let mapleader = " "
+    " toggle quickfix window
+    nnoremap <F8> :call asyncrun#quickfix_toggle(6)<cr>
     " toggle paste mode
     noremap <F9> :set paste!<cr>
-    "noremap <F10> :call Toggle_SignColumn()<CR>
     noremap <F10> :ToggleSignColumn<CR>
 
     "VimTuiMetaKey {{{
@@ -136,32 +148,114 @@ call plug#begin('~/.vim/plugged')
     endfunc
     call TUI_MetaUseEsc()
     "}}}
+
+    "WindowNavigateTmuxAware {{{
+        Plug 'christoomey/vim-tmux-navigator'
+        let g:tmux_navigator_no_mappings = 1
+        nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
+        nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
+        nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
+        nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
+        nnoremap <silent> <M-r> :TmuxNavigatePrevious<cr>
+    "}}}
 "}}}
 
 "GeneralFunctionality {{{
     Plug 'tpope/vim-surround'
     " Git wrapper
     Plug 'tpope/vim-fugitive'
+    "AsyncRun {{{
+        Plug 'skywind3000/asyncrun.vim'
+        let g:asyncrun_open = 6
+        let g:asyncrun_bell = 1
+    "}}}
 "}}}
 
 "LanguageSpecificConfiguration {{{
     "C/C++ {{{
-        function! BuildYCM(info)
-            " info is a dictionary with 3 fields
-            " - name:   name of the plugin
-            " - status: 'installed', 'updated', or 'unchanged'
-            " - force:  set on PlugInstall! or PlugUpdate!
-            if a:info.status == 'installed' || a:info.force
-                !./install.py
-            endif
-        endfunction
-        "Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+        "YCM {{{
+            function! BuildYCM(info)
+                " info is a dictionary with 3 fields
+                " - name:   name of the plugin
+                " - status: 'installed', 'updated', or 'unchanged'
+                " - force:  set on PlugInstall! or PlugUpdate!
+                if a:info.status == 'installed' || a:info.force
+                    !./install.py
+                endif
+            endfunction
+            "Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+        "}}}
+        "Uncrustify cmd - UC {{
+            " Restore cursor position, window position, and last search after running a command.
+            function! Preserve(command)
+              " Save the last search.
+              let search = @/
+
+              " Save the current cursor position.
+              let cursor_position = getpos('.')
+
+              " Save the current window position.
+              normal! H
+              let window_position = getpos('.')
+              call setpos('.', cursor_position)
+
+              " Execute the command.
+              execute a:command
+
+              " Restore the last search.
+              let @/ = search
+
+              " Restore the previous window position.
+              call setpos('.', window_position)
+              normal! zt
+
+              " Restore the previous cursor position.
+              call setpos('.', cursor_position)
+            endfunction
+
+            " Specify path to your Uncrustify configuration file.
+            let g:uncrustify_cfg_file_path =
+                \ shellescape(fnamemodify('~/.uncrustify.cfg', ':p'))
+
+            function! Uncrustify(language)
+              call Preserve(':silent %!uncrustify'
+                  \ . ' -q '
+                  \ . ' -l ' . a:language
+                  \ . ' -c ' . g:uncrustify_cfg_file_path)
+            endfunction
+            function! UC()
+                let exts = {"cpp": "cpp", "c": "c"}
+                let ext = expand('%:e')
+                if has_key(exts, ext)
+                    call Uncrustify(ext)
+                endif
+            endfunction
+            command! UC call UC()
+        "}}}
+    "}}}
+    "CTags {{{
+        set tags=./.tags;,.tags  " upward search .tags from the dir of the file being edit, if not found, search .tags in `pwd`
+        "Plug 'ludovicchabant/vim-gutentags'
+        let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+        let g:gutentags_ctags_tagfile = '.tags'
+        let s:vim_tags = expand('~/.cache/tags')
+        let g:gutentags_cache_dir = s:vim_tags
+        let g:gutentags_file_list_command = {
+            \ 'markers': {
+                \ '.git': 'git ls-files',
+                \ '.hg': 'hg files',
+                \ },
+            \ }
+        let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+        let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+        let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
     "}}}
 "}}}
 
 call plug#end()
 
-"FinalSetup {{{
+
+"Finalsetup {{{
   if has('gui_running')
       set background=light
   else
@@ -169,9 +263,4 @@ call plug#end()
   endif
   syntax enable
   colorscheme dim
-  " SignColumn is set by colorscheme, clear it then set hi for signify
-  highlight clear SignColumn
-  highlight SignifySignAdd    term=bold ctermbg=none  ctermfg=green
-  highlight SignifySignDelete term=bold ctermbg=none  ctermfg=red
-  highlight SignifySignChange term=bold ctermbg=none  ctermfg=yellow
 "}}}
