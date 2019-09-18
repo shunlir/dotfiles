@@ -1,0 +1,60 @@
+!--- Xft ---!
+Xft.dpi: 96
+Xft.antialias: true
+Xft.hinting: true
+Xft.rgba: rgb
+Xft.autohint: false
+Xft.hintstyle: hintslight
+Xft.lcdfilter: lcddefault
+
+!---------------------------!
+!--- TomorrowNight theme ---!
+!---------------------------!
+*foreground:   #c5c8c6
+*background:   #1d1f21
+*cursorColor:  #aeafad
+*color0:       #000000
+*color1:       #912226
+*color2:       #778900
+*color3:       #ae7b00
+*color4:       #1d2594
+*color5:       #682a9b
+*color6:       #2b6651
+*color7:       #929593
+*color8:       #666666
+*color9:       #cc6666
+*color10:      #b5bd68
+*color11:      #f0c674
+*color12:      #81a2be
+*color13:      #b294bb
+*color14:      #8abeb7
+*color15:      #ecebec
+
+!-------------------------!
+!-------- Urxvt ----------!
+!-------------------------!
+
+!-- General --!
+URxvt.saveLines: 9999
+URxvt*scrollBar: false
+URxvt.scrollstyle: rxvt
+URxvt.urgentOnBell: True
+
+!-- scrollback position --!
+URxvt*scrollTtyOutput: false
+URxvt*scrollWithBuffer: true
+URxvt*scrollTtyKeypress: true
+
+!-- disable scrollback buffer in secondary screen --!
+URxvt.secondaryScreen: 1
+URxvt.secondaryScroll: 0
+
+URxvt.font:xft:Monospace:pixelsize=15
+URxvt.boldfont:xft:Monospace-Bold:pixelsize=15
+
+Rxvt.perl-ext-common: default,selection-to-clipboard,keyboard-select,url-select,resize-font
+URxvt.keysym.M-Escape:      perl:keyboard-select:activate
+URxvt.keysym.M-s:           perl:keyboard-select:search
+URxvt.url-select.launcher:  xdg-open
+URxvt.url-select.underline: true
+URxvt.keysym.M-u:           perl:url-select:select_next
