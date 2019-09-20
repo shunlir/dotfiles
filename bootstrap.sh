@@ -57,7 +57,7 @@ main()
     UID=$(id -u)
   fi
 
-  stow -t ~ -d $DOT_ROOT dircolors emacs git tmux vim x zsh
+  stow -v -t ~ -d $DOT_ROOT dircolors emacs git tmux vim x zsh
 
   if [ "$1" != "--extra" ]; then
     success "Please re-login to take effect.\n"
