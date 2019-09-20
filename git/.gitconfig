@@ -1,0 +1,21 @@
+[core]
+	editor = vim
+	excludesfile = ~/.gitignore_global
+[alias]
+	ci = commit
+	co = checkout
+	st = status
+	br = branch
+	df  = diff --ws-error-highlight=all
+	dfc = diff --ws-error-highlight=all --cached
+	dfh = diff --ws-error-highlight=all HEAD^
+    dfi = icdiff
+	vg = !gitk
+	lg  = log --graph --pretty=format:'%Cred%h%Creset %C(bold yellow)<%an>%Creset -%Cgreen%cr%Creset %s' --abbrev-commit
+    lg2 = log --graph --pretty=format:'%Cred%h%Cgreen(%cd)%Creset -%C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset' --abbrev-commit --date=format:'%y-%m-%d %H:%M'
+    cof = checkout -- 
+[user]
+	email = shunli.ren@citrix.com
+	name = Shunli Ren
+[icdiff]
+	options = --highlight --line-numbers

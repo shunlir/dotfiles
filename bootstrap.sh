@@ -57,17 +57,13 @@ main()
     UID=$(id -u)
   fi
 
-  for t in zsh git tmux dircolors vim; do
-    . $DOT_ROOT/$t/install.sh
-  done
+  stow -t ~ -d $DOT_ROOT dircolors emacs git tmux vim x zsh
 
   if [ "$1" != "--extra" ]; then
     success "Please re-login to take effect.\n"
     warn "If you want to install fd, ripgrep and fzf, please run with '--extra' again!\n"
     exit 0
   fi
-
-  . $DOT_ROOT/tools/install.sh
 }
 
 set_log_color

@@ -1,8 +1,14 @@
 # -*- mode: shell-script -*-
 # vim:ft=zsh
 
+# self install
+if [ ! -e ~/.zplugin ]; then
+    mkdir ~/.zplugin
+    git clone https://github.com/zdharma/zplugin.git ~/.zplugin/bin
+fi
+
 # load ZPlug
-source '/home/shunlir/.zplugin/bin/zplugin.zsh'
+source ~/.zplugin/bin/zplugin.zsh
 autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
 
@@ -17,11 +23,31 @@ zplugin snippet OMZ::plugins/git/git.plugin.zsh
 
 # vi mode line editing
 zplugin snippet OMZ::plugins/vi-mode/vi-mode.plugin.zsh
+setopt promptsubst
+
+# man pages syntax
+zplugin snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
 
 zplugin light zsh-users/zsh-autosuggestions
 zplugin light zdharma/fast-syntax-highlighting
+
+# Ctrl-R
 zplugin light zdharma/history-search-multi-word
+zstyle ":history-search-multi-word" page-size "8"
+zstyle ":history-search-multi-word" highlight-color "fg=yellow,bold"
 
 # prompt theme
 zplugin snippet https://raw.githubusercontent.com/shunlir/oh-my-zsh-custom/master/themes/clean.zsh-theme
 
+# Z auto jump
+_ZL_MATCH_MODE=1
+_ZL_ADD_ONCE=1
+zplugin ice svn; zplugin snippet https://github.com/skywind3000/z.lua/trunk
+
+# aliases
+alias ls='ls --color=auto'
+alias la='ls --color=auto -A'
+alias grep='grep --color=auto'
+
+# local zshrc
+[[ ! -f ~/.zshrc.local ]] || source ~/.zshrc.local
