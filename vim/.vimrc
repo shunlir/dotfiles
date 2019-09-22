@@ -32,7 +32,9 @@ call plug#begin('~/.vim/plugged')
 "    if has('mouse')
 "      set mouse=a
 "    endif
-    set clipboard=exclude:.* "disable system clibpard
+    if !(has("nvim"))
+      set clipboard=exclude:.* "disable system clibpard
+    endif
 
     if has("autocmd")
         au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -69,9 +71,26 @@ call plug#begin('~/.vim/plugged')
         set laststatus=2 "always display the status line
         set noshowmode
         Plug 'itchyny/lightline.vim'
+
+        " show unicode value of char under cursor
         "let g:lightline = {
-        "      \ 'colorscheme': '',
-        "      \ }
+        "    \ 'active': {
+        "    \     'right': [ [ 'lineinfo', 'charcode' ],
+        "    \                [ 'percent' ],
+        "    \                [ 'fileformat', 'fileencoding', 'filetype' ] ]
+        "    \ },
+        "    \ 'component_function': {
+        "    \     'charcode': 'LightlineCharcode'
+        "    \ }
+        "    \ }
+        "function! LightlineCharcode() abort
+        "  let line = getline('.')
+        "  let col = col('.')
+        "  return col - 1 < len(line) ? printf('U+%04x', char2nr(matchstr(line[(col - 1):], '^.'))) : ''
+        "endfunction
+        let g:lightline = {
+              \ 'colorscheme': 'jellybeans'
+              \ }
     "}}}
 
     "SignColumn {{{

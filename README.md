@@ -1,7 +1,7 @@
 # dotfiles
 * zsh
   * depencencies: `svn`
-| 1 | 2 | 3 | 4 |
-|---|---|---|---|
-| 3 | 4 | 5 | 6 |
-|   |   |   |   |
+| class  | package    | depencencies    | comments                                 |
+|--------|------------|-----------------|------------------------------------------|
+| shell  | zsh        | `svn`           | `Zplugin` is the zsh plugin manager used |
+| editor | vim/neovim | `neovim-python` |                                          |

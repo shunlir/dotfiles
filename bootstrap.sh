@@ -8,8 +8,7 @@
 
 set -e
 
-set_log_color()
-{
+set_log_color() {
   # Use colors, but only if connected to a terminal, and that terminal
   # supports them.
   if which tput >/dev/null 2>&1; then
@@ -34,30 +33,27 @@ set_log_color()
   fi
 }
 
-info()
-{
+info() {
   printf "${MAGENTA}$1${NORMAL}"
 }
 
-warn()
-{
+warn() {
   printf "${YELLOW}$1${NORMAL}"
 }
 
-success()
-{
+success() {
   printf "${GREEN}$1${NORMAL}"
 }
 
-
-main()
-{
+main() {
   DOT_ROOT=$(readlink -f "$(dirname "$0")")
   if [ ${UID-notset} = "notset" ]; then
     UID=$(id -u)
   fi
 
-  stow -v -t ~ -d $DOT_ROOT dircolors emacs git tmux vim x zsh
+  info "stow...\n"
+  stow -v -t ~ -d $DOT_ROOT dircolors git tmux urxvt vim x zsh i3
+  success "[DONE]\n"
 
   if [ "$1" != "--extra" ]; then
     success "Please re-login to take effect.\n"
