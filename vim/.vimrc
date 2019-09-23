@@ -141,6 +141,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'Yggdroot/LeaderF', { 'do': './install.sh' } " default use 256 color for TUI
     let g:Lf_ShortcutF = '<C-p>'  " Ctrl+P - all files
     let g:Lf_ShortcutB = '<M-p>'  " Alt+P  - opened files
+    let g:Lf_CommandMap = {'<C-K>': ['<C-P>'], '<C-J>': ['<C-N>']}
     noremap <M-m> :LeaderfMru<cr>
     noremap <M-f> :LeaderfFunction!<cr>
     noremap <M-t> :LeaderfTag<cr>

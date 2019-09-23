@@ -12,7 +12,8 @@ Xft.lcdfilter: lcddefault
 !---------------------------!
 *foreground:   #c5c8c6
 *background:   #1d1f21
-*cursorColor:  #aeafad
+!*cursorColor:  #aeafad
+*cursorColor:  #5fd927
 *color0:       #000000
 *color1:       #912226
 *color2:       #778900

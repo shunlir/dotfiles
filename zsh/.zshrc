@@ -34,7 +34,7 @@ zplugin light zdharma/fast-syntax-highlighting
 # Ctrl-R
 zplugin light zdharma/history-search-multi-word
 zstyle ":history-search-multi-word" page-size "8"
-zstyle ":history-search-multi-word" highlight-color "fg=yellow,bold"
+zstyle ":history-search-multi-word" highlight-color "fg=48,bold" # SpringGreen
 
 # prompt theme
 zplugin snippet https://raw.githubusercontent.com/shunlir/oh-my-zsh-custom/master/themes/clean.zsh-theme
