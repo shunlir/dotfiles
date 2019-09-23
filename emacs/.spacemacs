@@ -475,6 +475,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   (setq-default
    dotspacemacs-themes '(spacemacs-dark gruvbox monokai )
    dotspacemacs-startup-banner nil)
+   ;; (setq package-check-signature nil)
   )
 
 (defun dotspacemacs/user-load ()

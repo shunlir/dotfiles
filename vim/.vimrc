@@ -46,6 +46,17 @@ call plug#begin('~/.vim/plugged')
     "LineNumber {{{
         set number
         Plug 'jeffkreeftmeijer/vim-numbertoggle'
+        "cmd - ToggleLineNumber
+        function! Toggle_LineNumber()
+            if &number == 1 ||  &relativenumber == 1
+                let &number=0
+                let &relativenumber=0
+            else
+                let &number=1
+                let &relativenumber=1
+            endif
+        endfunction
+        command! -nargs=0 ToggleLineNumber call Toggle_LineNumber()
     "}}}
 
     "Colors {{{
@@ -64,7 +75,7 @@ call plug#begin('~/.vim/plugged')
         endif
 
         " color schemes
-        Plug 'jeffkreeftmeijer/vim-dim'
+        Plug 'shunlir/vim-dim'
     "}}}
 
     "StatusLine {{{
@@ -183,7 +194,7 @@ call plug#begin('~/.vim/plugged')
     call TUI_MetaUseEsc()
     "}}}
 
-    "WindowNavigateTmuxAware {{{
+    "TmuxIntegration {{{
         Plug 'christoomey/vim-tmux-navigator'
         let g:tmux_navigator_no_mappings = 1
         nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
@@ -191,6 +202,14 @@ call plug#begin('~/.vim/plugged')
         nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
         nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
         nnoremap <silent> <M-r> :TmuxNavigatePrevious<cr>
+        Plug 'melonmanchan/vim-tmux-resizer'
+        let g:tmux_resizer_no_mappings = 1
+        nnoremap <silent> <M-H> :TmuxResizeLeft<cr>
+        nnoremap <silent> <M-J> :TmuxResizeDown<cr>
+        nnoremap <silent> <M-K> :TmuxResizeUp<cr>
+        nnoremap <silent> <M-L> :TmuxResizeRight<cr>
+        Plug 'benmills/vimux'
+        map <Leader>vp :VimuxPromptCommand<cr>
     "}}}
 "}}}
 

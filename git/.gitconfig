@@ -14,8 +14,7 @@
 	lg  = log --graph --pretty=format:'%Cred%h%Creset %C(bold yellow)<%an>%Creset -%Cgreen%cr%Creset %s' --abbrev-commit
     lg2 = log --graph --pretty=format:'%Cred%h%Cgreen(%cd)%Creset -%C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset' --abbrev-commit --date=format:'%y-%m-%d %H:%M'
     cof = checkout -- 
-[user]
-	email = shunli.ren@citrix.com
-	name = Shunli Ren
 [icdiff]
 	options = --highlight --line-numbers
+[include]
+    path = .gitconfig_local

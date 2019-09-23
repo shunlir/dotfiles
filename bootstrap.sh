@@ -52,7 +52,7 @@ main() {
   fi
 
   info "stow...\n"
-  stow -v -t ~ -d $DOT_ROOT dircolors git tmux urxvt vim x zsh i3
+  stow -v -t ~ -d $DOT_ROOT dircolors emacs git i3 tmux urxvt vim x zsh
   success "[DONE]\n"
 
   if [ "$1" != "--extra" ]; then

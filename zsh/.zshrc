@@ -44,6 +44,11 @@ _ZL_MATCH_MODE=1
 _ZL_ADD_ONCE=1
 zplugin ice svn; zplugin snippet https://github.com/skywind3000/z.lua/trunk
 
+# compinit after all loading all plugins
+autoload -Uz compinit
+compinit
+zplugin cdreplay -q
+
 # aliases
 alias ls='ls --color=auto'
 alias la='ls --color=auto -A'
