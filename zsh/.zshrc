@@ -49,6 +49,19 @@ autoload -Uz compinit
 compinit
 zplugin cdreplay -q
 
+# p <project>
+if [ -e ~/repo ]; then
+    _p () {
+        local commands
+        commands=(`ls ~/repo`)
+        _describe -t commands 'command' commands
+    }
+    function p () {
+        cd ~/repo/$1
+    }
+    compdef _p p
+fi
+
 # aliases
 alias ls='ls --color=auto'
 alias la='ls --color=auto -A'
