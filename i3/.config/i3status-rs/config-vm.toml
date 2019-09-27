@@ -1,0 +1,35 @@
+[theme]
+name = "gruvbox-dark"
+[theme.overrides]
+separator = ""
+good_fg = "#282828"
+info_fg = "#282828"
+
+[icons]
+name = "awesome"
+
+[[block]]
+block = "focused_window"
+max_width = 71
+
+[[block]]
+block = "memory"
+format_mem = "{Mum}MB/{MTm}MB({Mup}%)"
+format_swap = "{SUm}MB/{STm}MB({SUp}%)"
+display_type = "memory"
+icons = true
+clickable = true
+interval = 5
+warning_mem = 80
+warning_swap = 80
+critical_mem = 95
+critical_swap = 95
+
+[[block]]
+block = "sound"
+step_width = 3
+
+[[block]]
+block = "time"
+format = "%a %m/%d %R"
+interval = 60

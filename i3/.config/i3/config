@@ -28,10 +28,10 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
-exec --no-startup-id nm-applet
+#exec --no-startup-id nm-applet
 
 # Blueman is a full featured Bluetooth manager written in GTK
-exec --no-startup-id blueman-applet
+#exec --no-startup-id blueman-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -197,7 +197,7 @@ bar {
         # i3status with xwindow title
         #status_command ~/.config/i3status/i3status.sh
         # i3status-rust
-        status_command i3status-rs ~/.config/i3status-rs/config.toml
+        status_command i3status-rs ~/.config/i3status-rs/config-vm.toml
 }
 
 # hide window title bar
