@@ -24,6 +24,7 @@ zplugin snippet OMZ::plugins/git/git.plugin.zsh
 # vi mode line editing
 zplugin snippet OMZ::plugins/vi-mode/vi-mode.plugin.zsh
 setopt promptsubst
+bindkey '^[[3~' delete-char
 
 # man pages syntax
 zplugin snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh

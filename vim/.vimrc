@@ -1,3 +1,5 @@
+set nocompatible
+
 "VimPlugSelfBoot {{{
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent call system('curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
@@ -164,7 +166,31 @@ call plug#begin('~/.vim/plugged')
     nnoremap <F8> :call asyncrun#quickfix_toggle(6)<cr>
     " toggle paste mode
     noremap <F9> :set paste!<cr>
+    " toggle sign column
     noremap <F10> :ToggleSignColumn<CR>
+    " Reload .vimrc
+    nnoremap <Leader>R :source $MYVIMRC<CR>
+    " split window
+    map <Leader>w- :split<CR>
+    map <Leader>w. :vsplit<CR>
+    " toggle maximize window and resize windows
+    function! s:ToggleResize() abort
+        if winnr('$') > 1
+            if exists('t:zoomed') && t:zoomed
+                execute t:zoom_winrestcmd
+                let t:zoomed = 0
+                echo 'Windows resized.'
+            else
+                let t:zoom_winrestcmd = winrestcmd()
+                resize
+                vertical resize
+                let t:zoomed = 1
+                echo 'Window maximized.'
+            endif
+        endif
+    endfunction
+    autocmd VimEnter * autocmd WinEnter * let t:zoomed = 0
+    nnoremap <Leader>wf :call <SID>ToggleResize()<CR>
 
     "VimTuiMetaKey {{{
     " set keycode of some <M-?> to use <ESC> prefix, see :map-alt-keys
@@ -216,6 +242,8 @@ call plug#begin('~/.vim/plugged')
 
 "GeneralFunctionality {{{
     Plug 'tpope/vim-surround'
+    " Matchit- Extended '%' matching
+    Plug 'adelarsq/vim-matchit'
     " Git wrapper
     Plug 'tpope/vim-fugitive'
     "AsyncRun {{{

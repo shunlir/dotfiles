@@ -9,7 +9,7 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-set $mod Mod1
+# Super key as $mod
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -74,12 +74,6 @@ bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
-
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
@@ -87,10 +81,10 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod++\ split h
+bindsym $mod+period split h
 
 # split in vertical orientation
-bindsym $mod+- split v
+bindsym $mod+minus split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -193,16 +187,19 @@ bar {
             separator  #4c7899
         }
         font pango:Inconsolata,FontAwesome,PowerlineSymbols 11
+
         # i3status
         #status_command i3status
+
         # i3status with xwindow title
         #status_command ~/.config/i3status/i3status.sh
+
         # i3status-rust
         status_command i3status-rs ~/.config/i3status-rs/config.toml
 }
+# polybar
+#exec_always --no-startup-id bash ~/.config/polybar/launch.sh
 
 # hide window title bar
 default_border pixel 1
 for_window [tiling] border pixel 1
-
-#exec_always --no-startup-id bash ~/.config/polybar/launch.sh
