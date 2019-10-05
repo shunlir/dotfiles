@@ -55,8 +55,8 @@ URxvt.secondaryScreen: 1
 URxvt.secondaryScroll: 0
 ! Note: URxvt has issues double-wide font glyph characters (https://github.com/ryanoasis/nerd-fonts/wiki/Terminal-Emulators#urxvt)
 ! workaround: use single-width Nerd fonts (called `Nerd Mono` fonts)
-URxvt.font:xft:FantasqueSansMono Nerd Font Mono:pixelsize=17
-
+URxvt.font:xft:FantasqueSansMono Nerd Font Mono:pixelsize=17, \
+           xft:WenQuanYi Micro Hei Mono:pixelsize=17
 Rxvt.perl-ext-common: default,selection-to-clipboard,keyboard-select,url-select,resize-font
 URxvt.keysym.M-Escape:      perl:keyboard-select:activate
 URxvt.keysym.M-S:           perl:keyboard-select:search
