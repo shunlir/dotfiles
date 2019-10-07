@@ -1,0 +1,25 @@
+; vim: filetype=dosini
+
+[general]
+accounts = qq
+maxsyncaccounts = 3
+
+[Account qq]
+localrepository = Local
+remoterepository = Remote
+utf8foldernames = yes
+;status_backend = sqlite
+
+[Repository Local]
+type = Maildir
+localfolders = ~/mail
+
+[Repository Remote]
+type = IMAP
+remotehost = imap.<>.com
+ssl = yes
+remoteuser = <>
+#remotepass = <>
+maxconnections = 1
+realdelete = no
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt

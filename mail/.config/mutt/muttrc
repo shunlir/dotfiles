@@ -1,0 +1,65 @@
+set mbox_type=Maildir
+set folder=~/mail
+set header_cache=~/.cache/mutt
+
+#mbox
+#set mbox      = "~/mail/inbox"    # 收件箱文件
+#set record    = "~/mail/sent"     # 发件箱文件
+#set spoolfile = "~/mail/inbox"    # 启动mutt后默认显示的信箱文件
+
+set spoolfile = "~/mail/INBOX"
+
+ set mask=".*"    # the default mask hides dotfiles and maildirs are dotfiles now.
+ # set mask="!^\.[^.]"  # this line intentionally commented out
+ set record="+.Sent"
+ set postponed="+.Drafts"
+
+ mailboxes ! + `\
+ for file in ~/mail/*; do \
+   box=$(basename "$file"); \
+   echo -n "\"+$box\" "; \
+ done`
+
+
+set charset="utf-8"
+set assumed_charset="utf-8:gb2312:gb18030:gbk"
+
+set mailcap_path 	= ~/.mailcap
+auto_view text/x-diff
+auto_view text/x-patch
+auto_view text/html
+alternative_order text/plain text/html
+macro attach 'V' "<pipe-entry>iconv -c --to-code=UTF8 > ~/.cache/mutt/mail.html<enter><shell-escape>firefox ~/.cache/mutt/mail.html<enter>"
+
+set my_cfgdir = ~/.config/mutt
+source $my_cfgdir/themes/solarized-dark-256.muttrc
+
+set sidebar_visible
+set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
+set sidebar_width = 15
+set sidebar_divider_char = '│'
+set mail_check_stats
+
+# vim-style keys
+bind pager j  next-line
+bind pager k  previous-line
+bind pager g noop
+bind pager gg top
+bind pager G  bottom
+bind pager J  next-undeleted
+bind pager K  previous-undeleted
+bind pager R  group-reply
+bind index g  noop
+bind index gg first-entry
+bind index G  last-entry
+bind index R  group-reply
+bind index -  collapse-thread
+bind index _  collapse-all
+
+#
+# Move the highlight to the previous mailbox
+bind index,pager \Cp sidebar-prev
+# Move the highlight to the next mailbox
+bind index,pager \Cn sidebar-next
+# Open the highlighted mailbox
+bind index,pager \Co sidebar-open

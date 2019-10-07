@@ -1,0 +1,7 @@
+
+text/x-diff;  cat %s | colordiff; copiousoutput
+text/x-patch; cat %s | colordiff; copiousoutput
+text/html; w3m -I %{charset} -T text/html; copiousoutput;
+
+#TODO: following line doesn't work with some gbk html email 
+#text/html; elinks -dump -dump-color-mode 3 -dump-charset utf-8 -default-mime-type text/html -eval "set document.codepage.assume = %{charset}" %s; copiousoutput; needsterminal;

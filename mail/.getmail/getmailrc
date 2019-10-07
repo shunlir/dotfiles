@@ -1,0 +1,16 @@
+[options]
+verbose  = 0
+read_all = false
+delete   = false
+ 
+[retriever]
+type     = SimplePOP3SSLRetriever
+server   = pop.163.com
+#port     = 995
+username = rsljdkt
+#password = xxxxxx                  # 密码，明文
+ 
+[destination]
+type     = MDA_external
+path     = /usr/bin/procmail
+unixfrom = true
