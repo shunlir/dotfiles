@@ -203,3 +203,8 @@ bar {
 # hide window title bar
 default_border pixel 1
 for_window [tiling] border pixel 1
+
+# some GUI application, e.g., skin of sogoupinyin, relies on window composition
+#exec --no-startup-id compton
+# IME
+#exec --no-startup-id fcitx
