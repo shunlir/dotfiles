@@ -52,7 +52,15 @@ main() {
   fi
 
   info "stow...\n"
-  stow -v -t ~ -d $DOT_ROOT dircolors emacs git i3 tmux urxvt vim x zsh
+  if command -v stow >/dev/null 2>&1; then
+    STOW="stow"
+  elif command -v xstow >/dev/null 2>&1; then
+    STOW="xstow"
+  else
+    warn "command stow or xstow not found!"
+    exit 1
+  fi
+  $STOW -v -t ~ -d $DOT_ROOT dircolors emacs git i3 tmux urxvt vim x zsh
   success "[DONE]\n"
 
   if [ "$1" != "--extra" ]; then
