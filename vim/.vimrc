@@ -41,6 +41,14 @@ call plug#begin('~/.vim/plugged')
     if has("autocmd")
         au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
     endif
+
+    " trim trailing whitespace
+    fun! TrimWhitespace()
+        let l:save = winsaveview()
+        keeppatterns %s/\s\+$//e
+        call winrestview(l:save)
+    endfun
+    command! TrimWhitespace call TrimWhitespace()
 "}}}
 
 "Appearence {{{
