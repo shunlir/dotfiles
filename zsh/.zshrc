@@ -41,10 +41,10 @@ zstyle ":history-search-multi-word" highlight-color "fg=48,bold" # SpringGreen
 zplugin snippet https://raw.githubusercontent.com/shunlir/oh-my-zsh-custom/master/themes/clean.zsh-theme
 
 # Z auto jump
-if (( $+commands[lua] )) && (( $+commands[svn] )); then
+if (( $+commands[lua] )); then
   _ZL_MATCH_MODE=1
   _ZL_ADD_ONCE=1
-  zplugin ice svn; zplugin snippet https://github.com/skywind3000/z.lua/trunk
+  zplugin light skywind3000/z.lua
 fi
 
 # compinit after all loading all plugins
