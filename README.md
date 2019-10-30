@@ -4,7 +4,7 @@
 | Type        | Software                 | Depencencies    | Comments                                                                             |
 |-------------|--------------------------|-----------------|--------------------------------------------------------------------------------------|
 | WM          | i3wm                     |                 | A tiling window manager, completely written from scratch.                            |
-| Shell       | zsh                      | `wget`, `svn`   | `Zplugin` is the zsh plugin manager used                                             |
+| Shell       | zsh                      | `wget`, `lua`   | `Zplugin` is the zsh plugin manager used                                             |
 | StatusBar   | i3status-rust            | `xbacklight`    | A feature-rich and resource-friendly replacement for i3status, written in pure Rust. |
 | Terminal    | urxvt                    |                 |                                                                                      |
 | Multiplexer | tmux                     |                 |                                                                                      |
@@ -12,7 +12,7 @@
 | Font        | Font Awesome 4           |                 |                                                                                      |
 | Editor      | vim/neovim               | `python-neovim` |                                                                                      |
 | Editor      | emacs                    |                 | Spacemacs                                                                            |
-| CVS         | git                      | `diff-so-fancy` |                                                                                      |
+| CVS         | git                      | `diff-so-fancy` | a `perl` script                                                                      |
 | Files       | ranger                   |                 |                                                                                      |
 | Files       | TODO: vifm               |                 |                                                                                      |
 | Email       | TODO                     |                 |                                                                                      |
