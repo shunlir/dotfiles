@@ -8,28 +8,30 @@ Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 
 !---------------------------!
-!--- TomorrowNight theme ---!
+!---  GruvBox dark theme ---!
 !---------------------------!
-*foreground:   #c5c8c6
-*background:   #1d1f21
-!*cursorColor:  #aeafad
 *cursorColor:  #5fd927
-*color0:       #000000
-*color1:       #912226
-*color2:       #778900
-*color3:       #ae7b00
-*color4:       #1d2594
-*color5:       #682a9b
-*color6:       #2b6651
-*color7:       #929593
-*color8:       #666666
-*color9:       #cc6666
-*color10:      #b5bd68
-*color11:      #f0c674
-*color12:      #81a2be
-*color13:      #b294bb
-*color14:      #8abeb7
-*color15:      #ecebec
+! hard contrast:
+*background: #1d2021
+! default contrast: *background: #282828
+! soft contrast: *background: #32302f
+*foreground: #ebdbb2
+*color0:  #282828
+*color8:  #928374
+*color1:  #cc241d
+*color9:  #fb4934
+*color2:  #98971a
+*color10: #b8bb26
+*color3:  #d79921
+*color11: #fabd2f
+*color4:  #458588
+*color12: #83a598
+*color5:  #b16286
+*color13: #d3869b
+*color6:  #689d6a
+*color14: #8ec07c
+*color7:  #a89984
+*color15: #ebdbb2
 
 !-------------------------!
 !-------- Urxvt ----------!
@@ -63,3 +65,9 @@ URxvt.keysym.M-S:           perl:keyboard-select:search
 URxvt.url-select.launcher:  xdg-open
 URxvt.url-select.underline: true
 URxvt.keysym.M-u:           perl:url-select:select_next
+
+! gruvbox-dark hard contrast
+URxvt*keysym.Control-Shift-F9: command:\033]11;#1d2021\007\033]10;#ebdbb2\007\033]12;#5fd927\007\033]4;0;#282828\007\033]4;1;#cc241d\007\033]4;2;#98971a\007\033]4;3;#d79921\007\033]4;4;#458588\007\033]4;5;#b16286\007\033]4;6;#689d6a\007\033]4;7;#a89984\007\033]4;8;#928374\007\033]4;9;#fb4934\007\033]4;10;#b8bb26\007\033]4;11;#fabd2f\007\033]4;12;#83a598\007\033]4;13;#d3869b\007\033]4;14;#8ec07c\007\033]4;15;#ebdbb2\007
+! gruvbox-light hard contrast
+URxvt*keysym.Control-Shift-F10: command:\033]11;#f9f5d7\007\033]10;#3c3836\007\033]12;#5fd927\007\033]4;0;#fdf4c1\007\033]4;1;#cc241d\007\033]4;2;#98971a\007\033]4;3;#d79921\007\033]4;4;#458588\007\033]4;5;#b16286\007\033]4;6;#689d6a\007\033]4;7;#7c6f64\007\033]4;8;#928374\007\033]4;9;#9d0006\007\033]4;10;#79740e\007\033]4;11;#b57614\007\033]4;12;#076678\007\033]4;13;#8f3f71\007\033]4;14;#427b58\007\033]4;15;#3c3836\007
+URxvt*keysym.Control-Shift-F12: command:\033]11;#000000\007\033]10;#ffffff\007\033]12;#ffffff\007\033]4;0;#000000\007\033]4;1;#cc0000\007\033]4;2;#4e9a06\007\033]4;3;#c4a000\007\033]4;4;#3465a4\007\033]4;5;#75507b\007\033]4;6;#06989a\007\033]4;7;#d3d7cf\007\033]4;8;#555753\007\033]4;9;#ef2929\007\033]4;10;#8ae234\007\033]4;11;#fce94f\007\033]4;12;#729fcf\007\033]4;13;#ad7fa8\007\033]4;14;#34e2e2\007\033]4;15;#eeeeec\007
