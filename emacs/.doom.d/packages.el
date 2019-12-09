@@ -8,3 +8,5 @@
 
 (when (featurep! :lang cc +lsp)
   (package! dap-mode))
+
+(package! eterm-256color)

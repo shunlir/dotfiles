@@ -22,4 +22,9 @@
    :n "C-k" (λ! (ccls-navigate "L")))
   )
 
+(use-package! eterm-256color
+  :after term
+  :config
+  (add-hook 'term-mode-hook #'eterm-256color-mode))
+
 ;;(setq ccls-args '("--log-file=/tmp/ccls.log"))
