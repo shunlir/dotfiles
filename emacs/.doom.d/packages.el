@@ -6,7 +6,10 @@
 ;; (package! another-package :recipe (:host github :repo "username/repo"))
 ;; (package! builtin-package :disable t)
 
-(when (featurep! :lang cc +lsp)
+(when (package! lsp-mode)
   (package! dap-mode))
 
-(package! eterm-256color)
+(when (package! term)
+  (package! eterm-256color))
+
+(package! modern-cpp-font-lock)
