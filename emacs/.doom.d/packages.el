@@ -11,5 +11,3 @@
 
 (when (package! term)
   (package! eterm-256color))
-
-(package! modern-cpp-font-lock)
