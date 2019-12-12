@@ -172,3 +172,16 @@
 
        :private
        my-cc)
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ ;;
+ ;; markdown: based on tangotango color palette, see https://orgmode.org/worg/org-color-themes.html
+ '(markdown-header-face-1 ((t (:inherit markdown-header-face :foreground "DodgerBlue1" :height 1.7))))
+ '(markdown-header-face-2 ((t (:inherit markdown-header-face :foreground "#edd400" :height 1.5))))
+ '(markdown-header-face-3 ((t (:inherit markdown-header-face :foreground "#6ac214" :height 1.3))))
+ '(markdown-header-face-4 ((t (:inherit markdown-header-face :foreground "tomato" :height 1.1))))
+ )
