@@ -464,14 +464,17 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
     (when (version<= "9.2" (org-version))
       (require 'org-tempo))
     )
-  ;; version < 26: set aliases to xterm-256color
+  ;; set aliases to xterm-256color
   ;; https://stackoverflow.com/a/49364532
   ;; https://emacs.stackexchange.com/a/45223
+  ;; version < 26: add tmux
   (if (version< emacs-version "26")
-    (progn (add-to-list 'term-file-aliases
-                 '("tmux-256color" . "xterm-256color"))
-           (add-to-list 'term-file-aliases
-                 '("putty-256color" . "xterm-256color"))))
+    (add-to-list 'term-file-aliases
+                 '("tmux-256color" . "xterm-256color")))
+  ;; putty:
+  (add-to-list 'term-file-aliases
+        '("putty-256color" . "xterm-256color"))
+
   (setq-default
    dotspacemacs-themes '(spacemacs-dark gruvbox monokai )
    dotspacemacs-startup-banner nil)
