@@ -115,7 +115,7 @@ call plug#begin('~/.vim/plugged')
     "}}}
 
     "SignColumn {{{
-        "cmd - ToggleSignColum
+        "cmd - ToggleSignColum, ToggleSignAndNumber
         if exists("&signcolumn")
             function! Toggle_SignColumn()
                 if &signcolumn == 'yes' || &signcolumn == 'auto'
@@ -125,6 +125,19 @@ call plug#begin('~/.vim/plugged')
                 endif
             endfunction
             command! -nargs=0 ToggleSignColumn call Toggle_SignColumn()
+
+            function! Toggle_NS()
+              if &signcolumn == 'yes' || &signcolumn == 'auto' || &number == 1 || &relativenumber == 1
+                let &number=0
+                let &relativenumber=0
+                let &signcolumn='no'
+              else
+                let &number=1
+                let &relativenumber=1
+                let &signcolumn='yes'
+              endif
+            endfunction
+            command! -nargs=0 ToggleSignAndNumber call Toggle_NS()
         endif
 
         Plug 'mhinz/vim-signify'
@@ -175,7 +188,7 @@ call plug#begin('~/.vim/plugged')
     " toggle paste mode
     noremap <F9> :set paste!<cr>
     " toggle sign column
-    noremap <F10> :ToggleSignColumn<CR>
+    map <Leader>ts :ToggleSignAndNumber<CR>
     " Reload .vimrc
     nnoremap <Leader>R :source $MYVIMRC<CR>
     " split window
