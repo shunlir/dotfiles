@@ -66,7 +66,7 @@
        :term
        ;;eshell            ; a consistent, cross-platform shell (WIP)
        ;;shell             ; a terminal REPL for Emacs
-       ;;term              ; terminals in Emacs
+       term              ; terminals in Emacs
        ;;vterm             ; another terminals in Emacs
 
        :tools
@@ -180,8 +180,8 @@
  ;; If there is more than one, they won't work right.
  ;;
  ;; markdown: based on tangotango color palette, see https://orgmode.org/worg/org-color-themes.html
- '(markdown-header-face-1 ((t (:inherit markdown-header-face :foreground "DodgerBlue1" :height 1.7))))
- '(markdown-header-face-2 ((t (:inherit markdown-header-face :foreground "#edd400" :height 1.5))))
- '(markdown-header-face-3 ((t (:inherit markdown-header-face :foreground "#6ac214" :height 1.3))))
+ '(markdown-header-face-1 ((t (:inherit markdown-header-face :foreground "DodgerBlue1" :height 1.1))))
+ '(markdown-header-face-2 ((t (:inherit markdown-header-face :foreground "#edd400" :height 1.1))))
+ '(markdown-header-face-3 ((t (:inherit markdown-header-face :foreground "#6ac214" :height 1.1))))
  '(markdown-header-face-4 ((t (:inherit markdown-header-face :foreground "tomato" :height 1.1))))
  )
