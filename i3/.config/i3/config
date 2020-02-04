@@ -188,6 +188,8 @@ bar {
         }
         font pango:Inconsolata,FontAwesome,PowerlineSymbols 11
 
+        tray_output primary
+
         # i3status
         #status_command i3status
 
