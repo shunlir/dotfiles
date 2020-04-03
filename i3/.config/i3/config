@@ -158,10 +158,10 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym h resize grow left 10 px or 10 ppt
-        bindsym j resize grow down 10 px or 10 ppt
-        bindsym k resize grow up 10 px or 10 ppt
-        bindsym l resize grow right 10 px or 10 ppt
+        bindsym h resize shrink right 10 px or 10 ppt
+        bindsym j resize grow   down  10 px or 10 ppt
+        bindsym k resize shrink down  10 px or 10 ppt
+        bindsym l resize grow   right 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
@@ -201,6 +201,9 @@ bar {
 }
 # polybar
 #exec_always --no-startup-id bash ~/.config/polybar/launch.sh
+
+# screen shots
+bindsym Shift+Print exec maim -s -f png | xclip -selection clipboard -t image/png
 
 # hide window title bar
 default_border pixel 1
