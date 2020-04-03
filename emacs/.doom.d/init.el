@@ -9,7 +9,7 @@
 ;; found in modules/README.org.
 
 (doom! :input
-       ;;chinese
+       chinese
        ;;japanese
 
        :completion
@@ -185,3 +185,8 @@
  '(markdown-header-face-3 ((t (:inherit markdown-header-face :foreground "#6ac214" :height 1.1))))
  '(markdown-header-face-4 ((t (:inherit markdown-header-face :foreground "tomato" :height 1.1))))
  )
+
+;; workaround for: SPC f p (projectile-find-file):
+;;   "Setting current directory No such file or directory" error
+;;   ref: https://www.gitmemory.com/issue/bbatsov/projectile/1302/492561042
+(setq projectile-git-submodule-command nil)
