@@ -275,20 +275,8 @@ call plug#begin('~/.vim/plugged')
 "}}}
 
 "LanguageSpecificConfiguration {{{
-    "C/C++ {{{
-        "YCM {{{
-            function! BuildYCM(info)
-                " info is a dictionary with 3 fields
-                " - name:   name of the plugin
-                " - status: 'installed', 'updated', or 'unchanged'
-                " - force:  set on PlugInstall! or PlugUpdate!
-                if a:info.status == 'installed' || a:info.force
-                    !./install.py
-                endif
-            endfunction
-            "Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
-        "}}}
-        "Uncrustify cmd - UC {{
+    "CodeFormatter {{{
+        "Uncrustify cmd - Uncrustify {{
             " Restore cursor position, window position, and last search after running a command.
             function! Preserve(command)
               " Save the last search.
@@ -320,20 +308,20 @@ call plug#begin('~/.vim/plugged')
             let g:uncrustify_cfg_file_path =
                 \ shellescape(fnamemodify('~/.uncrustify.cfg', ':p'))
 
-            function! Uncrustify(language)
+            function! DoUncrustify(language)
               call Preserve(':silent %!uncrustify'
                   \ . ' -q '
                   \ . ' -l ' . a:language
                   \ . ' -c ' . g:uncrustify_cfg_file_path)
             endfunction
-            function! UC()
+            function! Uncrustify()
                 let exts = {"cpp": "cpp", "c": "c"}
                 let ext = expand('%:e')
                 if has_key(exts, ext)
-                    call Uncrustify(ext)
+                    call DoUncrustify(ext)
                 endif
             endfunction
-            command! UC call UC()
+            command! Uncrustify call Uncrustify()
         "}}}
     "}}}
     "CTags {{{
