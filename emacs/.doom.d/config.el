@@ -12,3 +12,12 @@
   :after term
   :config
   (add-hook 'term-mode-hook #'eterm-256color-mode))
+
+(after! lsp-ui
+  ;; workaround, see https://github.com/emacs-lsp/lsp-ui/issues/278#issuecomment-590000913
+  (setq lsp-ui-peek-fontify 'always))
+
+(setq lsp-keymap-prefix "C-c l")
+
+(with-eval-after-load 'lsp-mode
+  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
