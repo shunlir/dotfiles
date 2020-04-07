@@ -14,6 +14,8 @@ endif
 call plug#begin('~/.vim/plugged')
 
 "General {{{
+    let mapleader = " "
+
     " Tab and Space
     set tabstop=4
     set softtabstop=4
@@ -22,6 +24,8 @@ call plug#begin('~/.vim/plugged')
     filetype plugin indent on
     autocmd FileType make setlocal noexpandtab
     autocmd FileType vim setlocal softtabstop=2 shiftwidth=2 expandtab
+    " Heuristically indent
+    Plug 'tpope/vim-sleuth'
 
     " Searching
     set ignorecase "case insensitive searching
@@ -86,6 +90,8 @@ call plug#begin('~/.vim/plugged')
 
         " color schemes
         Plug 'shunlir/vim-dim'
+        Plug 'joshdick/onedark.vim'
+        Plug 'morhetz/gruvbox'
     "}}}
 
     "StatusLine {{{
@@ -162,12 +168,12 @@ call plug#begin('~/.vim/plugged')
 
 "FuzzyFinder {{{
     Plug 'Yggdroot/LeaderF', { 'do': './install.sh' } " default use 256 color for TUI
-    let g:Lf_ShortcutF = '<C-p>'  " Ctrl+P - all files
-    let g:Lf_ShortcutB = '<M-p>'  " Alt+P  - opened files
+    noremap <leader>fr :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
+    noremap <leader>bb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
+    noremap <leader>sb :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
+    let g:Lf_ShortcutF = '<leader><leader>'  " find file
+    let g:Lf_ShortcutB = '<leader>,'  " Alt+P  - opened files
     let g:Lf_CommandMap = {'<C-K>': ['<C-P>'], '<C-J>': ['<C-N>']}
-    noremap <M-m> :LeaderfMru<cr>
-    noremap <M-f> :LeaderfFunction!<cr>
-    noremap <M-t> :LeaderfTag<cr>
     let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
     let g:Lf_WildIgnore = { 'dir': ['.svn','.git','.hg'], 'file': [] }
     let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
@@ -178,11 +184,11 @@ call plug#begin('~/.vim/plugged')
     let g:Lf_HideHelp = 1
     let g:Lf_StlColorscheme = 'powerline'
     let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
+    let g:Lf_ShowDevIcons = 1
 "}}}
 
 
 "Mappings {{{
-    let mapleader = " "
     " toggle quickfix window
     nnoremap <F8> :call asyncrun#quickfix_toggle(6)<cr>
     " toggle paste mode
@@ -191,6 +197,8 @@ call plug#begin('~/.vim/plugged')
     map <Leader>ts :ToggleSignAndNumber<CR>
     " Reload .vimrc
     nnoremap <Leader>R :source $MYVIMRC<CR>
+    " Open .vimrc
+    nnoremap <Leader>fp :edit $MYVIMRC<CR>
     " split window
     map <Leader>w- :split<CR>
     map <Leader>w. :vsplit<CR>
@@ -265,6 +273,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-surround'
     " Matchit- Extended '%' matching
     Plug 'adelarsq/vim-matchit'
+    " auto-pairs
+    Plug 'jiangmiao/auto-pairs'
     " Git wrapper
     Plug 'tpope/vim-fugitive'
     "AsyncRun {{{
@@ -326,7 +336,7 @@ call plug#begin('~/.vim/plugged')
     "}}}
     "CTags {{{
         set tags=./.tags;,.tags  " upward search .tags from the dir of the file being edit, if not found, search .tags in `pwd`
-        "Plug 'ludovicchabant/vim-gutentags'
+        "Plug 'ludovicchabant/vim-gutentags' " disabled by default
         let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
         let g:gutentags_ctags_tagfile = '.tags'
         let s:vim_tags = expand('~/.cache/tags')
@@ -341,6 +351,172 @@ call plug#begin('~/.vim/plugged')
         let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
         let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
     "}}}
+    "LSP  {{{
+        Plug 'neoclide/coc.nvim', {'branch': 'release'}
+        Plug 'jackguo380/vim-lsp-cxx-highlight'
+
+        " lsp TextEdit might fail if hidden is not set.
+        set hidden
+
+        " Some servers have issues with backup files, see #649
+        set nobackup
+        set nowritebackup
+
+        " Give more space for displaying messages.
+        set cmdheight=2
+
+        " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+        " delays and poor user experience.
+        set updatetime=300
+
+        " Don't pass messages to |ins-completion-menu|.
+        set shortmess+=c
+
+        " Always show the signcolumn, otherwise it would shift the text each time
+        " diagnostics appear/become resolved.
+        set signcolumn=yes
+
+        " hi
+        "autocmd ColorScheme *
+        "                      \ highlight Pmenu ctermfg=white ctermbg=0 |
+        "                      \ highlight CocFloating ctermfg=white ctermbg=0
+
+
+        " Use tab for trigger completion with characters ahead and navigate.
+        " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+        " Use tab for trigger completion with characters ahead and navigate.
+        " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+        " other plugin before putting this into your config.
+        inoremap <silent><expr> <TAB>
+              \ pumvisible() ? "\<C-n>" :
+              \ <SID>check_back_space() ? "\<TAB>" :
+              \ coc#refresh()
+        inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+        function! s:check_back_space() abort
+          let col = col('.') - 1
+          return !col || getline('.')[col - 1]  =~# '\s'
+        endfunction
+
+        " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+        " position. Coc only does snippet and additional edit on confirm.
+        if has('patch8.1.1068')
+          " Use `complete_info` if your (Neo)Vim version supports it.
+          inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+        else
+          imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+        endif
+
+        " Use `[e` and `]e` to navigate diagnostics
+        nmap <silent> [e <Plug>(coc-diagnostic-prev)
+        nmap <silent> ]e <Plug>(coc-diagnostic-next)
+
+        " GoTo code navigation.
+        nmap <silent> gd <Plug>(coc-definition)
+        nmap <silent> gD <Plug>(coc-references)
+        nnoremap <silent>K :call <SID>show_documentation()<CR>
+        nmap <silent> gy <Plug>(coc-type-definition)
+        nmap <silent> gi <Plug>(coc-implementation)
+
+        nnoremap <leader>ck :call <SID>show_documentation()<CR>
+
+        function! s:show_documentation()
+          if (index(['vim','help'], &filetype) >= 0)
+            execute 'h '.expand('<cword>')
+          else
+            call CocAction('doHover')
+          endif
+        endfunction
+
+        " Highlight the symbol and its references when holding the cursor.
+        autocmd CursorHold * silent call CocActionAsync('highlight')
+
+        " Symbol renaming.
+        nmap <leader>cr <Plug>(coc-rename)
+
+        " Formatting selected code.
+        "xmap <leader>f  <Plug>(coc-format-selected)
+        "nmap <leader>f  <Plug>(coc-format-selected)
+
+        augroup mygroup
+          autocmd!
+          " Setup formatexpr specified filetype(s).
+          autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+          " Update signature help on jump placeholder
+          autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+        augroup end
+
+        " Applying codeAction to the selected region.
+        " Example: `<leader>aap` for current paragraph
+        xmap <leader>a  <Plug>(coc-codeaction-selected)
+        nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+        " Remap keys for applying codeAction to the current line.
+        nmap <leader>ac  <Plug>(coc-codeaction)
+        " Apply AutoFix to problem on the current line.
+        nmap <leader>qf  <Plug>(coc-fix-current)
+
+        " Introduce function text object
+        " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+        xmap if <Plug>(coc-funcobj-i)
+        xmap af <Plug>(coc-funcobj-a)
+        omap if <Plug>(coc-funcobj-i)
+        omap af <Plug>(coc-funcobj-a)
+
+        " Use <TAB> for selections ranges.
+        " NOTE: Requires 'textDocument/selectionRange' support from the language server.
+        " coc-tsserver, coc-python are the examples of servers that support it.
+        nmap <silent> <TAB> <Plug>(coc-range-select)
+        xmap <silent> <TAB> <Plug>(coc-range-select)
+
+        " Add `:Format` command to format current buffer.
+        command! -nargs=0 Format :call CocAction('format')
+
+        " Add `:Fold` command to fold current buffer.
+        command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+        " Add `:OR` command for organize imports of the current buffer.
+        command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+        " Add (Neo)Vim's native statusline support.
+        " NOTE: Please see `:h coc-status` for integrations with external plugins that
+        " provide custom statusline: lightline.vim, vim-airline.
+        set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+        " Mappings using CoCList:
+        " Show all diagnostics
+        nnoremap <silent> <space>cx  :<C-u>CocList diagnostics<cr>
+        " Find symbol of current document
+        nnoremap <silent> <space>si  :<C-u>CocList outline<cr>
+        " Search workspace symbols
+        nnoremap <silent> <space>sj  :<C-u>CocList -I symbols<cr>
+        " Manage extensions
+        nnoremap <silent> <space>Ce  :<C-u>CocList extensions<cr>
+        " Show commands
+        nnoremap <silent> <space>Cc  :<C-u>CocList commands<cr>
+        " Do default action for nexc
+        nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+        " Do default action for previous item.
+        nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+        " Resume latest coc list
+        nnoremap <silent> <space>Cp  :<C-u>CocListResume<CR>
+        au CursorHold * sil call CocActionAsync('highlight')
+        au CursorHoldI * sil call CocActionAsync('showSignatureHelp')
+        " coc-snippets {{
+            inoremap <silent><expr> <TAB>
+              \ pumvisible() ? coc#_select_confirm() :
+              \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+              \ <SID>check_back_space() ? "\<TAB>" :
+              \ coc#refresh()
+
+            function! s:check_back_space() abort
+              let col = col('.') - 1
+              return !col || getline('.')[col - 1]  =~# '\s'
+            endfunction
+
+            let g:coc_snippet_next = '<tab>'
+        "}}
+    "}}}
 "}}}
 
 call plug#end()
@@ -353,5 +529,7 @@ call plug#end()
       set background=dark
   endif
   syntax enable
-  colorscheme dim
+  "colorscheme dim
+  colorscheme onedark
+  "colorscheme gruvbox
 "}}}
