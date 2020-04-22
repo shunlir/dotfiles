@@ -273,10 +273,14 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-surround'
     " Matchit- Extended '%' matching
     Plug 'adelarsq/vim-matchit'
-    " auto-pairs
-    Plug 'jiangmiao/auto-pairs'
     " Git wrapper
     Plug 'tpope/vim-fugitive'
+    " auto-pairs {{{
+        Plug 'jiangmiao/auto-pairs'
+        let g:AutoPairsCenterLine = 0
+    "}}}
+    " comment
+    Plug 'tpope/vim-commentary'
     "AsyncRun {{{
         Plug 'skywind3000/asyncrun.vim'
         let g:asyncrun_open = 6
