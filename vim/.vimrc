@@ -71,6 +71,14 @@ call plug#begin('~/.vim/plugged')
             endif
         endfunction
         command! -nargs=0 ToggleLineNumber call Toggle_LineNumber()
+        " highlight cursor nr only
+        if !(has("nvim"))
+            set cursorline
+            augroup HiCursorNrOnly
+                autocmd!
+                autocmd ColorScheme * highlight clear CursorLine
+            augroup END
+        endif
     "}}}
 
     "Colors {{{
