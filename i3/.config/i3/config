@@ -209,7 +209,10 @@ bindsym Shift+Print exec maim -s -f png | xclip -selection clipboard -t image/pn
 default_border pixel 1
 for_window [tiling] border pixel 1
 
-# some GUI application, e.g., skin of sogoupinyin, relies on window composition
-#exec --no-startup-id compton
+# window composition is needed by some GUI apps, such as sogoupinyin's skin, xfce4-terminal's transparency
+exec --no-startup-id picom -CG --experimental-backends
+
 # IME
 exec --no-startup-id fcitx
+
+bindsym $mod+i exec xfce4-terminal --drop-down
