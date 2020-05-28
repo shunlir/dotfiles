@@ -161,7 +161,6 @@ inputbar {
 }
 
 case-indicator,
-entry,
 prompt,
 button {
     spacing:    0;
