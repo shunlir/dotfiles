@@ -4,25 +4,35 @@
 | Type        | Software                 | Depencencies    | Comments                                                                             |
 |-------------|--------------------------|-----------------|--------------------------------------------------------------------------------------|
 | WM          | i3wm                     |                 | A tiling window manager, completely written from scratch.                            |
-| Shell       | zsh                      | `wget`, `lua`   | `Zplugin` is the zsh plugin manager used                                             |
+| Shell       | zsh                      | `wget`, `lua`   | `zinit` is the zsh plugin manager used                                               |
 | StatusBar   | i3status-rust            | `xbacklight`    | A feature-rich and resource-friendly replacement for i3status, written in pure Rust. |
 | Terminal    | urxvt                    |                 |                                                                                      |
 | Multiplexer | tmux                     |                 |                                                                                      |
 | Font        | Fantasque Sans Nerd Font |                 |                                                                                      |
 | Font        | Font Awesome 4           |                 |                                                                                      |
 | Editor      | vim/neovim               | `python-neovim` |                                                                                      |
-| Editor      | emacs                    |                 | Spacemacs                                                                            |
+| Editor      | emacs                    | `ripgrep`, `fd` | doom-emacs                                                                           |
 | CVS         | git                      | `diff-so-fancy` | a `perl` script                                                                      |
-| Files       | ranger                   |                 |                                                                                      |
-| Files       | TODO: vifm               |                 |                                                                                      |
+| Files       | nnn                      |                 |                                                                                      |
 | Email       | TODO                     |                 |                                                                                      |
 | Music       | TODO                     |                 |                                                                                      |
 | Video       | mpv, vlc                 |                 |                                                                                      |
+| ScreenShot  | Flameshot                |                 |                                                                                      |
 | Notify      |                          |                 |                                                                                      |
 
 https://github.com/gerardbm/dotfiles
 https://github.com/xero/dotfiles
 https://gitlab.com/BVollmerhaus/dotfiles
+
+## Installation
+
+``` sh
+git clone --recursive https://github.com/shunlir/dotfiles.git ~/.dotfiles
+# or use the following command after clone
+cd ~/.dotfiles && git submodule update --init --recursive 
+
+# install stow or xstow
+```
 
 ## Navigation
 
