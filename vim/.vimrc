@@ -363,6 +363,7 @@ call plug#begin('~/.vim/plugged')
         let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
         let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
     "}}}
+    if (has("nvim"))
     "LSP  {{{
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
         Plug 'jackguo380/vim-lsp-cxx-highlight'
@@ -529,6 +530,7 @@ call plug#begin('~/.vim/plugged')
             let g:coc_snippet_next = '<tab>'
         "}}
     "}}}
+    endif
 "}}}
 
 call plug#end()
