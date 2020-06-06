@@ -2,7 +2,7 @@
 if ! command -v cargo >/dev/null 2>&1; then
   printf "${MAGENTA}Installing rust & cargo...${NORMAL}\n"
   curl -sSf https://static.rust-lang.org/rustup.sh | sh
-  echo 'export PATH=$PATH:~/.cargo/bin' >> ~/.zshrc
+  echo 'export PATH=$PATH:~/.cargo/bin' >> ~/.zshrc.local
 fi
 
 # fd
