@@ -226,3 +226,5 @@ bindsym $mod+Shift+minus move scratchpad
 # toggle visibility of the first scratchpad window
 bindsym $mod+Shift+s scratchpad show
 
+# MS Teams, see https://www.reddit.com/r/i3wm/comments/ebfiu7/microsoft_teams_notification_banner/
+for_window [title="Microsoft Teams Notification"] floating enable
