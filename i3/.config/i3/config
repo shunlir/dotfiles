@@ -228,3 +228,7 @@ bindsym $mod+Shift+s scratchpad show
 
 # MS Teams, see https://www.reddit.com/r/i3wm/comments/ebfiu7/microsoft_teams_notification_banner/
 for_window [title="Microsoft Teams Notification"] floating enable
+
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Blueman-manager"] floating enable
+for_window [class="Arandr"] floating enable

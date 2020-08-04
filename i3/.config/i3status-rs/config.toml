@@ -6,7 +6,7 @@ good_fg = "#282828"
 info_fg = "#282828"
 
 [icons]
-name = "awesome"
+name = "awesome5"
 
 [[block]]
 block = "focused_window"
@@ -43,6 +43,7 @@ block = "temperature"
 collapsed = true
 interval = 10
 format = "{min}° min, {max}° max, {average}° avg"
+chip = "coretemp-isa-0000"
 
 [[block]]
 block = "time"
