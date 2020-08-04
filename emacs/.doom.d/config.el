@@ -2,6 +2,8 @@
 
 ;; Place your private configuration here
 
+(setq doom-theme 'doom-vibrant)
+
 (use-package! dap-mode
   :after lsp-mode
   :config
@@ -21,3 +23,8 @@
 
 (with-eval-after-load 'lsp-mode
   (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
+
+;; (which-function-mode)
+;; (eval-after-load "which-func"
+;;     '(setq which-func-modes '(java-mode c++-mode org-mode)))
+
