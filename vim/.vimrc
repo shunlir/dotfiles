@@ -1,6 +1,7 @@
 set nocompatible
 
-"VimPlugSelfBoot {{{
+"VimPlug {{{
+" auto install vim-plug
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent call system('curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
   execute 'source  ~/.vim/autoload/plug.vim'
@@ -9,9 +10,51 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall
   augroup end
 endif
-"}}}
 
 call plug#begin('~/.vim/plugged')
+    " heuristically indent
+    Plug 'tpope/vim-sleuth'
+    " line number
+    Plug 'jeffkreeftmeijer/vim-numbertoggle'
+    " color schemes
+    Plug 'shunlir/vim-dim'
+    Plug 'joshdick/onedark.vim'
+    Plug 'morhetz/gruvbox'
+    " status line
+    Plug 'itchyny/lightline.vim'
+    " display color, optional: golang is used for async display
+    Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
+    " diff on sign column
+    Plug 'mhinz/vim-signify'
+    " file explorer
+    Plug 'justinmk/vim-dirvish'
+    " fuzzy finder
+    Plug 'Yggdroot/LeaderF', { 'do': './install.sh' } " default use 256 color for TUI
+    " keys
+    Plug 'liuchengxu/vim-which-key'
+    " Tmux
+    Plug 'christoomey/vim-tmux-navigator'
+    Plug 'melonmanchan/vim-tmux-resizer'
+    Plug 'benmills/vimux'
+    " Surround
+    Plug 'tpope/vim-surround'
+    " Matchit- Extended '%' matching
+    Plug 'adelarsq/vim-matchit'
+    " Git wrapper
+    Plug 'tpope/vim-fugitive'
+    Plug 'jiangmiao/auto-pairs'
+    " Comment
+    Plug 'tpope/vim-commentary'
+    Plug 'skywind3000/asyncrun.vim'
+    if has('nvim')
+        Plug 'neoclide/coc.nvim', {'branch': 'release'}
+        Plug 'jackguo380/vim-lsp-cxx-highlight'
+        " python highlight
+        Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+    endif
+    "Plug 'plasticboy/vim-markdown'
+call plug#end()
+"}}}
 
 "General {{{
     let mapleader = " "
@@ -24,8 +67,6 @@ call plug#begin('~/.vim/plugged')
     filetype plugin indent on
     autocmd FileType make setlocal noexpandtab
     autocmd FileType vim setlocal softtabstop=2 shiftwidth=2 expandtab
-    " Heuristically indent
-    Plug 'tpope/vim-sleuth'
 
     " Searching
     set ignorecase "case insensitive searching
@@ -33,16 +74,27 @@ call plug#begin('~/.vim/plugged')
     set incsearch  "incremental search
     set hlsearch   "highlight search results
 
+    " Folding
+    autocmd FileType vim
+        \ setlocal foldlevel=0  foldmethod=marker foldmarker={{{,}}}
+    autocmd FileType python
+        \ setlocal foldlevel=99  foldmethod=indent
+
+
     " Miscs
     set wildmenu   "vim buildin command line completion
+
+    " Mouse
 "    if has('mouse')
 "      set mouse=a
 "    endif
+
+    " Clipboard
     if !(has("nvim"))
       set clipboard=exclude:.* "disable system clibpard
     endif
 
-    if has("autocmd")
+    if has('autocmd')
         au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
     endif
 
@@ -59,7 +111,6 @@ call plug#begin('~/.vim/plugged')
 "
     "LineNumber {{{
         set number
-        Plug 'jeffkreeftmeijer/vim-numbertoggle'
         "cmd - ToggleLineNumber
         function! Toggle_LineNumber()
             if &number == 1 ||  &relativenumber == 1
@@ -96,16 +147,14 @@ call plug#begin('~/.vim/plugged')
             set termguicolors
         endif
 
-        " color schemes
-        Plug 'shunlir/vim-dim'
-        Plug 'joshdick/onedark.vim'
-        Plug 'morhetz/gruvbox'
-    "}}}
+        " display color values
+        let g:Hexokinase_highlighters = ['background']
+        let g:Hexokinase_ftEnabled = ['css', 'html', 'javascript', 'json']
+        "}}}
 
     "StatusLine {{{
         set laststatus=2 "always display the status line
         set noshowmode
-        Plug 'itchyny/lightline.vim'
 
         " show unicode value of char under cursor
         "let g:lightline = {
@@ -154,7 +203,6 @@ call plug#begin('~/.vim/plugged')
             command! -nargs=0 ToggleSignAndNumber call Toggle_NS()
         endif
 
-        Plug 'mhinz/vim-signify'
         let g:signify_vcs_list = [ 'git', 'hg' ]
         autocmd ColorScheme *
                   \ highlight clear SignColumn |
@@ -162,23 +210,16 @@ call plug#begin('~/.vim/plugged')
                   \ highlight SignifySignDelete term=bold ctermbg=none  ctermfg=red   |
                   \ highlight SignifySignChange term=bold ctermbg=none  ctermfg=yellow
     "}}}
-
-
-
-    "Plug 'godlygeek/tabular'
-    "Plug 'plasticboy/vim-markdown'
 "}}}
 
 "FileExplorer {{{
-    Plug 'justinmk/vim-dirvish'
 "}}}
 
 
 "FuzzyFinder {{{
-    Plug 'Yggdroot/LeaderF', { 'do': './install.sh' } " default use 256 color for TUI
-    noremap <leader>fr :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
-    noremap <leader>bb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
-    noremap <leader>sb :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
+    "noremap <leader>fr :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
+    "noremap <leader>bb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
+    "noremap <leader>sb :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
     let g:Lf_ShortcutF = '<leader><leader>'  " find file
     let g:Lf_ShortcutB = '<leader>,'  " Alt+P  - opened files
     let g:Lf_CommandMap = {'<C-K>': ['<C-P>'], '<C-J>': ['<C-N>']}
@@ -192,7 +233,8 @@ call plug#begin('~/.vim/plugged')
     let g:Lf_HideHelp = 1
     let g:Lf_StlColorscheme = 'powerline'
     let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
-    let g:Lf_ShowDevIcons = 1
+    let g:Lf_ShowDevIcons = 0
+    let g:Lf_GtagsAutoGenerate = 0
 "}}}
 
 
@@ -200,17 +242,17 @@ call plug#begin('~/.vim/plugged')
     " toggle quickfix window
     nnoremap <F8> :call asyncrun#quickfix_toggle(6)<cr>
     " toggle paste mode
-    noremap <F9> :set paste!<cr>
+    "noremap <F9> :set paste!<cr>
     " toggle sign column
-    map <Leader>ts :ToggleSignAndNumber<CR>
+    "map <Leader>ts :ToggleSignAndNumber<CR>
     " Reload .vimrc
     nnoremap <Leader>R :source $MYVIMRC<CR>
     " Open .vimrc
-    nnoremap <Leader>fp :edit $MYVIMRC<CR>
+    nnoremap <Leader>fp :edit ~/.vimrc<CR>
     " split window
-    map <Leader>w- :split<CR>
-    map <Leader>w. :vsplit<CR>
-    " toggle maximize window and resize windows
+    "map <Leader>w- :split<CR>
+    "map <Leader>w. :vsplit<CR>
+    " toggle maximized window and resized windows
     function! s:ToggleResize() abort
         if winnr('$') > 1
             if exists('t:zoomed') && t:zoomed
@@ -227,7 +269,71 @@ call plug#begin('~/.vim/plugged')
         endif
     endfunction
     autocmd VimEnter * autocmd WinEnter * let t:zoomed = 0
-    nnoremap <Leader>wf :call <SID>ToggleResize()<CR>
+    "nnoremap <Leader>wf :call <SID>ToggleResize()<CR>
+    command! -nargs=0 ToggleFull call <SID>ToggleResize()
+
+    " Map leader to which_key
+    nnoremap <silent> <leader> :silent <c-u> :silent WhichKey '<Space>'<CR>
+    vnoremap <silent> <leader> :silent <c-u> :silent WhichKeyVisual '<Space>'<CR>
+    " Create map to add keys to
+    let g:which_key_map =  {}
+    " Define a separator
+    let g:which_key_sep = '→'
+    let g:which_key_use_floating_win = 0
+    " colors
+    highlight default link WhichKey          Operator
+    highlight default link WhichKeySeperator DiffAdded
+    highlight default link WhichKeyGroup     Identifier
+    highlight default link WhichKeyDesc      Function
+
+    let g:which_key_map[','] = [ ':LeaderfBuffer'            , 'switch buffer' ]
+    let g:which_key_map.f = {
+        \ 'name': '+file',
+        \ 'r': [':LeaderfMru', 'Leaderf-recent_files'],
+        \ }
+    let g:which_key_map.b = {
+        \ 'name': '+buffer',
+        \ 'b': [':LeaderfBuffer', 'Leaderf-buffers'],
+        \ 'd': ['bd', 'delete-buffer'],
+        \ }
+    let g:which_key_map.w = {
+        \ 'name': '+window',
+        \ '-': [':split', 'split'],
+        \ '.': [':vsplit', 'vsplit'],
+        \ 'c': [':close', 'close'],
+        \ 'o': [':only', 'close-all-other'],
+        \ 'f': [':ToggleFull', 'toggle maximized'],
+        \ }
+    let g:which_key_map.s = {
+        \ 'name': '+search',
+        \ 'b': [':LeaderfLine', 'Leaderf-search_in_buffer'],
+        \ 'i': [':CocList outline', 'jump to symbol'],
+        \ 's': [':CocList -I symbols', 'search symbol in workspace'],
+        \ }
+    noremap <Leader>sp :<C-U><C-R>=printf("Leaderf rg -e %s", expand("<cword>"))<CR>
+    let g:which_key_map.t = {
+        \ 'name': '+toggle',
+        \ 's': [':ToggleSignAndNumber', 'sign and number'],
+        \ 'p': [':set paste!',          'paste mode'],
+        \ }
+    let g:which_key_map.c = {
+        \ 'name': '+code',
+        \ 'r' : ['<Plug>(coc-rename)'                  , 'rename'],
+        \ 'x' : [':CocList diagnostics'                 , 'list errors'],
+        \ }
+    let g:which_key_map.l = {
+        \ 'name': '+lsp',
+        \ '.' : [':CocConfig'                          , 'config'],
+        \ 'f' : ['<Plug>(coc-format-selected)'         , 'format selected'],
+        \ 'F' : ['<Plug>(coc-format)'                  , 'format'],
+        \ 'r' : ['<Plug>(coc-rename)'                  , 'rename'],
+        \ 'x' : [':CocList diagnostics'                 , 'list errors'],
+        \ }
+    let g:which_key_map.o = {
+        \ 'name': '+open',
+        \ 't' : [':VimuxPromptCommand'                 , 'tmux prompt'],
+        \ }
+    call which_key#register('<Space>', "g:which_key_map")
 
     "VimTuiMetaKey {{{
     " set keycode of some <M-?> to use <ESC> prefix, see :map-alt-keys
@@ -259,38 +365,26 @@ call plug#begin('~/.vim/plugged')
     "}}}
 
     "TmuxIntegration {{{
-        Plug 'christoomey/vim-tmux-navigator'
         let g:tmux_navigator_no_mappings = 1
         nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
         nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
         nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
         nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
         nnoremap <silent> <M-r> :TmuxNavigatePrevious<cr>
-        Plug 'melonmanchan/vim-tmux-resizer'
         let g:tmux_resizer_no_mappings = 1
         nnoremap <silent> <M-H> :TmuxResizeLeft<cr>
         nnoremap <silent> <M-J> :TmuxResizeDown<cr>
         nnoremap <silent> <M-K> :TmuxResizeUp<cr>
         nnoremap <silent> <M-L> :TmuxResizeRight<cr>
-        Plug 'benmills/vimux'
-        map <Leader>vp :VimuxPromptCommand<cr>
+        "map <Leader>vp :VimuxPromptCommand<cr>
     "}}}
 "}}}
 
 "GeneralFunctionality {{{
-    Plug 'tpope/vim-surround'
-    " Matchit- Extended '%' matching
-    Plug 'adelarsq/vim-matchit'
-    " Git wrapper
-    Plug 'tpope/vim-fugitive'
     " auto-pairs {{{
-        Plug 'jiangmiao/auto-pairs'
         let g:AutoPairsCenterLine = 0
     "}}}
-    " comment
-    Plug 'tpope/vim-commentary'
     "AsyncRun {{{
-        Plug 'skywind3000/asyncrun.vim'
         let g:asyncrun_open = 6
         let g:asyncrun_bell = 1
     "}}}
@@ -365,8 +459,6 @@ call plug#begin('~/.vim/plugged')
     "}}}
     if (has("nvim"))
     "LSP  {{{
-        Plug 'neoclide/coc.nvim', {'branch': 'release'}
-        Plug 'jackguo380/vim-lsp-cxx-highlight'
 
         " lsp TextEdit might fail if hidden is not set.
         set hidden
@@ -394,6 +486,14 @@ call plug#begin('~/.vim/plugged')
         "                      \ highlight Pmenu ctermfg=white ctermbg=0 |
         "                      \ highlight CocFloating ctermfg=white ctermbg=0
 
+        let g:coc_global_extensions = [
+          \ 'coc-json',
+          \ 'coc-vimlsp',
+          \ 'coc-sh',
+          \ 'coc-cmake',
+          \ 'coc-snippets',
+          \ 'coc-python'
+          \ ]
 
         " Use tab for trigger completion with characters ahead and navigate.
         " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -444,9 +544,6 @@ call plug#begin('~/.vim/plugged')
         " Highlight the symbol and its references when holding the cursor.
         autocmd CursorHold * silent call CocActionAsync('highlight')
 
-        " Symbol renaming.
-        nmap <leader>cr <Plug>(coc-rename)
-
         " Formatting selected code.
         "xmap <leader>f  <Plug>(coc-format-selected)
         "nmap <leader>f  <Plug>(coc-format-selected)
@@ -459,16 +556,6 @@ call plug#begin('~/.vim/plugged')
           autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
         augroup end
 
-        " Applying codeAction to the selected region.
-        " Example: `<leader>aap` for current paragraph
-        xmap <leader>a  <Plug>(coc-codeaction-selected)
-        nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-        " Remap keys for applying codeAction to the current line.
-        nmap <leader>ac  <Plug>(coc-codeaction)
-        " Apply AutoFix to problem on the current line.
-        nmap <leader>qf  <Plug>(coc-fix-current)
-
         " Introduce function text object
         " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
         xmap if <Plug>(coc-funcobj-i)
@@ -479,8 +566,8 @@ call plug#begin('~/.vim/plugged')
         " Use <TAB> for selections ranges.
         " NOTE: Requires 'textDocument/selectionRange' support from the language server.
         " coc-tsserver, coc-python are the examples of servers that support it.
-        nmap <silent> <TAB> <Plug>(coc-range-select)
-        xmap <silent> <TAB> <Plug>(coc-range-select)
+        "nmap <silent> <TAB> <Plug>(coc-range-select)
+        "xmap <silent> <TAB> <Plug>(coc-range-select)
 
         " Add `:Format` command to format current buffer.
         command! -nargs=0 Format :call CocAction('format')
@@ -496,23 +583,8 @@ call plug#begin('~/.vim/plugged')
         " provide custom statusline: lightline.vim, vim-airline.
         set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-        " Mappings using CoCList:
-        " Show all diagnostics
-        nnoremap <silent> <space>cx  :<C-u>CocList diagnostics<cr>
-        " Find symbol of current document
-        nnoremap <silent> <space>si  :<C-u>CocList outline<cr>
-        " Search workspace symbols
-        nnoremap <silent> <space>sj  :<C-u>CocList -I symbols<cr>
-        " Manage extensions
-        nnoremap <silent> <space>Ce  :<C-u>CocList extensions<cr>
-        " Show commands
-        nnoremap <silent> <space>Cc  :<C-u>CocList commands<cr>
-        " Do default action for nexc
-        nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-        " Do default action for previous item.
-        nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
         " Resume latest coc list
-        nnoremap <silent> <space>Cp  :<C-u>CocListResume<CR>
+        nnoremap <silent> <space>'  :<C-u>CocListResume<CR>
         au CursorHold * sil call CocActionAsync('highlight')
         au CursorHoldI * sil call CocActionAsync('showSignatureHelp')
         " coc-snippets {{
@@ -532,9 +604,6 @@ call plug#begin('~/.vim/plugged')
     "}}}
     endif
 "}}}
-
-call plug#end()
-
 
 "Finalsetup {{{
   if has('gui_running')

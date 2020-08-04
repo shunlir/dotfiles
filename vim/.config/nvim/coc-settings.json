@@ -17,6 +17,13 @@
            "lsRanges" : true
          }
        }
+    },
+    "dockerfile": {
+      "command": "docker-langserver",
+      "filetypes": ["dockerfile"],
+      "args": ["--stdio"]
     }
-  }
+  },
+  "python.jediEnabled": true,
+  "python.jediPath": "/usr/lib/python3.7/site-packages"
 }
