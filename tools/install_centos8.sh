@@ -11,7 +11,7 @@ sudo dnf config-manager --add-repo=https://copr.fedorainfracloud.org/coprs/carlw
 sudo wget -P /etc/yum.repos.d/ https://download.opensuse.org/repositories/shells:zsh-users:zsh-completions/CentOS_8/shells:zsh-users:zsh-completions.repo
 sudo dnf install ripgrep zsh-completions
 
-. "$SCRIPTPATH/gist_install_fd.sh"
+. "$SCRIPTPATH/gist_fd.sh"
 
 mkdir ~/code
 #
