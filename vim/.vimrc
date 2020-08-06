@@ -287,6 +287,9 @@ call plug#end()
     highlight default link WhichKeyDesc      Function
 
     let g:which_key_map[','] = [ ':LeaderfBuffer'            , 'switch buffer' ]
+    let g:which_key_map['.'] = [ ':LeaderfFileCwd'           , 'find file' ]
+    " re-define <Leader>. to workaround the issue with which-key
+    nnoremap <Leader>. :LeaderfFileCwd<CR>
     let g:which_key_map.f = {
         \ 'name': '+file',
         \ 'r': [':LeaderfMru', 'Leaderf-recent_files'],
@@ -334,6 +337,7 @@ call plug#end()
         \ 't' : [':VimuxPromptCommand'                 , 'tmux prompt'],
         \ }
     call which_key#register('<Space>', "g:which_key_map")
+    command! -bar -nargs=0 LeaderfFileCwd LeaderfFile %:p:h
 
     "VimTuiMetaKey {{{
     " set keycode of some <M-?> to use <ESC> prefix, see :map-alt-keys
