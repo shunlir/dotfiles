@@ -70,5 +70,8 @@ alias ls='ls --color=auto'
 alias la='ls --color=auto -A'
 alias grep='grep --color=auto'
 
+#
+export PATH=$PATH:~/.dotfiles/emacs/.emacs.d-doom-emacs/bin
+
 # local zshrc
 [[ ! -f ~/.zshrc.local ]] || source ~/.zshrc.local
