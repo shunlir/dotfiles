@@ -29,6 +29,23 @@ bindkey '^[[3~' delete-char
 # man pages syntax
 zinit snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
 
+zinit light Aloxaf/fzf-tab
+FZF_TAB_COMMAND=(
+    fzf
+    --ansi   # Enable ANSI color support, necessary for showing groups
+    --expect='$continuous_trigger,$print_query' # For continuous completion and print query
+    '--color=hl:$(( $#headers == 0 ? 40 : 255 )),hl+:41'
+    --nth=2,3 --delimiter='\x00'  # Don't search prefix
+    --layout=reverse --height='${FZF_TMUX_HEIGHT:=75%}'
+    --tiebreak=begin -m --bind=tab:down,btab:up,change:top,ctrl-space:toggle --cycle
+    '--query=$query'   # $query will be expanded to query string at runtime.
+    '--header-lines=$#headers' # $#headers will be expanded to lines of headers at runtime
+    --print-query
+)
+zstyle ':fzf-tab:*' command $FZF_TAB_COMMAND
+#zstyle ':completion:complete:*:options' sort false
+zstyle ':completion:complete:*' sort false
+
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma/fast-syntax-highlighting
 
@@ -69,9 +86,10 @@ fi
 alias ls='ls --color=auto'
 alias la='ls --color=auto -A'
 alias grep='grep --color=auto'
+type nvim 2>&1 >/dev/null && alias vim='nvim'
 
 #
-export PATH=$PATH:~/.dotfiles/emacs/.emacs.d-doom-emacs/bin
+export PATH=$PATH:~/.local/bin:~/.dotfiles/emacs/.emacs.d-doom-emacs/bin
 
 # local zshrc
 [[ ! -f ~/.zshrc.local ]] || source ~/.zshrc.local
