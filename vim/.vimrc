@@ -316,13 +316,13 @@ call plug#end()
     noremap <Leader>sp :<C-U><C-R>=printf("Leaderf rg -e %s", expand("<cword>"))<CR>
     let g:which_key_map.t = {
         \ 'name': '+toggle',
-        \ 's': [':ToggleSignAndNumber', 'sign and number'],
+        \ 'l': [':ToggleSignAndNumber', 'sign and number'],
         \ 'p': [':set paste!',          'paste mode'],
         \ }
     let g:which_key_map.c = {
         \ 'name': '+code',
         \ 'r' : ['<Plug>(coc-rename)'                  , 'rename'],
-        \ 'x' : [':CocList diagnostics'                 , 'list errors'],
+        \ 'x' : [':CocList diagnostic'                 , 'list errors'],
         \ }
     let g:which_key_map.l = {
         \ 'name': '+lsp',
@@ -330,7 +330,7 @@ call plug#end()
         \ 'f' : ['<Plug>(coc-format-selected)'         , 'format selected'],
         \ 'F' : ['<Plug>(coc-format)'                  , 'format'],
         \ 'r' : ['<Plug>(coc-rename)'                  , 'rename'],
-        \ 'x' : [':CocList diagnostics'                 , 'list errors'],
+        \ 'x' : [':CocList diagnostics'                , 'list errors'],
         \ }
     let g:which_key_map.o = {
         \ 'name': '+open',
@@ -489,6 +489,8 @@ call plug#end()
         "autocmd ColorScheme *
         "                      \ highlight Pmenu ctermfg=white ctermbg=0 |
         "                      \ highlight CocFloating ctermfg=white ctermbg=0
+        autocmd ColorScheme *
+            \ highlight default link CocHighlightText PmenuSbar
 
         let g:coc_global_extensions = [
           \ 'coc-json',
