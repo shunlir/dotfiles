@@ -24,6 +24,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'itchyny/lightline.vim'
     " display color, optional: golang is used for async display
     Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
+    " highlighted yank
+    Plug 'machakann/vim-highlightedyank'
+    let g:highlightedyank_highlight_duration = 100
     " diff on sign column
     Plug 'mhinz/vim-signify'
     " file explorer
@@ -322,7 +325,7 @@ call plug#end()
     let g:which_key_map.c = {
         \ 'name': '+code',
         \ 'r' : ['<Plug>(coc-rename)'                  , 'rename'],
-        \ 'x' : [':CocList diagnostic'                 , 'list errors'],
+        \ 'x' : [':CocList diagnostics'                , 'list errors'],
         \ }
     let g:which_key_map.l = {
         \ 'name': '+lsp',

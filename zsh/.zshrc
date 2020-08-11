@@ -36,15 +36,24 @@ FZF_TAB_COMMAND=(
     --expect='$continuous_trigger,$print_query' # For continuous completion and print query
     '--color=hl:$(( $#headers == 0 ? 40 : 255 )),hl+:41'
     --nth=2,3 --delimiter='\x00'  # Don't search prefix
-    --layout=reverse --height='${FZF_TMUX_HEIGHT:=75%}'
+    --layout=reverse --height='${FZF_TMUX_HEIGHT:=35%}'
     --tiebreak=begin -m --bind=tab:down,btab:up,change:top,ctrl-space:toggle --cycle
     '--query=$query'   # $query will be expanded to query string at runtime.
     '--header-lines=$#headers' # $#headers will be expanded to lines of headers at runtime
     --print-query
 )
 zstyle ':fzf-tab:*' command $FZF_TAB_COMMAND
-#zstyle ':completion:complete:*:options' sort false
-zstyle ':completion:complete:*' sort false
+zstyle ':completion:complete:git-checkout:argument-rest' sort false
+local extract="
+# trim input
+local in=\${\${\"\$(<{f})\"%\$'\0'*}#*\$'\0'}
+# get ctxt for current completion
+local -A ctxt=(\"\${(@ps:\2:)CTXT}\")
+# real path
+local realpath=\${ctxt[IPREFIX]}\${ctxt[hpre]}\$in
+realpath=\${(Qe)~realpath}
+"
+zstyle ':fzf-tab:complete:kill:argument-rest' extra-opts --preview=$extract'ps --pid=$in[(w)1] -o cmd --no-headers -w -w' --preview-window=down:3:wrap
 
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma/fast-syntax-highlighting
