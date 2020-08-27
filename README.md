@@ -27,7 +27,7 @@ https://gitlab.com/BVollmerhaus/dotfiles
 ## Installation
 
 ``` sh
-git clone --recursive https://github.com/shunlir/dotfiles.git ~/.dotfiles
+git clone --recursive <repo-url> ~/.dotfiles
 # or use the following command after clone
 cd ~/.dotfiles && git submodule update --init --recursive 
 

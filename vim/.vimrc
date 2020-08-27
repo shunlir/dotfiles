@@ -52,6 +52,10 @@ call plug#begin('~/.vim/plugged')
     if has('nvim')
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
         Plug 'jackguo380/vim-lsp-cxx-highlight'
+        Plug 'dense-analysis/ale'
+        let g:ale_linters_explicit = 1
+        let g:ale_linters = { 'cpp': ['clangtidy'], 'c': ['clangtidy'], }
+        let g:ale_fixers = { 'cpp': ['clangtidy'], 'c': ['clangtidy'], }
         " python highlight
         Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
     endif
