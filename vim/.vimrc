@@ -56,6 +56,8 @@ call plug#begin('~/.vim/plugged')
         let g:ale_linters_explicit = 1
         let g:ale_linters = { 'cpp': ['clangtidy'], 'c': ['clangtidy'], }
         let g:ale_fixers = { 'cpp': ['clangtidy'], 'c': ['clangtidy'], }
+        " for showing in the statusline the name of function where the cursor resides
+        Plug 'liuchengxu/vista.vim'
         " python highlight
         Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
     endif
@@ -180,8 +182,29 @@ call plug#end()
         "  return col - 1 < len(line) ? printf('U+%04x', char2nr(matchstr(line[(col - 1):], '^.'))) : ''
         "endfunction
         let g:lightline = {
-              \ 'colorscheme': 'jellybeans'
-              \ }
+            \ 'colorscheme': 'jellybeans',
+            \ 'active': {
+            \     'left': [ [ 'mode', 'paste' ],
+            \               [ 'readonly', 'filename', 'modified', 'method' ] ]
+            \ },
+            \ 'component_function': {
+            \     'filename': 'LightlineFilename',
+            \     'method': 'NearestMethodOrFunction'
+            \ }
+          \ }
+        function! LightlineFilename()
+          let root = fnamemodify(get(b:, 'git_dir'), ':h')
+          let path = expand('%:p')
+          if path[:len(root)-1] ==# root
+            return path[len(root)+1:]
+          endif
+          return expand('%')
+        endfunction
+        function! NearestMethodOrFunction() abort
+          return get(b:, 'vista_nearest_method_or_function', '')
+        endfunction
+        autocmd FileType cpp,c,cs,java,javascript,lisp  call vista#RunForNearestMethodOrFunction()
+        let g:vista_default_executive = 'coc'
     "}}}
 
     "SignColumn {{{
@@ -254,6 +277,12 @@ call plug#end()
     "map <Leader>ts :ToggleSignAndNumber<CR>
     " Reload .vimrc
     nnoremap <Leader>R :source $MYVIMRC<CR>
+	" jump to the previous function
+	nnoremap <silent> [f :call
+	\ search('\(\(if\\|for\\|while\\|switch\\|catch\)\_s*\)\@64<!(\_[^)]*)\_[^;{}()]*\zs{', "bw")<CR>
+	" jump to the next function
+	nnoremap <silent> ]f :call
+	\ search('\(\(if\\|for\\|while\\|switch\\|catch\)\_s*\)\@64<!(\_[^)]*)\_[^;{}()]*\zs{', "w")<CR>
     " Open .vimrc
     nnoremap <Leader>fp :edit ~/.vimrc<CR>
     " split window
