@@ -200,3 +200,9 @@
 ;;   "Setting current directory No such file or directory" error
 ;;   ref: https://www.gitmemory.com/issue/bbatsov/projectile/1302/492561042
 (setq projectile-git-submodule-command nil)
+
+;; let ‘C-i’ jumps forward in the jump list (like Vim)
+;; In character-based terminal, both `C-i' and `<TAB>' generate `<TAB>', in other words, emacs receives only `<TAB>'
+;; Some mode may re-map `<TAB>' to other command, e.g., markdown-mode: <Tab> -> markdown-cycle
+(unless (display-graphic-p)
+  (setq evil-want-C-i-jump t))
