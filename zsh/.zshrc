@@ -92,8 +92,12 @@ if [ -e ~/repo ]; then
 fi
 
 # aliases
-alias ls='ls --color=auto'
-alias la='ls --color=auto -A'
+if [ "$(uname)" = "Linux" ]; then
+  alias ls='ls --color=auto'
+  alias la='ls --color=auto -A'
+elif [ "$(uname)" = "Linux" ]; then
+  alias ls='ls -G'
+fi
 alias grep='grep --color=auto'
 type nvim 2>&1 >/dev/null && alias vim='nvim'
 

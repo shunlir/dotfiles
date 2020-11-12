@@ -46,7 +46,7 @@ success() {
 }
 
 main() {
-  DOT_ROOT=$(readlink -f "$(dirname "$0")")
+  DOT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
   if [ ${UID-notset} = "notset" ]; then
     UID=$(id -u)
   fi
@@ -60,7 +60,10 @@ main() {
     warn "command stow or xstow not found!"
     exit 1
   fi
-  $STOW -v -t ~ -d $DOT_ROOT dircolors emacs git i3 tmux urxvt vim x zsh
+  $STOW -v -t ~ -d $DOT_ROOT dircolors emacs git tmux vim zsh
+  if [ "$(uname)" == "Linux" ]; then
+    $STOW -v -t ~ -d $DOT_ROOT x i3 urxvt
+  fi
   success "[DONE]\n"
 
   if [ "$1" != "--extra" ]; then
