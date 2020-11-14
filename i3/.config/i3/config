@@ -232,3 +232,4 @@ for_window [title="Microsoft Teams Notification"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Blueman-manager"] floating enable
 for_window [class="Arandr"] floating enable
+for_window [class="SimpleScreenRecorder"] floating enable
