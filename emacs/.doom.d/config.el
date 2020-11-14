@@ -28,3 +28,7 @@
 ;; (eval-after-load "which-func"
 ;;     '(setq which-func-modes '(java-mode c++-mode org-mode)))
 
+;; `SPC f r' ignore
+(after! recentf
+  (add-to-list 'recentf-exclude
+             "~/.dotfiles/emacs/.emacs.d-doom-emacs/.local/etc/workspaces/autosave"))
