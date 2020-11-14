@@ -99,6 +99,7 @@ elif [ "$(uname)" = "Linux" ]; then
   alias ls='ls -G'
 fi
 alias grep='grep --color=auto'
+alias gg='git status'
 type nvim 2>&1 >/dev/null && alias vim='nvim'
 
 #
