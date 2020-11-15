@@ -326,6 +326,7 @@ call plug#end()
     let g:which_key_map['.'] = [ ':LeaderfFileCwd'           , 'find file' ]
     " re-define <Leader>. to workaround the issue with which-key
     nnoremap <Leader>. :LeaderfFileCwd<CR>
+    nnoremap <Leader>' :<C-u>Leaderf --recall<CR>
     let g:which_key_map.f = {
         \ 'name': '+file',
         \ 'r': [':LeaderfMru', 'Leaderf-recent_files'],
@@ -349,7 +350,8 @@ call plug#end()
         \ 'i': [':CocList outline', 'jump to symbol'],
         \ 's': [':CocList -I symbols', 'search symbol in workspace'],
         \ }
-    noremap <Leader>sp :<C-U><C-R>=printf("Leaderf rg -e %s", expand("<cword>"))<CR>
+    noremap <Leader>sp :<C-U><C-R>=printf("Leaderf rg -e %s", "")<CR>
+    noremap <Leader>*  :<C-U><C-R>=printf("Leaderf rg -e %s", expand("<cword>"))<CR><CR>
     let g:which_key_map.t = {
         \ 'name': '+toggle',
         \ 'l': [':ToggleSignAndNumber', 'sign and number'],
@@ -626,7 +628,7 @@ call plug#end()
         set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
         " Resume latest coc list
-        nnoremap <silent> <space>'  :<C-u>CocListResume<CR>
+        nnoremap <silent> <space>"  :<C-u>CocListResume<CR>
         au CursorHold * sil call CocActionAsync('highlight')
         au CursorHoldI * sil call CocActionAsync('showSignatureHelp')
         " coc-snippets {{
