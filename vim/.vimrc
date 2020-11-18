@@ -535,8 +535,10 @@ call plug#end()
           \ 'coc-vimlsp',
           \ 'coc-sh',
           \ 'coc-cmake',
+          \ 'coc-docker',
           \ 'coc-snippets',
-          \ 'coc-python'
+          \ 'coc-python',
+          \ 'coc-yaml'
           \ ]
 
         " Use tab for trigger completion with characters ahead and navigate.
