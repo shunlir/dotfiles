@@ -1,17 +1,27 @@
 #!/bin/bash
 
-# required
-sudo pacman -S git diff-so-fancy\
-     zsh wget curl subversion lua go \
-     rxvt-unicode-pixbuf \
+# CLI
+sudo pacman -S \
+     stow \
+     make \
+     git diff-so-fancy\
+     fzf ripgrep fd \
+     zsh wget curl \
      neovim python-neovim vim \
-     emacs npm \
-     i3 rofi i3status-rust-git \
-     nerd-fonts-fantasque-sans-mono nerd-fonts-inconsolata ttf-font-awesome ttf-unifont
+     emacs-native-comp-git \
+     go \
+     nodejs npm \
+     python-pip
 
-sudo npm install -g vmd
+sudo npm install -g dockerfile-language-server-nodejs
+
+# GUI
+sudo pacman -S \
+     rxvt-unicode-pixbuf \
+     i3 rofi i3status-rust-git \
+     nerd-fonts-fantasque-sans-mono nerd-fonts-inconsolata ttf-font-awesome ttf-unifont wqy-microhe \
+     lxappearance-gtk3
 
 # optional
-sudo pacman -S lxappearance-gtk3 \
-     ripgrep fd \
-     wqy-microhe
+sudo pacman -S \
+     lua
