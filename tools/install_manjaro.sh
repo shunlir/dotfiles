@@ -11,9 +11,12 @@ sudo pacman -S \
      emacs-native-comp-git \
      go \
      nodejs npm \
-     python-pip
+     python-pip \
+     python-jedi \
+     dotnet-sdk \
+     jdk-openjdk
 
-sudo npm install -g dockerfile-language-server-nodejs
+sudo npm install -g dockerfile-language-server-nodejs bash-language-server
 
 # GUI
 sudo pacman -S \

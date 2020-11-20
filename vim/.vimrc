@@ -531,14 +531,16 @@ call plug#end()
             \ highlight default link CocHighlightText PmenuSbar
 
         let g:coc_global_extensions = [
-          \ 'coc-json',
           \ 'coc-vimlsp',
+          \ 'coc-json',
+          \ 'coc-snippets',
           \ 'coc-sh',
           \ 'coc-cmake',
           \ 'coc-docker',
-          \ 'coc-snippets',
+          \ 'coc-yaml',
           \ 'coc-python',
-          \ 'coc-yaml'
+          \ 'coc-java',
+          \ 'coc-omnisharp'
           \ ]
 
         " Use tab for trigger completion with characters ahead and navigate.

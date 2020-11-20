@@ -24,6 +24,5 @@
       "args": ["--stdio"]
     }
   },
-  "python.jediEnabled": true,
-  "python.jediPath": "/usr/lib/python3.7/site-packages"
+  "python.jediEnabled": true
 }
