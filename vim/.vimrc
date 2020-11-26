@@ -252,7 +252,7 @@ call plug#end()
     "noremap <leader>sb :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
     let g:Lf_ShortcutF = '<leader><leader>'  " find file
     let g:Lf_ShortcutB = '<leader>,'  " Alt+P  - opened files
-    let g:Lf_CommandMap = {'<C-K>': ['<C-P>'], '<C-J>': ['<C-N>']}
+    "let g:Lf_CommandMap = {'<C-K>': ['<C-P>'], '<C-J>': ['<C-N>']}
     let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
     let g:Lf_WildIgnore = { 'dir': ['.svn','.git','.hg'], 'file': [] }
     let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
@@ -521,14 +521,12 @@ call plug#end()
 
         " Always show the signcolumn, otherwise it would shift the text each time
         " diagnostics appear/become resolved.
-        set signcolumn=yes
-
-        " hi
-        "autocmd ColorScheme *
-        "                      \ highlight Pmenu ctermfg=white ctermbg=0 |
-        "                      \ highlight CocFloating ctermfg=white ctermbg=0
-        autocmd ColorScheme *
-            \ highlight default link CocHighlightText PmenuSbar
+        if has("patch-8.1.1564")
+          " Recently vim can merge signcolumn and number column into one
+          set signcolumn=number
+        else
+          set signcolumn=yes
+        endif
 
         let g:coc_global_extensions = [
           \ 'coc-vimlsp',
@@ -543,8 +541,10 @@ call plug#end()
           \ 'coc-omnisharp'
           \ ]
 
-        " Use tab for trigger completion with characters ahead and navigate.
-        " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+        " Use <C-j> and <C-k> to navigate completion
+        inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+        inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
+
         " Use tab for trigger completion with characters ahead and navigate.
         " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
         " other plugin before putting this into your config.
@@ -559,14 +559,10 @@ call plug#end()
           return !col || getline('.')[col - 1]  =~# '\s'
         endfunction
 
-        " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-        " position. Coc only does snippet and additional edit on confirm.
-        if has('patch8.1.1068')
-          " Use `complete_info` if your (Neo)Vim version supports it.
-          inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-        else
-          imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-        endif
+        " Make <CR> auto-select the first completion item and notify coc.nvim to
+        " format on enter, <cr> could be remapped by other vim plugin
+        inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                                      \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
         " Use `[e` and `]e` to navigate diagnostics
         nmap <silent> [e <Plug>(coc-diagnostic-prev)
@@ -575,26 +571,29 @@ call plug#end()
         " GoTo code navigation.
         nmap <silent> gd <Plug>(coc-definition)
         nmap <silent> gD <Plug>(coc-references)
-        nnoremap <silent>K :call <SID>show_documentation()<CR>
         nmap <silent> gy <Plug>(coc-type-definition)
         nmap <silent> gi <Plug>(coc-implementation)
 
+        " Use K to show documentation in preview window.
+        nnoremap <silent>K :call <SID>show_documentation()<CR>
         nnoremap <leader>ck :call <SID>show_documentation()<CR>
-
         function! s:show_documentation()
           if (index(['vim','help'], &filetype) >= 0)
             execute 'h '.expand('<cword>')
+          elseif (coc#rpc#ready())
+            call CocActionAsync('doHover')
           else
-            call CocAction('doHover')
+            execute '!' . &keywordprg . " " . expand('<cword>')
           endif
         endfunction
 
         " Highlight the symbol and its references when holding the cursor.
-        autocmd CursorHold * silent call CocActionAsync('highlight')
-
-        " Formatting selected code.
-        "xmap <leader>f  <Plug>(coc-format-selected)
-        "nmap <leader>f  <Plug>(coc-format-selected)
+        augroup coc_highlight
+          autocmd!
+          autocmd CursorHold * silent call CocActionAsync('highlight')
+          autocmd ColorScheme *
+              \ highlight default link CocHighlightText PmenuSbar
+        augroup end
 
         augroup mygroup
           autocmd!
@@ -604,18 +603,21 @@ call plug#end()
           autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
         augroup end
 
-        " Introduce function text object
+        " Map function and class text objects
         " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
         xmap if <Plug>(coc-funcobj-i)
-        xmap af <Plug>(coc-funcobj-a)
         omap if <Plug>(coc-funcobj-i)
+        xmap af <Plug>(coc-funcobj-a)
         omap af <Plug>(coc-funcobj-a)
+        xmap ic <Plug>(coc-classobj-i)
+        omap ic <Plug>(coc-classobj-i)
+        xmap ac <Plug>(coc-classobj-a)
+        omap ac <Plug>(coc-classobj-a)
 
-        " Use <TAB> for selections ranges.
-        " NOTE: Requires 'textDocument/selectionRange' support from the language server.
-        " coc-tsserver, coc-python are the examples of servers that support it.
-        "nmap <silent> <TAB> <Plug>(coc-range-select)
-        "xmap <silent> <TAB> <Plug>(coc-range-select)
+        " Use CTRL-S for selections ranges.
+        " Requires 'textDocument/selectionRange' support of language server.
+        nmap <silent> <C-s> <Plug>(coc-range-select)
+        xmap <silent> <C-s> <Plug>(coc-range-select)
 
         " Add `:Format` command to format current buffer.
         command! -nargs=0 Format :call CocAction('format')
@@ -633,8 +635,7 @@ call plug#end()
 
         " Resume latest coc list
         nnoremap <silent> <space>"  :<C-u>CocListResume<CR>
-        au CursorHold * sil call CocActionAsync('highlight')
-        au CursorHoldI * sil call CocActionAsync('showSignatureHelp')
+
         " coc-snippets {{
             inoremap <silent><expr> <TAB>
               \ pumvisible() ? coc#_select_confirm() :

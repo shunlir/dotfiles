@@ -4,6 +4,10 @@
   "suggest.maxCompleteItemCount": 15,
   "suggest.noselect": false,
   "suggest.labelMaxLength": 80,
+  "list.normalMappings": {
+    "<C-j>": "normal:j",
+    "<C-k>": "normal:k"
+  },
   "languageserver": {
     "ccls": {
       "command": "ccls",
