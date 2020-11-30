@@ -62,10 +62,13 @@ realpath=\${(Qe)~realpath}
 "
 zstyle ':fzf-tab:complete:kill:argument-rest' extra-opts --preview=$extract'ps --pid=$in[(w)1] -o cmd --no-headers -w -w' --preview-window=down:3:wrap
 
+# Fish-like autosuggestions
 zinit light zsh-users/zsh-autosuggestions
+
+# syntax highlighting
 zinit light zdharma/fast-syntax-highlighting
 
-# Ctrl-R
+# Ctrl-R fuzzy completion
 zinit light zdharma/history-search-multi-word
 zstyle ":history-search-multi-word" page-size "8"
 zstyle ":history-search-multi-word" highlight-color "fg=48,bold" # SpringGreen
@@ -108,6 +111,7 @@ fi
 alias grep='grep --color=auto'
 alias gg='git status'
 type nvim 2>&1 >/dev/null && alias vim='nvim'
+alias weather='clear && curl wttr.in'
 
 #
 export PATH=$PATH:~/.local/bin:~/.dotfiles/emacs/.emacs.d-doom-emacs/bin
