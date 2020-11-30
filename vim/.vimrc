@@ -32,7 +32,7 @@ call plug#begin('~/.vim/plugged')
     " file explorer
     Plug 'justinmk/vim-dirvish'
     " fuzzy finder
-    Plug 'Yggdroot/LeaderF', { 'do': './install.sh' } " default use 256 color for TUI
+    Plug 'Yggdroot/LeaderF', { 'do': 'LeaderfInstallCExtension' } " default use 256 color for TUI
     " keys
     Plug 'liuchengxu/vim-which-key'
     " Tmux
@@ -49,16 +49,19 @@ call plug#begin('~/.vim/plugged')
     " Comment
     Plug 'tpope/vim-commentary'
     Plug 'skywind3000/asyncrun.vim'
+    " more for nvim
     if has('nvim')
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
+        Plug 'shunlir/coc-leaderf'
         Plug 'jackguo380/vim-lsp-cxx-highlight'
+        " use ale for linting
         Plug 'dense-analysis/ale'
         let g:ale_linters_explicit = 1
         let g:ale_linters = { 'cpp': ['clangtidy'], 'c': ['clangtidy'], }
         let g:ale_fixers = { 'cpp': ['clangtidy'], 'c': ['clangtidy'], }
-        " for showing in the statusline the name of function where the cursor resides
+        " use vista for showing in the statusline the name of function where the cursor resides
         Plug 'liuchengxu/vista.vim'
-        " python highlight
+        " for python highlight
         Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
     endif
     "Plug 'plasticboy/vim-markdown'
@@ -327,6 +330,7 @@ call plug#end()
     " re-define <Leader>. to workaround the issue with which-key
     nnoremap <Leader>. :LeaderfFileCwd<CR>
     nnoremap <Leader>' :<C-u>Leaderf --recall<CR>
+    nnoremap <M-x> :LeaderfCommand<CR>
     let g:which_key_map.f = {
         \ 'name': '+file',
         \ 'r': [':LeaderfMru', 'Leaderf-recent_files'],
