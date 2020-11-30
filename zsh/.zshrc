@@ -27,8 +27,15 @@ setopt promptsubst
 bindkey '^[[3~' delete-char
 
 # man pages syntax
-zinit snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
+#zinit snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
+if [[ "$(command -v nvim)" ]]; then
+  export EDITOR='nvim'
+  export MANPAGER='nvim +Man!'
+fi
 
+#
+# tab fuzzy completion
+#
 zinit light Aloxaf/fzf-tab
 FZF_TAB_COMMAND=(
     fzf
