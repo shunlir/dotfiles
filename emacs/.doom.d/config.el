@@ -32,3 +32,9 @@
 (after! recentf
   (add-to-list 'recentf-exclude
              "~/.dotfiles/emacs/.emacs.d-doom-emacs/.local/etc/workspaces/autosave"))
+
+
+;;
+;; TODO A quick to add supporting for space as delimiters for ivy--regex-fuzzy.
+;; ref: https://github.com/abo-abo/swiper/issues/360#issuecomment-253992364
+;;
