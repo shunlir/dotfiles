@@ -69,9 +69,11 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma/fast-syntax-highlighting
 
 # Ctrl-R fuzzy completion
-zinit light zdharma/history-search-multi-word
-zstyle ":history-search-multi-word" page-size "8"
-zstyle ":history-search-multi-word" highlight-color "fg=48,bold" # SpringGreen
+if (( $+commands[fzf] )); then
+  zinit light zdharma/history-search-multi-word
+  zstyle ":history-search-multi-word" page-size "8"
+  zstyle ":history-search-multi-word" highlight-color "fg=48,bold" # SpringGreen
+fi
 
 # prompt theme
 zinit snippet https://raw.githubusercontent.com/shunlir/oh-my-zsh-custom/master/themes/clean.zsh-theme
