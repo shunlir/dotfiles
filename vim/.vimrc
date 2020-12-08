@@ -22,8 +22,10 @@ call plug#begin('~/.vim/plugged')
     Plug 'morhetz/gruvbox'
     " status line
     Plug 'itchyny/lightline.vim'
-    " display color, optional: golang is used for async display
-    Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
+    " display color, golang is required
+    if executable('go')
+      Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
+    endif
     " highlighted yank
     Plug 'machakann/vim-highlightedyank'
     let g:highlightedyank_highlight_duration = 100
