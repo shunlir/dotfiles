@@ -8,9 +8,10 @@ set -e
 
 if [ "$(lsb_release -rs | cut -d. -f1)" = 18 ]; then
   add-apt-repository -y ppa:neovim-ppa/stable
+  add-apt-repository -y ppa:kelleyk/emacs
   apt update -y
 fi
-apt install -y git vim wget lua50 zsh emacs tmux \
+apt install -y git vim wget lua5.1 zsh emacs27 tmux \
     neovim python-neovim python3-neovim golang
 
 if ! command -v diff-so-fancy >/dev/null 2>&1; then
@@ -34,6 +35,10 @@ if ! command -v fzf >/dev/null 2>&1; then
   wget -P /tmp/work https://github.com/junegunn/fzf/releases/download/0.24.4/fzf-0.24.4-linux_amd64.tar.gz
   tar xf /tmp/work/fzf-0.24.4-linux_amd64.tar.gz -C /usr/local/bin
   chmod a+x /usr/local/bin/fzf
+fi
+
+if ! command -v node >/dev/null 2>&1; then
+  curl -sL install-node.now.sh/lts | bash
 fi
 
 rm -rf /tmp/work
