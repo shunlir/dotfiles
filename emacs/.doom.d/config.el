@@ -38,3 +38,22 @@
 ;; TODO A quick to add supporting for space as delimiters for ivy--regex-fuzzy.
 ;; ref: https://github.com/abo-abo/swiper/issues/360#issuecomment-253992364
 ;;
+
+;; darken code block back ground by 5%
+;; ref: https://orgmode.org/manual/Editing-Source-Code.html
+(after! org
+  (require 'color)
+  (set-face-attribute 'org-block nil :background
+                    (color-darken-name
+                     (face-attribute 'default :background) 5)))
+
+
+;;
+;; org-babel
+;;
+
+(after! org
+  :config
+  (org-babel-do-load-languages
+    'org-babel-load-languages
+    '((dot . t))))

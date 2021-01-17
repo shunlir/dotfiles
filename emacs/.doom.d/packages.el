@@ -11,3 +11,5 @@
 
 (when (package! term)
   (package! eterm-256color))
+
+(package! graphviz-dot-mode)
