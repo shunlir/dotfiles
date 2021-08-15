@@ -8,8 +8,15 @@
 # i3 config file (v4)
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
+#
+# This config file uses keycodes (bindsym) and was written for the QWERTY
+# layout.
+#
+# To get a config file with the same key positions, but for your current
+# layout, use the i3-config-wizard
+#
 
-# Super key as $mod
+# Mod1 - Alt, Mod4 - Super (use `xmodmap` to check the actually mapping)
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -92,7 +99,6 @@ bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
-#bindsym $mod+w layout tabbed
 bindsym $mod+t layout tabbed
 bindsym $mod+e layout toggle split
 
@@ -199,7 +205,7 @@ bar {
         #status_command ~/.config/i3status/i3status.sh
 
         # i3status-rust
-        status_command i3status-rs ~/.config/i3status-rs/config.toml
+        status_command i3status-rs ~/.config/i3status-rust/config.toml
 }
 # polybar
 #exec_always --no-startup-id bash ~/.config/polybar/launch.sh
@@ -233,3 +239,12 @@ for_window [class="Pavucontrol"] floating enable
 for_window [class="Blueman-manager"] floating enable
 for_window [class="Arandr"] floating enable
 for_window [class="SimpleScreenRecorder"] floating enable
+
+set $trapmode "Bypass Mode [Mod+Esc] to quit"
+mode $trapmode {
+    bindsym $mod+Escape mode "default"; bar mode hide bar-hide
+    bindsym $mod+Shift+q kill
+    bindsym $mod+f fullscreen toggle
+}
+bindsym $mod+x nop
+bindsym $mod+x mode $trapmode; bar mode invisible bar-hide
