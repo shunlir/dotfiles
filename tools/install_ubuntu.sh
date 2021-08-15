@@ -11,8 +11,8 @@ if [ "$(lsb_release -rs | cut -d. -f1)" = 18 ]; then
   add-apt-repository -y ppa:kelleyk/emacs
   apt update -y
 fi
-apt install -y git vim wget lua5.1 zsh emacs27 tmux \
-    neovim python-neovim python3-neovim golang
+apt install -y git wget lua5.1 zsh emacs27 tmux \
+    neovim python3-neovim golang
 
 if ! command -v diff-so-fancy >/dev/null 2>&1; then
   wget -P /usr/local/bin/ https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy

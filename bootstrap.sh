@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #
 # Test platforms: RHEL 6, 7, Ubuntu 16.04, 18.04, SuSE 12
@@ -57,20 +57,16 @@ main() {
   elif command -v xstow >/dev/null 2>&1; then
     STOW="xstow"
   else
-    warn "command stow or xstow not found!"
+    warn "command stow or xstow not found!\n"
     exit 1
   fi
+
   $STOW -v -t ~ -d $DOT_ROOT dircolors emacs git tmux vim zsh
   if [ "$(uname)" == "Linux" ]; then
     $STOW -v -t ~ -d $DOT_ROOT x i3 urxvt
   fi
   success "[DONE]\n"
-
-  if [ "$1" != "--extra" ]; then
-    success "Please re-login to take effect.\n"
-    warn "If you want to install fd, ripgrep and fzf, please run with '--extra' again!\n"
-    exit 0
-  fi
+  success "Please re-login to take effect.\n"
 }
 
 set_log_color
