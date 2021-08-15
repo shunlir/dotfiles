@@ -8,6 +8,8 @@
     "<C-j>": "normal:j",
     "<C-k>": "normal:k"
   },
+  "clangd.enabled": true,
+  "clangd.semanticHighlighting": true,
   "languageserver": {
     "ccls": {
       "command": "ccls",

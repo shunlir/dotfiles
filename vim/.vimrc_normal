@@ -58,21 +58,21 @@ call plug#begin('~/.vim/plugged')
     Plug 'kana/vim-textobj-user'
     Plug 'sgur/vim-textobj-parameter'
     " C++ switch header/source
-    if has('nvim') || v:versionlong >= 8001453
-      Plug 'neoclide/coc.nvim', {'branch': 'release'}
-      Plug 'shunlir/coc-leaderf'
-      Plug 'jackguo380/vim-lsp-cxx-highlight'
-    endif
-    " use ale for linting
-    Plug 'dense-analysis/ale'
-    let g:ale_linters_explicit = 1
-    let g:ale_linters = { 'cpp': ['clangtidy'], 'c': ['clangtidy'], }
-    let g:ale_fixers = { 'cpp': ['clangtidy'], 'c': ['clangtidy'], }
-    " use vista for showing in the statusline the name of function where the cursor resides
-    Plug 'liuchengxu/vista.vim'
-    " for python highlight
+    Plug 'ericcurtin/CurtineIncSw.vim'
+    " more for nvim
     if has('nvim')
-      Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+        Plug 'neoclide/coc.nvim', {'branch': 'release'}
+        Plug 'shunlir/coc-leaderf'
+        Plug 'jackguo380/vim-lsp-cxx-highlight'
+        " use ale for linting
+        Plug 'dense-analysis/ale'
+        let g:ale_linters_explicit = 1
+        let g:ale_linters = { 'cpp': ['clangtidy'], 'c': ['clangtidy'], }
+        let g:ale_fixers = { 'cpp': ['clangtidy'], 'c': ['clangtidy'], }
+        " use vista for showing in the statusline the name of function where the cursor resides
+        Plug 'liuchengxu/vista.vim'
+        " for python highlight
+        Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
     endif
     "Plug 'CoatiSoftware/vim-sourcetrail'
     "Plug 'plasticboy/vim-markdown'
@@ -326,7 +326,7 @@ call plug#begin('~/.vim/plugged')
     " Open .vimrc
     nnoremap <Leader>fp :edit ~/.vimrc<CR>
     " switch header/source (C++)
-    noremap <M-o> :CocCommand clangd.switchSourceHeader<CR>
+    noremap <M-o> :call CurtineIncSw()<CR>
     " split window
     "map <Leader>w- :split<CR>
     "map <Leader>w. :vsplit<CR>
@@ -543,7 +543,7 @@ call plug#begin('~/.vim/plugged')
         let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
         let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
     "}}}
-    if has('nvim') || v:versionlong >= 8001453
+    if (has("nvim"))
     "LSP  {{{
 
         " lsp TextEdit might fail if hidden is not set.
