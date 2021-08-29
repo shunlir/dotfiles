@@ -13,5 +13,10 @@ return function()
     autocmd ColorScheme * highlight! TelescopeSelectionCaret ctermfg=48 guifg=red
     augroup END
   ]]
+  vim.cmd[[
+    augroup AgMisc
+    autocmd ColorScheme * highlight! IncSearch cterm=bold ctermfg=15 ctermbg=9 gui=bold guifg=#ffffff guibg=#f00077
+    augroup END
+  ]]
   vim.cmd('colorscheme onedark')
 end

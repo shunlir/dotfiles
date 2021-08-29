@@ -49,6 +49,15 @@ return require('packer').startup(function(use)
 
   use {'folke/which-key.nvim', config = require('cfg.which-key')}
 
+
+  -- highlight current matched word when in hlsearch
+  use {'qxxxb/vim-searchhi', config = function()
+    vim.cmd[[
+    nmap n <Plug>(searchhi-n)
+    nmap N <Plug>(searchhi-N)
+    ]]
+  end}
+
   -- themes
   use {'joshdick/onedark.vim', config = require('cfg.colors')}
 
