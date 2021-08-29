@@ -5,7 +5,12 @@ local cmd = vim.cmd
 
 g.mapleader = ' '
 
-if env.COLORTERM == 'truecolor' then
+if env.COLORTERM == 'truecolor' or
+   string.match(vim.env.TERM, '^st-.*$') or
+   string.match(vim.env.TERM, '^xst-.*$') or
+   string.match(vim.env.TERM, '^tmux-.*$') or
+   string.match(vim.env.TERM, '^gnome-.*$') or
+   string.match(vim.env.TERM, '^vte-.*$') then
   opt.termguicolors = true
 end
 
