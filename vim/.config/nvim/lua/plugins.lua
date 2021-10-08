@@ -18,6 +18,7 @@ return require('packer').startup(function(use)
   use {"aserowy/tmux.nvim", config = require('cfg.tmux')}
 
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', event = 'BufRead', config = require('cfg.nvim-treesitter')}
+  use {'nvim-treesitter/nvim-treesitter-textobjects', after = 'nvim-treesitter', config = require('cfg.nvim-treesitter-textobjects')}
 
   use {'hoob3rt/lualine.nvim', config = require('cfg.lualine')}
 
@@ -30,14 +31,27 @@ return require('packer').startup(function(use)
 
   -- editor, motion enhance
   use {'andymass/vim-matchup', after = 'nvim-treesitter'}
-  use {'windwp/nvim-autopairs', event = 'InsertEnter', config = require('cfg.nvim-autopairs')}
+  use {'windwp/nvim-autopairs', config = require('cfg.nvim-autopairs')}
   use {'tpope/vim-sleuth', event = 'InsertEnter'} -- heuristically indent
 
 
   -- completion, snippet
-  use {'hrsh7th/nvim-compe',config = require('cfg.compe')}
-  use {'hrsh7th/vim-vsnip'}
-  use {'hrsh7th/vim-vsnip-integ'}
+  --use {'hrsh7th/nvim-compe',config = require('cfg.compe')}
+  --use {'hrsh7th/vim-vsnip'}
+  --use {'hrsh7th/vim-vsnip-integ'}
+  use {
+    "hrsh7th/nvim-cmp",
+    requires = {
+      'hrsh7th/vim-vsnip',
+      'hrsh7th/cmp-vsnip',    -- source: vsnip
+      'hrsh7th/cmp-buffer',   -- source: buffer
+      'hrsh7th/cmp-nvim-lsp', -- source: nvim_lsp
+      'hrsh7th/cmp-nvim-lua', -- source: nvim_lua
+      'hrsh7th/cmp-path',     -- source: path
+      'hrsh7th/cmp-calc',     -- source: calc
+    },
+    config = require('cfg.cmp')
+  }
 
   -- lsp (diagnostics, compe source, ...)
   use {'neovim/nvim-lspconfig'}
@@ -49,6 +63,9 @@ return require('packer').startup(function(use)
 
   use {'folke/which-key.nvim', config = require('cfg.which-key')}
 
+  use {'TimUntersberger/neogit', config = function() require('neogit').setup{} end}
+
+  use {'norcalli/nvim-colorizer.lua', config = function() require('colorizer').setup{'xdefaults', 'tmux'} end}
 
   -- highlight current matched word when in hlsearch
   use {'qxxxb/vim-searchhi', config = function()
@@ -58,9 +75,13 @@ return require('packer').startup(function(use)
     ]]
   end}
 
+  use {'ggandor/lightspeed.nvim'}
+
   -- themes
+  use {'folke/lsp-colors.nvim'}
   use {'joshdick/onedark.vim', config = require('cfg.colors')}
 
   use {'tweekmonster/startuptime.vim', cmd = 'StartupTime'}
+  use {'vim-scripts/DoxygenToolkit.vim'}
 
 end)

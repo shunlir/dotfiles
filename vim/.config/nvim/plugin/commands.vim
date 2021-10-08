@@ -60,3 +60,7 @@ function! s:ToggleResize() abort
 endfunction
 autocmd VimEnter * autocmd WinEnter * let t:zoomed = 0
 command! -nargs=0 ToggleFull call <SID>ToggleResize()
+
+" format selected range
+command! -nargs=0 FormatRange lua vim.lsp.buf.range_formatting()
+vnoremap <silent> <leader>lf :<C-U>FormatRange<cr>

@@ -7,6 +7,9 @@ return function()
         n = { ["<c-l>"] = require'trouble.providers.telescope'.open_with_trouble },
       },
       prompt_prefix = "$ ",
+      cache_picker = {
+        num_pickers = 5,
+      },
     },
     pickers = {
       -- Your special builtin config goes in here
@@ -15,10 +18,12 @@ return function()
         sort_lastused = true,
         previewer = false,
       },
-      find_files = {theme = 'ivy',},
+      find_files = {theme = 'ivy', path_display = {}},
+      git_files = {theme = 'ivy', path_display = {}},
       file_browser = {theme = 'ivy',},
       oldfiles = {theme = 'ivy',},
       lsp_references = {theme = 'ivy',},
+      pickers = {theme = 'ivy',},
     },
     extensions = {
       -- Your extension config goes in here

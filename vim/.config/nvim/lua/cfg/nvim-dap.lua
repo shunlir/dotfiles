@@ -5,7 +5,6 @@ return function()
   local dap_install = require("dap-install")
   dap_install.config("ccppr_vsc_dbg", {})
   dap_install.config("dnetcs_dbg", {})
-  --[[
   dap.adapters.cppdbg = {
     type = 'executable',
     command = vim.fn.stdpath('data') .. '/dapinstall/ccppr_vsc_dbg/extension/debugAdapters/OpenDebugAD7',
@@ -34,7 +33,6 @@ return function()
       end,
     },
   }
-  --]]
   dap.configurations.c = dap.configurations.cpp
   dap.configurations.rust = dap.configurations.cpp
 end
