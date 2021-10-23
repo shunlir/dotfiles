@@ -51,12 +51,18 @@ rm -rf /tmp/work
 apt install -y rxvt-unicode-256color fonts-font-awesome \
     i3 rofi
 
+[ -d ~/.local/bin] || mkdir -p ~/.local/bin
+wget -O ~/.local/bin/plantuml.jar http://sourceforge.net/projects/plantuml/files/plantuml.jar/download
+
 dest=/usr/local/share/fonts/truetype/fonts-fantasquesansmono-nerd
-if [ ! -d $dest ]; then
-    mkdir -p $dest
-fi
-wget -P $dest https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/FantasqueSansMono.zip
+[ -d $dest ] ||  mkdir -p $dest
+wget -P $dest https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FantasqueSansMono.zip
 unzip -d $dest FantasqueSansMono.zip
+
+dest=/usr/local/share/fonts/truetype/fonts-hack-nerd
+[ -d $dest ] ||  mkdir -p $dest
+wget -P $dest https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Hack.zip
+unzip -d $dest Hack.zip
 
 [ -d /tmp/work ] || mkdir /tmp/work
 cd /tmp/work
