@@ -93,10 +93,8 @@ return function()
       end,
     },
   }
-  -- autopairs <CR> mapping
-  require("nvim-autopairs.completion.cmp").setup({
-    map_cr = true, --  map <CR> on insert mode
-    map_complete = true, -- it will auto insert `(` after select function or method item
-    auto_select = true -- automatically select the first item
-  })
+  -- If you want insert `(` after select function or method item
+  -- (see https://github.com/windwp/nvim-autopairs/issues/171#issuecomment-954346682)
+  local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+  cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done())
 end
