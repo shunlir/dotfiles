@@ -74,7 +74,7 @@ return function()
   }
 
   -- config that activates keymaps and enables snippet support
-  local function make_config()
+  local function make_opts()
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
     capabilities.textDocument.completion.completionItem.resolveSupport = {
@@ -93,38 +93,20 @@ return function()
   end
 
   -- lsp-install
-  local function setup_servers()
-    require'lspinstall'.setup()
-
-    -- get all installed servers
-    local servers = require'lspinstall'.installed_servers()
-    -- ... and add manually installed servers
-    table.insert(servers, "sourcekit")
-
-    for _, server in pairs(servers) do
-      local config = make_config()
+  local lsp_installer = require("nvim-lsp-installer")
+    lsp_installer.on_server_ready(function(server)
+      local opts = make_opts()
 
       -- language specific config
-      if server == "lua" then
-        config.settings = lua_settings
+      if server.name == "lua" then
+        opts.settings = lua_settings
       end
-      if server == "sourcekit" then
-        config.filetypes = {"swift", "objective-c", "objective-cpp"}; -- we don't want c and cpp!
+      if server.name == "sourcekit" then
+        opts.filetypes = {"swift", "objective-c", "objective-cpp"}; -- we don't want c and cpp!
       end
-      if server == "clangd" then
-        config.filetypes = {"c", "cpp"}; -- we don't want objective-c and objective-cpp!
+      if server.name == "clangd" then
+        opts.filetypes = {"c", "cpp"}; -- we don't want objective-c and objective-cpp!
       end
-
-      require'lspconfig'[server].setup(config)
-    end
-  end
-
-  setup_servers()
-
-  -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
-  require'lspinstall'.post_install_hook = function ()
-    setup_servers() -- reload installed servers
-    vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
-  end
-
+      server:setup(opts)
+    end)
 end

@@ -55,7 +55,7 @@ return require('packer').startup(function(use)
 
   -- lsp (diagnostics, compe source, ...)
   use {'neovim/nvim-lspconfig'}
-  use {'kabouzeid/nvim-lspinstall', config = require('cfg.lspinstall')}
+  use {'williamboman/nvim-lsp-installer', config = require'cfg.nvim-lsp-installer'}
 
   -- dap (live-debugging)
   use {'mfussenegger/nvim-dap', ft = {'c', 'cpp', 'cs'}, config = require('cfg.nvim-dap')}

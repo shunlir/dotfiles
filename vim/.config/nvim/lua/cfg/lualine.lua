@@ -21,7 +21,7 @@ return function()
       lualine_c = {
         {
           'diagnostics',
-          sources = {'nvim_lsp'}
+          sources = {'nvim_diagnostic'}
         }
       },
       lualine_x = {},
