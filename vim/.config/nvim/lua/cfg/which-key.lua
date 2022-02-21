@@ -37,11 +37,9 @@ return function()
     ["<leader>."]        = {
       function()
         local opts = {
-          cwd = vim.fn.expand("%:p:h'"),
-          hidden = true
+          path = "%:p:h"
         }
-        opts = require('telescope.themes').get_ivy(opts)
-        require('telescope.builtin').file_browser(opts)
+        require "telescope".extensions.file_browser.file_browser(opts)
       end,
       "Files in current dir"
     },

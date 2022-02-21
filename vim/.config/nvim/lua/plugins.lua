@@ -22,12 +22,13 @@ return require('packer').startup(function(use)
 
   use {'hoob3rt/lualine.nvim', config = require('cfg.lualine')}
 
-  use {'lewis6991/gitsigns.nvim', event = {'BufRead','BufNewFile'},  config = function() require('gitsigns').setup() end}
+  use {'lewis6991/gitsigns.nvim', event = {'BufRead','BufNewFile'},  config = require('cfg.gitsigns')}
 
   -- fuzzy search
   use {'folke/trouble.nvim', opt = true, cmd = 'Trouble', module = 'trouble.providers.telescope'}
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
   use {'nvim-telescope/telescope.nvim', opt=true, cmd = 'Telescope', module = {'telescope.builtin','telescope.themes'}, config = require('cfg.telescope')}
+  use { 'nvim-telescope/telescope-file-browser.nvim' }
 
   -- editor, motion enhance
   use {'andymass/vim-matchup', after = 'nvim-treesitter'}
