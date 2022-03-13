@@ -34,7 +34,8 @@ return require('packer').startup(function(use)
   use {'andymass/vim-matchup', after = 'nvim-treesitter'}
   use {'windwp/nvim-autopairs', config = require('cfg.nvim-autopairs')}
   use {'tpope/vim-sleuth', event = 'InsertEnter'} -- heuristically indent
-
+  -- coment
+  use {'numToStr/Comment.nvim', config = function() require('Comment').setup() end}
 
   -- completion, snippet
   --use {'hrsh7th/nvim-compe',config = require('cfg.compe')}
@@ -58,6 +59,14 @@ return require('packer').startup(function(use)
   use {'neovim/nvim-lspconfig'}
   use {'williamboman/nvim-lsp-installer', config = require'cfg.nvim-lsp-installer'}
 
+  -- linter
+  use {'mfussenegger/nvim-lint', config = function()
+       require('lint').linters_by_ft = {
+         cpp = {'cppcheck',}
+       }
+     end
+  }
+
   -- dap (live-debugging)
   use {'mfussenegger/nvim-dap', ft = {'c', 'cpp', 'cs'}, config = require('cfg.nvim-dap')}
   use {'shunlir/DAPInstall.nvim'}
@@ -68,6 +77,8 @@ return require('packer').startup(function(use)
 
   use {'norcalli/nvim-colorizer.lua', config = function() require('colorizer').setup{'xdefaults', 'tmux'} end}
 
+  -- highlight trailing whitespaces
+  use {'ntpeters/vim-better-whitespace'}
   -- highlight current matched word when in hlsearch
   use {'qxxxb/vim-searchhi', config = function()
     vim.cmd[[

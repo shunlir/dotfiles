@@ -13,14 +13,31 @@ return function()
 
     ["<leader>wc"] = { "<cmd>close<cr>", "Close window"},
 
+    ["<leader>la"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action"},
     ["<leader>lr"] = { "<cmd>Telescope lsp_references theme=get_ivy<cr>", "References"},
     ["<leader>ls"] = { "<cmd>Telescope lsp_document_symbols theme=get_ivy<cr>", "Document Symbols"},
     ["<leader>lS"] = { "<cmd>Telescope lsp_dynamic_workspace_symbols theme=get_ivy<cr>", "Workspace  Symbols"},
-    ["<leader>lx"] = { "<cmd>Telescope lsp_document_diagnostics theme=get_ivy<cr>", "Document Diagnostic"},
+    ["<leader>lx"] = { "<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<cr>", "Document Diagnostic"},
     ["<leader>lf"] = { "<cmd>lua vim.lsp.buf.range_formatting()<cr>", "Format Selection"},
     ["<leader>lF"] = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format File"},
 
     ["<leader>sp"] = { "<cmd>Telescope live_grep theme=get_ivy<cr>", "Search in project"},
+    ["<leader>sb"] = {
+      function()
+        local opts = { search_dirs = {vim.fn.expand('%:p')} }
+        opts = require('telescope.themes').get_ivy(opts)
+        require('telescope.builtin').live_grep(opts)
+      end,
+      "Search in buffer"
+    },
+    ["<leader>sd"] = {
+      function()
+        local opts = { search_dirs = {vim.fn.expand('%:p:h')} }
+        opts = require('telescope.themes').get_ivy(opts)
+        require('telescope.builtin').live_grep(opts)
+      end,
+      "Search in buffer"
+    },
 
     ["<leader>d"] = { name = "+debug" },
     ["<leader>dd"] = { "<cmd>lua require'dap'.continue()<cr>", "Start debugging" },
