@@ -1,59 +1,134 @@
-;;; .doom.d/config.el -*- lexical-binding: t; -*-
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; Place your private configuration here
+;; Place your private configuration here! Remember, you do not need to run 'doom
+;; sync' after modifying this file!
 
+
+;; Some functionality uses this to identify you, e.g. GPG configuration, email
+;; clients, file templates and snippets. It is optional.
+;;(setq user-full-name "John Doe"
+;;      user-mail-address "john@doe.com")
+
+;; Doom exposes five (optional) variables for controlling fonts in Doom:
+;;
+;; - `doom-font' -- the primary font to use
+;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
+;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
+;;   presentations or streaming.
+;; - `doom-unicode-font' -- for unicode glyphs
+;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
+;;
+;; See 'C-h v doom-font' for documentation and more examples of what they
+;; accept. For example:
+;;
+;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+;;
+;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
+;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
+;; refresh your font settings. If Emacs still can't find your font, it likely
+;; wasn't installed correctly. Font issues are rarely Doom issues!
+
+;; There are two ways to load a theme. Both assume the theme is installed and
+;; available. You can either set `doom-theme' or manually load a theme with the
+;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-vibrant)
 
-(use-package! dap-mode
-  :after lsp-mode
-  :config
-  (dap-mode t)
-  (dap-ui-mode t))
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+(setq display-line-numbers-type t)
 
-(use-package! eterm-256color
-  :after term
-  :config
-  (add-hook 'term-mode-hook #'eterm-256color-mode))
+;; If you use `org' and don't want your org files in the default location below,
+;; change `org-directory'. It must be set before org loads!
+(setq org-directory "~/org/")
 
-(after! lsp-ui
-  ;; workaround, see https://github.com/emacs-lsp/lsp-ui/issues/278#issuecomment-590000913
-  (setq lsp-ui-peek-fontify 'always))
 
-(setq lsp-keymap-prefix "C-c l")
+;; Whenever you reconfigure a package, make sure to wrap your config in an
+;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
+;;
+;;   (after! PACKAGE
+;;     (setq x y))
+;;
+;; The exceptions to this rule:
+;;
+;;   - Setting file/directory variables (like `org-directory')
+;;   - Setting variables which explicitly tell you to set them before their
+;;     package is loaded (see 'C-h v VARIABLE' to look up their documentation).
+;;   - Setting doom variables (which start with 'doom-' or '+').
+;;
+;; Here are some additional functions/macros that will help you configure Doom.
+;;
+;; - `load!' for loading external *.el files relative to this one
+;; - `use-package!' for configuring packages
+;; - `after!' for running code after a package has loaded
+;; - `add-load-path!' for adding directories to the `load-path', relative to
+;;   this file. Emacs searches the `load-path' when you load packages with
+;;   `require' or `use-package'.
+;; - `map!' for binding new keys
+;;
+;; To get information about any of these functions/macros, move the cursor over
+;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
+;; This will open documentation for it, including demos of how they are used.
+;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
+;; etc).
+;;
+;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
+;; they are implemented.
 
-(with-eval-after-load 'lsp-mode
-  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
-
-;; (which-function-mode)
-;; (eval-after-load "which-func"
-;;     '(setq which-func-modes '(java-mode c++-mode org-mode)))
-
+;;
 ;; `SPC f r' ignore
+;; after making change, then run M-x recentf-cleanup to make it work.
 (after! recentf
   (add-to-list 'recentf-exclude
              "~/.dotfiles/emacs/.emacs.d-doom-emacs/.local/etc/workspaces/autosave"))
 
+(setq projectile-project-search-path '("~/repo"))
+
+(setq orderless-matching-styles '(orderless-literal, orderless-regexp, orderless-flex))
+(setq orderless-matching-styles
+ '(orderless-literal
+   orderless-prefixes
+   orderless-initialism
+   orderless-regexp
+   ;; orderless-flex                       ; Basically fuzzy finding
+   ;; orderless-strict-leading-initialism
+   ;; orderless-strict-initialism
+   ;; orderless-strict-full-initialism
+   ;; orderless-without-literal          ; Recommended for dispatches instead
+   ))
 
 ;;
-;; TODO A quick to add supporting for space as delimiters for ivy--regex-fuzzy.
-;; ref: https://github.com/abo-abo/swiper/issues/360#issuecomment-253992364
+;; org-mode
 ;;
-
-;; darken code block back ground by 5%
-;; ref: https://orgmode.org/manual/Editing-Source-Code.html
+(setq org-hide-emphasis-markers t)
+(add-hook 'org-mode-hook 'org-appear-mode)
 (after! org
-  (require 'color)
-  (set-face-attribute 'org-block nil :background
-                    (color-darken-name
-                     (face-attribute 'default :background) 5)))
-
-
-;;
-;; org-babel
-;;
-
-(after! org
-  :config
   (org-babel-do-load-languages
     'org-babel-load-languages
-    '((dot . t))))
+    '((dot . t)
+      (plantuml . t)))
+  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
+
+;;(defun my/org-mode-visual-fill ()
+;;  (setq visual-fill-column-width 120
+;;        visual-fill-column-center-text t)
+;;  (visual-fill-column-mode 1))
+;;(after! org
+;;  (add-hook 'org-mode-hook #'my/org-mode-visual-fill))
+
+;;
+;; plantuml-mode
+;;
+(after! plantuml-mode
+  (setq plantuml-jar-path
+      (expand-file-name "~/.local/bin/plantuml.jar"))
+  (setq plantuml-default-exec-mode 'jar))
+
+
+;;
+;; terminal
+;;
+(use-package! eterm-256color
+  :after term
+  :config
+  (add-hook 'term-mode-hook #'eterm-256color-mode))
