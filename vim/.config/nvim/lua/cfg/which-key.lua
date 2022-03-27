@@ -13,7 +13,7 @@ return function()
 
     ["<leader>wc"] = { "<cmd>close<cr>", "Close window"},
 
-    ["<leader>la"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action"},
+    ["<leader>la"] = { "<cmd>Telescope lsp_code_actions theme=get_ivy<cr>", "Code Action"},
     ["<leader>lr"] = { "<cmd>Telescope lsp_references theme=get_ivy<cr>", "References"},
     ["<leader>ls"] = { "<cmd>Telescope lsp_document_symbols theme=get_ivy<cr>", "Document Symbols"},
     ["<leader>lS"] = { "<cmd>Telescope lsp_dynamic_workspace_symbols theme=get_ivy<cr>", "Workspace  Symbols"},
@@ -36,7 +36,7 @@ return function()
         opts = require('telescope.themes').get_ivy(opts)
         require('telescope.builtin').live_grep(opts)
       end,
-      "Search in buffer"
+      "Search in current dir"
     },
 
     ["<leader>d"] = { name = "+debug" },
@@ -53,9 +53,8 @@ return function()
     ["<leader>,"]        = { "<cmd>lua require('telescope.builtin').buffers()<cr>", "Switch Buffer" },
     ["<leader>."]        = {
       function()
-        local opts = {
-          path = "%:p:h"
-        }
+        local opts = { path = "%:p:h" }
+        opts = require('telescope.themes').get_ivy(opts)
         require "telescope".extensions.file_browser.file_browser(opts)
       end,
       "Files in current dir"
