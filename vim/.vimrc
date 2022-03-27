@@ -584,6 +584,7 @@ call plug#begin('~/.vim/plugged')
           \ 'coc-java',
           \ 'coc-omnisharp'
           \ ]
+	let g:coc_config_home = '~/.config/vim'
 
         " Use <C-j> and <C-k> to navigate completion
         inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
