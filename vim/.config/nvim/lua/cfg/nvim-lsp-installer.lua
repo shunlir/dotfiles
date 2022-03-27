@@ -52,27 +52,6 @@ return function()
     }]]
   end
 
-  -- Configure lua language server for neovim development
-  local lua_settings = {
-    Lua = {
-      runtime = {
-        -- LuaJIT in the case of Neovim
-        version = 'LuaJIT',
-        path = vim.split(package.path, ';'),
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = {
-          [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-          [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-        },
-      },
-    }
-  }
 
   -- config that activates keymaps and enables snippet support
   local function make_opts()
@@ -93,22 +72,59 @@ return function()
     }
   end
 
-  -- lsp-install
+  local enhance_server_opts = {
+    ["sumneko_lua"] = function(opts)
+      -- Configure lua language server for neovim development
+      local runtime_path = vim.split(package.path, ';')
+      table.insert(runtime_path, "lua/?.lua")
+      table.insert(runtime_path, "lua/?/init.lua")
+      opts.settings = {
+        Lua = {
+          runtime = {
+            -- LuaJIT in the case of Neovim
+            version = 'LuaJIT',
+            path = runtime_path,
+          },
+          diagnostics = {
+            -- Get the language server to recognize the `vim` global
+            globals = {'vim'},
+          },
+          workspace = {
+            -- Make the server aware of Neovim runtime files
+            library = vim.api.nvim_get_runtime_file("", true),
+          },
+          -- Do not send telemetry data containing a randomized but unique identifier
+          telemetry = {
+            enable = false,
+          },
+        },
+      }
+    end,
+
+    ["sourcekit"] = function(opts)
+      opts.filetypes = {"swift", "objective-c", "objective-cpp"}; -- we don't want c and cpp!
+    end,
+
+    ["clangd"] = function(opts)
+      opts.filetypes = {"c", "cpp"}; -- we don't want objective-c and objective-cpp!
+      opts.cmd = {"clangd", "--background-index", "--pch-storage=disk", "--completion-style=detailed", "--clang-tidy", "--enable-config", "--offset-encoding=utf-32"}
+    end,
+
+    ["ccls"] = function(opts)
+      opts.filetypes = {"c", "cpp"}; -- we don't want objective-c and objective-cpp!
+    end,
+  }
+
+  -- nvim-lsp-installer
   local lsp_installer = require("nvim-lsp-installer")
     lsp_installer.on_server_ready(function(server)
       local opts = make_opts()
 
       -- language specific config
-      if server.name == "lua" then
-        opts.settings = lua_settings
+      if enhance_server_opts[server.name] then
+        enhance_server_opts[server.name](opts)
       end
-      if server.name == "sourcekit" then
-        opts.filetypes = {"swift", "objective-c", "objective-cpp"}; -- we don't want c and cpp!
-      end
-      if server.name == "clangd" then
-        opts.filetypes = {"c", "cpp"}; -- we don't want objective-c and objective-cpp!
-        opts.cmd = {"clangd", "--background-index", "--pch-storage=disk", "--completion-style=detailed", "--clang-tidy"}
-      end
+
       server:setup(opts)
     end)
 end
