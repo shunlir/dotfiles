@@ -1,38 +1,32 @@
 [core]
-	editor = vim
-	excludesfile = ~/.gitignore_global
-    # disable 'quit if one screen', enable 'clearing the screen' of less
-    pager = diff-so-fancy | less --tabs=4 -+F -+X
+    editor = vim
+    excludesfile = ~/.gitignore_global
+    # less - disable 'quit if one screen', enable 'clearing the screen'
+    pager = delta --line-numbers --pager 'less --tabs=8 -+F -+X'
 [alias]
-	ci = commit
-	co = checkout
-	st = status
-	br = branch
-	df  = diff --ws-error-highlight=all
-	dfc = diff --ws-error-highlight=all --cached
-	dfh = diff --ws-error-highlight=all HEAD^
-    dfi = icdiff
-	vg = !gitk
-	lg  = log --graph --pretty=format:'%Cred%h%Creset %C(bold yellow)<%an>%Creset -%Cgreen%cr%Creset %s' --abbrev-commit
-    lg2 = log --graph --pretty=format:'%Cred%h%Cgreen(%cd)%Creset -%C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset' --abbrev-commit --date=format:'%y-%m-%d %H:%M'
-    cof = checkout -- 
-[icdiff]
-	options = --highlight --line-numbers
+    ci = commit
+    co = checkout
+    cof = checkout --
+    st = status
+    br = branch
+    df  = diff --ws-error-highlight=all
+    dfc = diff --ws-error-highlight=all --cached
+    dfh = diff --ws-error-highlight=all HEAD^
+    vg = !gitk
+    lg  = log --graph --pretty=format:'%Cred%h%Creset %C(bold yellow)<%an>%Creset -%Cgreen%cr%Creset %s' --abbrev-commit
+    lg2 = log --graph --pretty=format:'%Cred%h%Cgreen(%cd)%Cblue(%cd)%Creset -%C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset %C(blue)<%cn>%Creset' --abbrev-commit --date=format:'%y-%m-%d %H:%M'
 [include]
     path = .gitconfig_local
-[color]
-	ui = true
-[color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
-[color "diff"]
-	meta = 11
-	frag = magenta bold
-	commit = yellow bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
-[diff-so-fancy]
-	rulerWidth = 47
+
+; delta
+[interactive]
+    diffFilter = delta --color-only
+[merge]
+    conflictstyle = diff3
+[diff]
+    colorMoved = default
+[delta]
+    navigate = true
+    syntax-theme = gruvbox-dark
+    minus-style = syntax "#301b1d" # adjust for gruvbox-dark background
+    file-style = bold yellow ul
