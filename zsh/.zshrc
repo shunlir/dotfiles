@@ -28,9 +28,12 @@ bindkey '^[[3~' delete-char
 
 # man pages syntax
 #zinit snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
+if [[ "$(command -v bat)" ]]; then
+  export MANPAGER="sh -c 'col -bx | bat --theme=OneHalfDark -l man -p'"
+fi
+
 if [[ "$(command -v nvim)" ]]; then
   export EDITOR='nvim'
-  export MANPAGER='nvim +Man!'
 fi
 
 #
