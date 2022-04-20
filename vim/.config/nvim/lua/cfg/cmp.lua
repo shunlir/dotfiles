@@ -95,6 +95,16 @@ return function()
       end,
     },
   }
+
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
+
   -- If you want insert `(` after select function or method item
   -- (see https://github.com/windwp/nvim-autopairs/issues/171#issuecomment-954346682)
   local cmp_autopairs = require('nvim-autopairs.completion.cmp')
