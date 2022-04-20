@@ -98,8 +98,14 @@ return function()
     end,
 
     ["clangd"] = function(opts)
+      local path = require "nvim-lsp-installer.path"
+      local process = require "nvim-lsp-installer.process"
+      local root_dir = vim.fn.stdpath("data") .. "/lsp_servers/clangd"
       opts.filetypes = {"c", "cpp"}; -- we don't want objective-c and objective-cpp!
       opts.cmd = {"clangd", "--background-index", "--pch-storage=disk", "--completion-style=detailed", "--clang-tidy", "--enable-config", "--offset-encoding=utf-32"}
+      opts.cmd_env = {
+        PATH = process.extend_path { path.concat { root_dir, "clangd", "bin" } },
+      }
     end,
 
     ["ccls"] = function(opts)
@@ -117,6 +123,10 @@ return function()
         enhance_server_opts[server.name](opts)
       end
 
-      server:setup(opts)
+      if server.name == "clangd" then
+        require("clangd_extensions").setup{server = opts}
+      else
+        server:setup(opts)
+      end
     end)
 end

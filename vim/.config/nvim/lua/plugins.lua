@@ -60,6 +60,7 @@ return require('packer').startup(function(use)
   -- lsp (diagnostics, compe source, ...)
   use {'neovim/nvim-lspconfig'}
   use {'williamboman/nvim-lsp-installer', config = require'cfg.nvim-lsp-installer'}
+  use {'p00f/clangd_extensions.nvim'}
 
   -- linter
   use {'mfussenegger/nvim-lint', config = function()
