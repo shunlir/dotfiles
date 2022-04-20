@@ -34,6 +34,7 @@ return require('packer').startup(function(use)
   use {'andymass/vim-matchup', after = 'nvim-treesitter'}
   use {'windwp/nvim-autopairs', config = require('cfg.nvim-autopairs')}
   use {'tpope/vim-sleuth', event = 'InsertEnter'} -- heuristically indent
+  use {'tpope/vim-surround'}
   -- coment
   use {'numToStr/Comment.nvim', config = function() require('Comment').setup() end}
 
