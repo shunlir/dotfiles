@@ -51,6 +51,7 @@ return require('packer').startup(function(use)
       'hrsh7th/cmp-nvim-lua', -- source: nvim_lua
       'hrsh7th/cmp-path',     -- source: path
       'hrsh7th/cmp-calc',     -- source: calc
+      'hrsh7th/cmp-cmdline',  -- source: cmdline for vim's cmdline
     },
     config = require('cfg.cmp')
   }
