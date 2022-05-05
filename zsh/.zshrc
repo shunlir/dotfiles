@@ -2,13 +2,16 @@
 # vim:ft=zsh
 
 # self install
-if [ ! -e ~/.zinit ]; then
-    mkdir ~/.zinit
-    git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+if [ ! -e "$(dirname $ZINIT_HOME)" ]; then
+    mkdir -p "$(dirname $ZINIT_HOME)"
+    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
 # load Zinit
-source ~/.zinit/bin/zinit.zsh
+source "${ZINIT_HOME}/zinit.zsh"
+unset ZINIT_HOME
+
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
