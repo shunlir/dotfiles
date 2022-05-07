@@ -26,10 +26,12 @@ return require('packer').startup(function(use)
 
   -- fuzzy search
   use {'folke/trouble.nvim', opt = true, cmd = 'Trouble', module = 'trouble.providers.telescope'}
-  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
-  use {'nvim-telescope/telescope.nvim', opt=true, cmd = 'Telescope', module = {'telescope.builtin','telescope.themes'}, config = require('cfg.telescope')}
-  use { 'nvim-telescope/telescope-file-browser.nvim' }
-  use {'nvim-telescope/telescope-ui-select.nvim' }
+  use { 'nvim-telescope/telescope.nvim', opt = true, cmd = 'Telescope', module = { 'telescope' }, config = require('cfg.telescope') }
+  use { 'nvim-telescope/telescope-fzf-native.nvim', opt = true, run = 'make', after = 'telescope.nvim' }
+  use { 'nvim-telescope/telescope-file-browser.nvim', opt = true }
+  use { 'nvim-telescope/telescope-project.nvim', opt = true }
+  use { 'nvim-telescope/telescope-live-grep-raw.nvim', opt = true }
+  use { 'nvim-telescope/telescope-ui-select.nvim', opt = true }
 
   -- editor, motion enhance
   use {'andymass/vim-matchup', after = 'nvim-treesitter'}

@@ -1,10 +1,25 @@
 return function()
+
+  vim.cmd([[packadd telescope-fzf-native.nvim]])
+  vim.cmd([[packadd telescope-file-browser.nvim]])
+  vim.cmd([[packadd telescope-live-grep-raw.nvim]])
+  vim.cmd([[packadd telescope-ui-select.nvim]])
+  vim.cmd([[packadd telescope-project.nvim]])
+
   require("telescope").setup {
     defaults = {
       -- Your defaults config goes in here
       mappings = {
-        i = { ["<c-l>"] = require'trouble.providers.telescope'.open_with_trouble },
-        n = { ["<c-l>"] = require'trouble.providers.telescope'.open_with_trouble },
+        i = {
+          ["<C-f>"] = require('telescope.actions').results_scrolling_down,
+          ["<C-b>"] = require('telescope.actions').results_scrolling_up,
+          ["<c-l>"] = require'trouble.providers.telescope'.open_with_trouble,
+        },
+        n = {
+          ["<C-f>"] = require('telescope.actions').results_scrolling_down,
+          ["<C-b>"] = require('telescope.actions').results_scrolling_up,
+          ["<c-l>"] = require'trouble.providers.telescope'.open_with_trouble,
+        },
       },
       prompt_prefix = "$ ",
       cache_picker = {
@@ -39,6 +54,12 @@ return function()
           -- even more opts
         }
       },
+      project = {
+        base_dirs = {
+          '~/repo'
+        },
+        theme = 'ivy'
+      },
     }
   }
 
@@ -46,5 +67,7 @@ return function()
   -- load_extension, somewhere after setup function:
   require('telescope').load_extension('fzf')
   require("telescope").load_extension "file_browser"
+  require('telescope').load_extension('live_grep_raw')
   require("telescope").load_extension("ui-select")
+  require('telescope').load_extension('project')
 end
