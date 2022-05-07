@@ -13,11 +13,11 @@ return function()
 
     ["<leader>wc"] = { "<cmd>close<cr>", "Close window"},
 
-    ["<leader>la"] = { "<cmd>Telescope lsp_code_actions theme=get_ivy<cr>", "Code Action"},
     ["<leader>lr"] = { "<cmd>Telescope lsp_references theme=get_ivy<cr>", "References"},
     ["<leader>ls"] = { "<cmd>Telescope lsp_document_symbols theme=get_ivy<cr>", "Document Symbols"},
     ["<leader>lS"] = { "<cmd>Telescope lsp_dynamic_workspace_symbols theme=get_ivy<cr>", "Workspace  Symbols"},
     ["<leader>lx"] = { "<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<cr>", "Document Diagnostic"},
+    ["<leader>la"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action"},
     ["<leader>lf"] = { "<cmd>lua vim.lsp.buf.range_formatting()<cr>", "Format Selection"},
     ["<leader>lF"] = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format File"},
 
