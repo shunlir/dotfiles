@@ -10,6 +10,7 @@ return require('packer').startup(function(use)
   use {'nvim-lua/plenary.nvim'}
   use {'nvim-lua/popup.nvim'}
   use {'svermeulen/vimpeccable'}
+  use {'lewis6991/impatient.nvim'}
   -- icons
   use {'kyazdani42/nvim-web-devicons'}
 
@@ -33,13 +34,20 @@ return require('packer').startup(function(use)
   use { 'nvim-telescope/telescope-live-grep-raw.nvim', opt = true }
   use { 'nvim-telescope/telescope-ui-select.nvim', opt = true }
 
-  -- editor, motion enhance
-  use {'andymass/vim-matchup', after = 'nvim-treesitter'}
+  -- motion enhance:
+  use {'andymass/vim-matchup'} -- % enhance
+  use {'ggandor/lightspeed.nvim'}
+
+  -- editing enhance:
+  use {'tpope/vim-surround'} -- surroundings manipulation
   use {'windwp/nvim-autopairs', config = require('cfg.nvim-autopairs')}
   use {'tpope/vim-sleuth', event = 'InsertEnter'} -- heuristically indent
-  use {'tpope/vim-surround'}
   -- coment
   use {'numToStr/Comment.nvim', config = function() require('Comment').setup() end}
+  -- formatter
+  use {'gpanders/editorconfig.nvim'}
+  -- ga enhance
+  use { 'tpope/vim-characterize', opt = false , keys = 'g'}
 
   -- completion, snippet
   --use {'hrsh7th/nvim-compe',config = require('cfg.compe')}
@@ -64,14 +72,11 @@ return require('packer').startup(function(use)
   use {'neovim/nvim-lspconfig'}
   use {'williamboman/nvim-lsp-installer', config = require'cfg.nvim-lsp-installer'}
   use {'p00f/clangd_extensions.nvim'}
-
-  -- linter
-  use {'mfussenegger/nvim-lint', config = function()
-       require('lint').linters_by_ft = {
-         cpp = {'cppcheck',}
-       }
-     end
+  use { 'j-hui/fidget.nvim', config = function()
+    require "fidget".setup {}
+  end
   }
+  use { 'jose-elias-alvarez/null-ls.nvim', config = require'cfg.null-ls'}
 
   -- dap (live-debugging)
   use {'mfussenegger/nvim-dap', ft = {'c', 'cpp', 'cs'}, config = require('cfg.nvim-dap')}
@@ -93,13 +98,10 @@ return require('packer').startup(function(use)
     ]]
   end}
 
-  use {'ggandor/lightspeed.nvim'}
-
   -- themes
   use {'folke/lsp-colors.nvim'}
   use {'joshdick/onedark.vim', config = require('cfg.colors')}
 
   use {'tweekmonster/startuptime.vim', cmd = 'StartupTime'}
-  use {'vim-scripts/DoxygenToolkit.vim'}
 
 end)

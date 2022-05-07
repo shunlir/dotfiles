@@ -1,3 +1,5 @@
+require('impatient') -- save ~50% startup time for lua modules
+
 local g = vim.g
 local opt = vim.opt
 local env = vim.env
