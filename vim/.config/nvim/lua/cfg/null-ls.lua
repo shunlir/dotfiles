@@ -1,6 +1,9 @@
 return function()
   local h = require("null-ls.helpers")
   require("null-ls").setup({
+    on_init = function(new_client, _)
+      new_client.offset_encoding = 'utf-32'
+    end,
     sources = {
       require("null-ls").builtins.diagnostics.cppcheck.with({
         diagnostics_format = "#{m}",

@@ -1,5 +1,33 @@
 return function()
+  -- vim.diagnostic.config({virtual_text = { source = true}})
+  local function hack_clangd_ccls(client)
+    if client.name == 'ccls' then
+      client.server_capabilities.hoverProvider = false
+      client.server_capabilities.completionProvider = false
+      client.server_capabilities.codeActionProvider = false
+      client.server_capabilities.documentFormattingProvider = false
+      client.server_capabilities.documentHighlightProvider = false
+      client.server_capabilities.documentLinkProvider = false
+      client.server_capabilities.documentOnTypeFormattingProvider = false
+      client.server_capabilities.documentRangeFormattingProvider = false
+      client.server_capabilities.documentSymbolProvider = false
+      client.server_capabilities.renameProvider = false
+      client.server_capabilities.signatureHelpProvider = false
+      -- client.server_capabilities.codeLensProvider = false
+      -- client.server_capabilities.foldingRangeProvider = false
+    elseif client.name == 'clangd' then
+      client.server_capabilities.definitionProvider = false
+      client.server_capabilities.referencesProvider = false
+      client.server_capabilities.declarationProvider = false
+      client.server_capabilities.typeDefinitionProvider = false
+      client.server_capabilities.implementationProvider = false
+      client.server_capabilities.workspaceSymbolProvider = false
+    end
+  end
+
   local on_attach = function(client, bufnr)
+    hack_clangd_ccls(client)
+
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -56,6 +84,7 @@ return function()
   -- config that activates keymaps and enables snippet support
   local function make_opts()
     local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    capabilities.offsetEncoding = { "utf-32" }
     return {
       -- enable snippet support
       capabilities = capabilities,
@@ -102,7 +131,8 @@ return function()
       local process = require "nvim-lsp-installer.process"
       local install_dir = vim.fn.stdpath("data") .. "/lsp_servers/clangd"
       opts.filetypes = {"c", "cpp"}; -- we don't want objective-c and objective-cpp!
-      opts.cmd = {"clangd", "--background-index", "--pch-storage=disk", "--completion-style=detailed", "--clang-tidy", "--enable-config", "--offset-encoding=utf-32"}
+      -- opts.cmd = {"clangd", "--background-index", "--pch-storage=disk", "--completion-style=detailed", "--clang-tidy", "--enable-config", "--offset-encoding=utf-32"}
+      opts.cmd = {"clangd", "--background-index", "--pch-storage=disk", "--completion-style=detailed", "--clang-tidy", "--enable-config"}
       opts.cmd_env = {
         PATH = process.extend_path { path.concat { install_dir, "clangd", "bin" } },
       }
