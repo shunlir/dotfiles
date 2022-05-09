@@ -19,7 +19,7 @@ return function()
     ["<leader>lx"] = { "<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<cr>", "Document Diagnostic"},
     ["<leader>la"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action"},
     ["<leader>lf"] = { "<cmd>lua vim.lsp.buf.range_formatting()<cr>", "Format Selection"},
-    ["<leader>lF"] = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format File"},
+    ["<leader>lF"] = { "<cmd>lua vim.lsp.buf.format{async=true}<cr>", "Format File"},
 
     ["<leader>sp"] = { "<cmd>Telescope live_grep_raw theme=get_ivy<cr>", "Search in project"},
     ["<leader>s."] = {
