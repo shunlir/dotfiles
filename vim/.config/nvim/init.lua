@@ -33,10 +33,3 @@ function _G.dump(...)
 end
 
 require('plugins')
-
-
-local map = vim.api.nvim_set_keymap
-
---local opts = { noremap=true, silent=true }
--- map('n', '<leader>F', '<Cmd>lua require("my.lsp").cur_func()<CR>', opts)
---map('x', '<leader>lf', '<Cmd>lua vim.lsp.buf.range_formatting()<cr>', opts)

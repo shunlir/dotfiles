@@ -8,6 +8,7 @@ return function()
     ["<leader>fr"] = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
 
     ["<leader>t"] = { name = "+toggle" },
+    ["<leader>tv"] = { "<Cmd>lua require('my.utils').diagnostics_toggle()<CR>", "Toggle diagnostics" },
     ["<leader>tl"] = { "<cmd>ToggleSignAndNumber<cr>", "Toggle line" },
     ["<leader>tf"] = { "<cmd>ToggleFull<cr>", "Toggle Full" },
 
@@ -64,7 +65,7 @@ return function()
     ["<leader>*"] = { "<cmd>Telescope grep_string theme=get_ivy<cr>", "Search current word in project"},
     ["<leader>\""] = { "<cmd>TroubleToggle<cr>", "Toggle trouble list" },
     ["<leader>'"] = { "<cmd>Telescope resume theme=get_ivy<cr>", "Telescope resume"},
-    ["<leader>F"] = { "<Cmd>lua require('my.lsp').cur_func()<CR>", "Show Current Function"},
+    ["<leader>F"] = { "<Cmd>lua require('my.utils').which_func()<CR>", "Show Current Function"},
     ["<leader>R"]        = {
       function()
         local vimp = require('vimp')

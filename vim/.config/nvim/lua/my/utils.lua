@@ -1,3 +1,5 @@
+local M = {}
+
 local function extract_symbols(items, _result)
   local result = _result or {}
   if items == nil then return result end
@@ -124,8 +126,8 @@ local function current_function_callback(_, result, _, _)
   end
 end
 
-local function which_func()
-  local params = { textDocument = require('vim.lsp.util').make_text_document_params() }
+M.which_func = function()
+  local params = { textDocument = require('vim.lsp.util').make_text_document_params(0) }
   vim.lsp.buf_request(0, 'textDocument/documentSymbol', params, current_function_callback)
 
   --[[ alternatively
@@ -135,6 +137,15 @@ local function which_func()
   --]]
 end
 
-return {
-  cur_func = which_func
-}
+-- toggle diagnostic show/hide for all buffers
+M.diagnostics_visible = true
+M.diagnostics_toggle = function()
+    M.diagnostics_visible = not M.diagnostics_visible
+    if M.diagnostics_visible then
+        vim.diagnostic.show(nil, 0)
+    else
+        vim.diagnostic.hide()
+    end
+end
+
+return M
