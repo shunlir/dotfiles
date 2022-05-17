@@ -19,6 +19,8 @@ return function()
   vim.cmd[[
     augroup AgMisc
     autocmd ColorScheme * highlight! IncSearch cterm=bold ctermfg=15 ctermbg=9 gui=bold guifg=#ffffff guibg=#f00077
+    autocmd ColorScheme * highlight! CmpItemAbbrMatchFuzzy guifg=#56B6C2
+    autocmd ColorScheme * highlight! CmpItemAbbrMatch guifg=#56B6C2
     augroup END
   ]]
   vim.cmd('colorscheme onedark')
