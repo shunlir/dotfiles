@@ -140,7 +140,7 @@ return function()
 
     ["ccls"] = function(opts)
       opts.filetypes = {"c", "cpp"}; -- we don't want objective-c and objective-cpp!
-      opts.init_options = { cache = { directory = ".cache/ccls" } }
+      opts.init_options = { cache = { directory = vim.fn.expand("~/.cache/ccls") } }
     end,
   }
 
