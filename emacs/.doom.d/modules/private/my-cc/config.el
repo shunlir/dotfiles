@@ -28,3 +28,21 @@
 
 (use-package! modern-cpp-font-lock
   :hook '(c++-mode . modern-c++-font-lock-mode))
+
+(use-package flycheck-clang-tidy
+  :after flycheck
+  :hook '(flycheck-mode . flycheck-clang-tidy-setup))
+
+(defvar-local my/flycheck-local-cache nil)
+(defun my/flycheck-checker-get (fn checker property)
+  (or (alist-get property (alist-get checker my/flycheck-local-cache))
+      (funcall fn checker property)))
+(advice-add 'flycheck-checker-get :around 'my/flycheck-checker-get)
+(add-hook 'lsp-managed-mode-hook
+  (lambda ()
+    (when (derived-mode-p 'c-mode)
+      (setq my/flycheck-local-cache '((lsp . ((next-checkers . (c/c++-clang-tidy)))))))))
+(add-hook 'lsp-managed-mode-hook
+  (lambda ()
+    (when (derived-mode-p 'c++-mode)
+      (setq my/flycheck-local-cache '((lsp . ((next-checkers . (c/c++-clang-tidy)))))))))

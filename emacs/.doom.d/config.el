@@ -82,7 +82,7 @@
   (add-to-list 'recentf-exclude
              "~/.dotfiles/emacs/.emacs.d-doom-emacs/.local/etc/workspaces/autosave"))
 
-(setq projectile-project-search-path '("~/repo"))
+(setq projectile-project-search-path '("~/repo" "/workspaces"))
 
 (setq orderless-matching-styles '(orderless-literal, orderless-regexp, orderless-flex))
 (setq orderless-matching-styles
