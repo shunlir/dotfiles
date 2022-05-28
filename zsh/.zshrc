@@ -122,7 +122,7 @@ type nvim 2>&1 >/dev/null && alias vim='nvim'
 alias weather='clear && curl wttr.in'
 
 #
-export PATH=$PATH:~/.local/bin:~/.dotfiles/emacs/.emacs.d-doom-emacs/bin
+export PATH=$PATH:~/.local/bin:~/.config/doomemacs/bin
 
 # local zshrc
 [[ ! -f ~/.zshrc.local ]] || source ~/.zshrc.local
