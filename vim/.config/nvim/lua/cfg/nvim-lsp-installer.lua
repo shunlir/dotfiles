@@ -127,8 +127,8 @@ return function()
     end,
 
     ["clangd"] = function(opts)
-      local path = require "nvim-lsp-installer.path"
-      local process = require "nvim-lsp-installer.process"
+      local path = require "nvim-lsp-installer.core.path"
+      local process = require "nvim-lsp-installer.core.process"
       local install_dir = vim.fn.stdpath("data") .. "/lsp_servers/clangd"
       opts.filetypes = {"c", "cpp"}; -- we don't want objective-c and objective-cpp!
       -- opts.cmd = {"clangd", "--background-index", "--pch-storage=disk", "--completion-style=detailed", "--clang-tidy", "--enable-config", "--offset-encoding=utf-32"}
