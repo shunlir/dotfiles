@@ -67,11 +67,7 @@ fi
 zinit snippet https://raw.githubusercontent.com/shunlir/oh-my-zsh-custom/master/themes/clean.zsh-theme
 
 # Z auto jump
-if (( $+commands[lua] )); then
-  _ZL_MATCH_MODE=1
-  _ZL_ADD_ONCE=1
-  zinit light skywind3000/z.lua
-fi
+eval "$(zoxide init zsh)"
 
 # compinit after all loading all plugins
 autoload -Uz compinit
@@ -79,14 +75,14 @@ compinit
 zinit cdreplay -q
 
 # p <project>
-if [ -e ~/repo ]; then
+if [ -e /workspaces ]; then
     _p () {
         local commands
-        commands=(`ls ~/repo`)
+        commands=(`ls /workspaces`)
         _describe -t commands 'command' commands
     }
     function p () {
-        cd ~/repo/$1
+        cd /workspaces/$1
     }
     compdef _p p
 fi
