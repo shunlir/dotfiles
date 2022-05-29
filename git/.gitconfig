@@ -30,3 +30,4 @@
     syntax-theme = gruvbox-dark
     minus-style = syntax "#301b1d" # adjust for gruvbox-dark background
     file-style = bold yellow ul
+    keep-plus-minus-markers = true
