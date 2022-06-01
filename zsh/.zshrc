@@ -67,7 +67,9 @@ fi
 zinit snippet https://raw.githubusercontent.com/shunlir/oh-my-zsh-custom/master/themes/clean.zsh-theme
 
 # Z auto jump
-eval "$(zoxide init zsh)"
+if (( $+commands[fzf] )); then
+  eval "$(zoxide init zsh)"
+fi
 
 # compinit after all loading all plugins
 autoload -Uz compinit
