@@ -69,8 +69,8 @@ return require('packer').startup(function(use)
   }
 
   -- lsp (diagnostics, compe source, ...)
-  use {'neovim/nvim-lspconfig'}
-  use {'williamboman/nvim-lsp-installer', config = require'cfg.nvim-lsp-installer'}
+  use {'williamboman/nvim-lsp-installer'}
+  use {'neovim/nvim-lspconfig', config = require'cfg.nvim-lspconfig'}
   use {'p00f/clangd_extensions.nvim'}
   use { 'j-hui/fidget.nvim', config = function()
     require "fidget".setup {}

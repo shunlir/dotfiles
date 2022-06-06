@@ -12,7 +12,8 @@ if env.COLORTERM == 'truecolor' or
    string.match(vim.env.TERM, '^xst-.*$') or
    string.match(vim.env.TERM, '^tmux-.*$') or
    string.match(vim.env.TERM, '^gnome-.*$') or
-   string.match(vim.env.TERM, '^vte-.*$') then
+   string.match(vim.env.TERM, '^vte-.*$') or
+   string.match(vim.env.TERM, '^xterm-kitty$') then
   opt.termguicolors = true
 end
 
