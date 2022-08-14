@@ -11,7 +11,7 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font          = "sans 8"
+theme.font          = "sans 11"
 
 theme.bg_normal     = "#222222"
 theme.bg_focus      = "#535d6c"
@@ -26,8 +26,10 @@ theme.fg_minimize   = "#ffffff"
 
 theme.useless_gap   = dpi(0)
 theme.border_width  = dpi(1)
-theme.border_normal = "#000000"
-theme.border_focus  = "#535d6c"
+-- theme.border_normal = "#000000"
+theme.border_normal = "#222222"
+-- theme.border_focus  = "#535d6c"
+theme.border_focus  = "#005577"
 theme.border_marked = "#91231c"
 
 -- There are other variable sets
@@ -42,6 +44,8 @@ theme.border_marked = "#91231c"
 -- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
 -- Example:
 --theme.taglist_bg_focus = "#ff0000"
+theme.taglist_bg_focus = "#005577"
+theme.tasklist_bg_focus = theme.taglist_bg_focus
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)
@@ -62,8 +66,14 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
 theme.menu_submenu_icon = themes_path.."default/submenu.png"
-theme.menu_height = dpi(15)
-theme.menu_width  = dpi(100)
+-- theme.menu_height = dpi(15)
+theme.menu_height = dpi(26)
+-- theme.menu_width  = dpi(100)
+theme.menu_width  = dpi(170)
+theme.menu_font = "sans 14"
+
+-- tasklist
+theme.tasklist_font = "sans 10"
 
 -- You can add as many variables as
 -- you wish and access them by using
