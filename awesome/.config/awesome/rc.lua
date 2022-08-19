@@ -18,6 +18,10 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+-- $PATH
+local posix = require("posix")
+posix.stdlib.setenv("PATH", "/home/shunlir/.local/bin:" .. os.getenv("PATH"))
+
 local dpi = require("beautiful.xresources").apply_dpi
 local scratch = require("scratch")
 
