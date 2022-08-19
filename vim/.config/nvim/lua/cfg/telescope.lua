@@ -2,7 +2,7 @@ return function()
 
   vim.cmd([[packadd telescope-fzf-native.nvim]])
   vim.cmd([[packadd telescope-file-browser.nvim]])
-  vim.cmd([[packadd telescope-live-grep-raw.nvim]])
+  vim.cmd([[packadd telescope-live-grep-args.nvim]])
   vim.cmd([[packadd telescope-ui-select.nvim]])
   vim.cmd([[packadd telescope-project.nvim]])
 
@@ -67,7 +67,7 @@ return function()
   -- load_extension, somewhere after setup function:
   require('telescope').load_extension('fzf')
   require("telescope").load_extension "file_browser"
-  require('telescope').load_extension('live_grep_raw')
+  require('telescope').load_extension('live_grep_args')
   require("telescope").load_extension("ui-select")
   require('telescope').load_extension('project')
 end

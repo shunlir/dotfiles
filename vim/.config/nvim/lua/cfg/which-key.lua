@@ -22,12 +22,12 @@ return function()
     ["<leader>lf"] = { "<cmd>lua vim.lsp.buf.range_formatting()<cr>", "Format Selection"},
     ["<leader>lF"] = { "<cmd>lua vim.lsp.buf.format{async=true}<cr>", "Format File"},
 
-    ["<leader>sp"] = { "<cmd>Telescope live_grep_raw theme=get_ivy<cr>", "Search in project"},
+    ["<leader>sp"] = { "<cmd>Telescope live_grep_args theme=get_ivy<cr>", "Search in project"},
     ["<leader>s."] = {
       function()
         local opts = { cwd = '%:p:h' }
         opts = require('telescope.themes').get_ivy(opts)
-        require("telescope").extensions.live_grep_raw.live_grep_raw(opts)
+        require("telescope").extensions.live_grep_args.live_grep_args(opts)
       end,
       "Search in current dir"
     },
