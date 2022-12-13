@@ -18,6 +18,10 @@ get_distro_ver() {
       echo "ubuntu.16.04"
       return 0
       ;;
+    "debian.11")
+      echo "debian.11"
+      return 0
+      ;;
   esac
   return 1
 }
@@ -26,24 +30,26 @@ has_cmd() {
   command -v "$1" >/dev/null 2>&1
 }
 
-ins_diff_so_fancy() {
-  if ! command -v diff-so-fancy >/dev/null 2>&1; then
-    wget -P /usr/local/bin/ https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy
-    chmod a+x /usr/local/bin/diff-so-fancy
+ins_delta() {
+  if ! command -v delta >/dev/null 2>&1; then
+    cd "$work"
+    local version="0.13.0"
+    wget https://github.com/dandavison/delta/releases/download/${version}/git-delta_${version}_amd64.deb
+    dpkg -i git-delta_${version}_amd64.deb
   fi
 }
 
 ins_fd() {
-  if ! command -v fd >/dev/null 2>&1; then
+  if ! has_cmd fd; then
     cd "$work"
-    local version="8.2.1"
+    local version="8.4.0"
     wget https://github.com/sharkdp/fd/releases/download/v${version}/fd_${version}_amd64.deb
     dpkg -i fd_${version}_amd64.deb
   fi
 }
 
 ins_rg() {
-  if ! command -v rg >/dev/null 2>&1; then
+  if ! has_cmd rg; then
     cd "$work"
     local version="13.0.0"
     wget https://github.com/BurntSushi/ripgrep/releases/download/${version}/ripgrep_${version}_amd64.deb
@@ -53,17 +59,28 @@ ins_rg() {
 }
 
 ins_fzf() {
-  if ! command -v fzf >/dev/null 2>&1; then
+  if ! has_cmd fzf; then
     cd "$work"
-    local version="0.27.2"
+    local version="0.30.0"
     wget https://github.com/junegunn/fzf/releases/download/${version}/fzf-${version}-linux_amd64.tar.gz
     tar xf /tmp/work/fzf-${version}-linux_amd64.tar.gz -C /usr/local/bin
     chmod a+x /usr/local/bin/fzf
+    wget -P /usr/local/bin/ https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-tmux
+    chmod a+x /usr/local/bin/fzf-tmux
+  fi
+}
+
+ins_bat() {
+  if ! has_cmd bat; then
+    cd "$work"
+    local version="0.21.0"
+    wget https://github.com/sharkdp/bat/releases/download/v${version}/bat_${version}_amd64.deb
+    dpkg -i bat_${version}_amd64.deb
   fi
 }
 
 ins_node() {
-  if ! command -v node >/dev/null 2>&1; then
+  if ! has_cmd node; then
     curl -sL install-node.now.sh/lts | bash
   fi
 }
@@ -116,7 +133,8 @@ ins_i3status_rust() {
       curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain stable --no-modify-path -y
     fi
     . ~/.cargo/env
-    apt-get install -y libdbus-1-dev libssl-dev
+    apt-get install -y libdbus-1-dev libssl-dev libsensors-dev
+    cd "$work"
     git clone --depth=1 https://github.com/greshake/i3status-rust.git
     cd i3status-rust && cargo build --release
     cp target/release/i3status-rs /usr/local/bin/
@@ -126,30 +144,11 @@ ins_i3status_rust() {
 }
 
 
-prep_ubuntu1604() {
-  # for vim 8
-  add-apt-repository -y ppa:jonathonf/vim
-  # for emacs27
-  add-apt-repository -y ppa:kelleyk/emacs
-  apt-get update
-  apt-get install -y git wget curl lua5.1 tmux vim golang emacs27
-  ins_diff_so_fancy
-  ins_fd
-  ins_rg
-  ins_fzf
-  ins_node
-  # the zsh from Ubuntu16.04 doesn't work with fzf-tab
-  ins_zsh
-}
-
 prep_ubuntu1804() {
-  add-apt-repository -y ppa:neovim-ppa/stable
   add-apt-repository -y ppa:kelleyk/emacs
   apt-get update
-  apt-get install -y git wget curl tmux emacs27 \
-    zsh lua5.1 \
-    neovim python3-neovim python3-dev python3-setuptools golang
-  ins_diff_so_fancy
+  apt-get install -y git wget curl tmux emacs28 zsh
+  ins_delta
   ins_fd
   ins_rg
   ins_fzf
@@ -163,16 +162,30 @@ prep_ubuntu1804() {
 }
 
 prep_ubuntu2004() {
-  apt-get install -y git wget curl tmux emacs27  \
-    zsh lua5.1 \
-    neovim python3-neovim golang
-  ins_diff_so_fancy
+  add-apt-repository -y ppa:kelleyk/emacs
+  apt-get update
+  apt-get install -y git wget curl tmux emacs28 zsh
+  ins_delta
   ins_fd
   ins_rg
   ins_fzf
   ins_node
 
   [ "$1" == "--gui" ] || return 0
+  apt-get install -y rxvt-unicode-256color fonts-font-awesome \
+      i3 rofi
+  ins_nerd_fonts
+  ins_i3status_rust
+}
+
+prep_debian11() {
+  apt-get install -y git wget curl emacs zsh build-essential
+  ins_fzf
+  ins_node
+  test -d /home/linuxbrew/.linuxbrew || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  brew install rg fd delta exa bat zoxide broot tmux
+
+  [ "${1:-no}" == "--gui" ] || return 0
   apt-get install -y rxvt-unicode-256color fonts-font-awesome \
       i3 rofi
   ins_nerd_fonts
@@ -196,6 +209,13 @@ case "$platform" in
   "ubuntu.16.04")
     echo "ubuntu.16.04"
     prep_ubuntu1604 $@
+    ;;
+  "debian.11")
+    echo "debian.11"
+    prep_debian11 $@
+    ;;
+  *)
+    echo "unsupported distro: $platform"
     ;;
 esac
 
