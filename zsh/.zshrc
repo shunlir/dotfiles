@@ -67,7 +67,7 @@ fi
 zinit snippet https://raw.githubusercontent.com/shunlir/oh-my-zsh-custom/master/themes/clean.zsh-theme
 
 # Z auto jump
-if (( $+commands[fzf] )); then
+if (( $+commands[zoxide] )); then
   eval "$(zoxide init zsh)"
 fi
 
@@ -97,7 +97,7 @@ elif [ "$(uname)" = "Linux" ]; then
   alias ls='ls -G'
 fi
 alias grep='grep --color=auto'
-alias gg='git status'
+alias gs='git status'
 type nvim 2>&1 >/dev/null && alias vim='nvim'
 alias weather='clear && curl wttr.in'
 
