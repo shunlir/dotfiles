@@ -64,3 +64,7 @@ command! -nargs=0 ToggleFull call <SID>ToggleResize()
 " format selected range
 command! -nargs=0 FormatRange lua vim.lsp.buf.range_formatting()
 vnoremap <silent> <leader>lf :<C-U>FormatRange<cr>
+
+" jsonc for some vscode setting json files
+autocmd BufNewFile,BufRead devcontainer.json setlocal filetype=jsonc
+autocmd BufNewFile,BufRead cmake-variants.json setlocal filetype=jsonc

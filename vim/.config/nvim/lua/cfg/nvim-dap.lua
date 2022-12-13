@@ -2,12 +2,10 @@ return function()
   local dap = require('dap')
   dap.defaults.fallback.terminal_win_cmd = 'below 5sp new'
 
-  local dap_install = require("dap-install")
-  dap_install.config("ccppr_vsc_dbg", {})
-  dap_install.config("dnetcs_dbg", {})
   dap.adapters.cppdbg = {
+    id = 'cppdbg',
     type = 'executable',
-    command = vim.fn.stdpath('data') .. '/dapinstall/ccppr_vsc_dbg/extension/debugAdapters/OpenDebugAD7',
+    command = vim.fn.stdpath('data') .. '/dap_debuggers/cpptools/extension/debugAdapters/OpenDebugAD7',
   }
   dap.configurations.cpp = {
     {
@@ -19,6 +17,13 @@ return function()
       end,
       cwd = '${workspaceFolder}',
       stopOnEntry = true,
+      setupCommands = {
+       {
+          text = '-enable-pretty-printing',
+          description =  'enable pretty printing',
+          ignoreFailures = false
+       },
+     },
     },
     {
       name = 'Attach to gdbserver :1234',
@@ -31,6 +36,13 @@ return function()
       program = function()
         return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
       end,
+      setupCommands = {
+       {
+          text = '-enable-pretty-printing',
+          description =  'enable pretty printing',
+          ignoreFailures = false
+       },
+     },
     },
   }
   dap.configurations.c = dap.configurations.cpp

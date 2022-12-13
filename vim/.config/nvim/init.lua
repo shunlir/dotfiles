@@ -5,6 +5,8 @@ local opt = vim.opt
 local env = vim.env
 local cmd = vim.cmd
 
+opt.mouse = nil
+
 g.mapleader = ' '
 
 if env.COLORTERM == 'truecolor' or

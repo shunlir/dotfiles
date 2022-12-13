@@ -1,4 +1,7 @@
 return function()
+  require("nvim-lsp-installer").setup {}
+  local lspconfig = require("lspconfig")
+
   -- vim.diagnostic.config({virtual_text = { source = true}})
   local function hack_clangd_ccls(client)
     if client.name == 'ccls' then
@@ -52,13 +55,6 @@ return function()
     buf_set_keymap('n', ']e', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
     buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.setloclist()<CR>', opts)
 
-    -- Set some keybinds conditional on server capabilities
-    -- if client.server_capabilities.document_formatting then
-    --   buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-    -- elseif client.server_capabilities.document_range_formatting then
-    --   buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
-    -- end
-
 
     -- Set autocommands conditional on server_capabilities
     -- if client.server_capabilities.documentHighlightProvider then
@@ -83,7 +79,7 @@ return function()
 
   -- config that activates keymaps and enables snippet support
   local function make_opts()
-    local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    local capabilities = require('cmp_nvim_lsp').default_capabilities()
     capabilities.offsetEncoding = { "utf-32" }
     return {
       -- enable snippet support
@@ -122,10 +118,6 @@ return function()
       }
     end,
 
-    ["sourcekit"] = function(opts)
-      opts.filetypes = {"swift", "objective-c", "objective-cpp"}; -- we don't want c and cpp!
-    end,
-
     ["clangd"] = function(opts)
       local path = require "nvim-lsp-installer.core.path"
       local process = require "nvim-lsp-installer.core.process"
@@ -139,25 +131,31 @@ return function()
     end,
 
     ["ccls"] = function(opts)
-      opts.filetypes = {"c", "cpp"}; -- we don't want objective-c and objective-cpp!
-      opts.init_options = { cache = { directory = vim.fn.expand("~/.cache/ccls") } }
+      opts.cmd = {'/opt/ccls/bin/ccls'}
+      opts.filetypes = {"c", "cpp"} -- we don't want objective-c and objective-cpp!
+      opts.init_options = {
+        cache = {
+          directory = vim.fn.expand("~/.cache/ccls")
+        },
+        clang = {
+          resourceDir = '/opt/ccls/clang-resource'
+        },
+      }
     end,
   }
 
   -- nvim-lsp-installer
-  local lsp_installer = require("nvim-lsp-installer")
-    lsp_installer.on_server_ready(function(server)
-      local opts = make_opts()
-
-      -- language specific config
-      if enhance_server_opts[server.name] then
-        enhance_server_opts[server.name](opts)
-      end
-
-      if server.name == "clangd" then
-        require("clangd_extensions").setup{server = opts}
-      else
-        server:setup(opts)
-      end
-    end)
+  local servers = { 'sumneko_lua', 'clangd', 'ccls' }
+  for _, server in ipairs(servers) do
+    local opts = make_opts()
+    -- language specific config
+    if enhance_server_opts[server] then
+      enhance_server_opts[server](opts)
+    end
+    if server == "clangd" then
+      require("clangd_extensions").setup{server = opts}
+    else
+      lspconfig[server].setup(opts)
+    end
+  end
 end

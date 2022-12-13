@@ -11,6 +11,7 @@ return function()
     ["<leader>tv"] = { "<Cmd>lua require('my.utils').diagnostics_toggle()<CR>", "Toggle diagnostics" },
     ["<leader>tl"] = { "<cmd>ToggleSignAndNumber<cr>", "Toggle line" },
     ["<leader>tf"] = { "<cmd>ToggleFull<cr>", "Toggle Full" },
+    ["<leader>th"] = { "<cmd>ClangdSwitchSourceHeader<cr>", "Toggle Source/Header" },
 
     ["<leader>wc"] = { "<cmd>close<cr>", "Close window"},
 
