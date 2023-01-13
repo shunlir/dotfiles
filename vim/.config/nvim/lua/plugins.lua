@@ -76,7 +76,9 @@ return require('packer').startup(function(use)
   }
 
   -- lsp (diagnostics, compe source, ...)
-  use {'williamboman/nvim-lsp-installer'}
+  -- use {'williamboman/nvim-lsp-installer'}
+  use {'williamboman/mason.nvim'}
+  use {'williamboman/mason-lspconfig.nvim'}
   use {'neovim/nvim-lspconfig', config = require'cfg.nvim-lspconfig'}
   use {'p00f/clangd_extensions.nvim'}
   use { 'j-hui/fidget.nvim', config = function()

@@ -1,5 +1,6 @@
 return function()
-  require("nvim-lsp-installer").setup {}
+  require("mason").setup()
+  require("mason-lspconfig").setup()
   local lspconfig = require("lspconfig")
 
   -- vim.diagnostic.config({virtual_text = { source = true}})
@@ -119,15 +120,9 @@ return function()
     end,
 
     ["clangd"] = function(opts)
-      local path = require "nvim-lsp-installer.core.path"
-      local process = require "nvim-lsp-installer.core.process"
-      local install_dir = vim.fn.stdpath("data") .. "/lsp_servers/clangd"
       opts.filetypes = {"c", "cpp"}; -- we don't want objective-c and objective-cpp!
       -- opts.cmd = {"clangd", "--background-index", "--pch-storage=disk", "--completion-style=detailed", "--clang-tidy", "--enable-config", "--offset-encoding=utf-32"}
       opts.cmd = {"clangd", "--background-index", "--pch-storage=disk", "--completion-style=detailed", "--clang-tidy", "--enable-config"}
-      opts.cmd_env = {
-        PATH = process.extend_path { path.concat { install_dir, "clangd", "bin" } },
-      }
     end,
 
     ["ccls"] = function(opts)
@@ -144,7 +139,6 @@ return function()
     end,
   }
 
-  -- nvim-lsp-installer
   local servers = { 'sumneko_lua', 'clangd', 'ccls' }
   for _, server in ipairs(servers) do
     local opts = make_opts()
