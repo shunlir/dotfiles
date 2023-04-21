@@ -91,7 +91,7 @@ return function()
   end
 
   local enhance_server_opts = {
-    ["sumneko_lua"] = function(opts)
+    ["lua_ls"] = function(opts)
       -- Configure lua language server for neovim development
       local runtime_path = vim.split(package.path, ';')
       table.insert(runtime_path, "lua/?.lua")
@@ -139,7 +139,7 @@ return function()
     end,
   }
 
-  local servers = { 'sumneko_lua', 'clangd', 'ccls' }
+  local servers = { 'lua_ls', 'clangd', 'ccls' }
   for _, server in ipairs(servers) do
     local opts = make_opts()
     -- language specific config
