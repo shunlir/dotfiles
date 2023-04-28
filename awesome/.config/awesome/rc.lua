@@ -505,7 +505,7 @@ awful.rules.rules = {
         }
       },
       properties = { floating = true },
-      callback = function (c) awful.placement.centered(c, nil) end
+      callback = function (c) awful.placement.centered(c, {honor_workarea=true}) end
     },
 
     -- Add titlebars to normal clients and dialogs
