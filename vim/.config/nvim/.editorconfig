@@ -1,0 +1,11 @@
+[*.lua]
+# [basic]
+
+indent_style = space
+indent_size = 2
+# none/single/double
+quote_style = none
+continuation_indent = 2
+max_line_length = 120
+end_of_line = lf
+call_arg_parentheses = keep

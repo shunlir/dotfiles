@@ -1,11 +1,5 @@
 return function()
 
-  vim.cmd([[packadd telescope-fzf-native.nvim]])
-  vim.cmd([[packadd telescope-file-browser.nvim]])
-  vim.cmd([[packadd telescope-live-grep-args.nvim]])
-  vim.cmd([[packadd telescope-ui-select.nvim]])
-  vim.cmd([[packadd telescope-project.nvim]])
-
   require("telescope").setup {
     defaults = {
       -- Your defaults config goes in here
