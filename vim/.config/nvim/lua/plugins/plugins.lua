@@ -40,8 +40,6 @@ return {
   { 'tpope/vim-sleuth',          event = 'InsertEnter' }, -- heuristically indent
   -- coment
   { 'numToStr/Comment.nvim',     config = function() require('Comment').setup() end },
-  -- formatter
-  { 'gpanders/editorconfig.nvim' },
   -- ga enhance
   { 'tpope/vim-characterize',    lazy = false,                                      keys = 'g' },
 
