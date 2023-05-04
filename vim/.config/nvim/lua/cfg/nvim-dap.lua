@@ -18,12 +18,12 @@ return function()
       cwd = '${workspaceFolder}',
       stopOnEntry = true,
       setupCommands = {
-       {
+        {
           text = '-enable-pretty-printing',
-          description =  'enable pretty printing',
+          description = 'enable pretty printing',
           ignoreFailures = false
-       },
-     },
+        },
+      },
     },
     {
       name = 'Attach to gdbserver :1234',
@@ -37,12 +37,12 @@ return function()
         return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
       end,
       setupCommands = {
-       {
+        {
           text = '-enable-pretty-printing',
-          description =  'enable pretty printing',
+          description = 'enable pretty printing',
           ignoreFailures = false
-       },
-     },
+        },
+      },
     },
   }
   dap.configurations.c = dap.configurations.cpp

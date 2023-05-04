@@ -6,7 +6,7 @@ local function extract_symbols(items, _result)
   for _, item in ipairs(items) do
     local kind = require('vim.lsp.protocol').SymbolKind[item.kind] or 'Unknown'
     local sym_range = nil
-    if item.location then -- Item is a SymbolInformation
+    if item.location then  -- Item is a SymbolInformation
       sym_range = item.location.range
     elseif item.range then -- Item is a DocumentSymbol
       sym_range = item.range
@@ -60,14 +60,14 @@ local function filter(list, test)
 end
 
 local scope_kinds = {
- Class = true,
- Function = true,
- Method = true,
- Struct = true,
- Enum = true,
- Interface = true,
- Namespace = true,
- Module = true,
+  Class = true,
+  Function = true,
+  Method = true,
+  Struct = true,
+  Enum = true,
+  Interface = true,
+  Namespace = true,
+  Module = true,
 }
 
 local function current_function_callback(_, result, _, _)
@@ -113,9 +113,8 @@ local function current_function_callback(_, result, _, _)
         fn_name = _config.kind_labels[sym.kind] .. ' ' .. fn_name
       end
       --]]
-
       print(fn_name)
-      local lines = {sym.detail}
+      local lines = { sym.detail }
       table.insert(lines, '`' .. fn_name .. '`')
       local opts = {
         height = 2
@@ -140,12 +139,12 @@ end
 -- toggle diagnostic show/hide for all buffers
 M.diagnostics_visible = true
 M.diagnostics_toggle = function()
-    M.diagnostics_visible = not M.diagnostics_visible
-    if M.diagnostics_visible then
-        vim.diagnostic.show(nil, 0)
-    else
-        vim.diagnostic.hide()
-    end
+  M.diagnostics_visible = not M.diagnostics_visible
+  if M.diagnostics_visible then
+    vim.diagnostic.show(nil, 0)
+  else
+    vim.diagnostic.hide()
+  end
 end
 
 return M

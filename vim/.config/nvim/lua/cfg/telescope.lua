@@ -1,5 +1,4 @@
 return function()
-
   require("telescope").setup {
     defaults = {
       -- Your defaults config goes in here
@@ -7,12 +6,12 @@ return function()
         i = {
           ["<C-f>"] = require('telescope.actions').results_scrolling_down,
           ["<C-b>"] = require('telescope.actions').results_scrolling_up,
-          ["<c-l>"] = require'trouble.providers.telescope'.open_with_trouble,
+          ["<c-l>"] = require 'trouble.providers.telescope'.open_with_trouble,
         },
         n = {
           ["<C-f>"] = require('telescope.actions').results_scrolling_down,
           ["<C-b>"] = require('telescope.actions').results_scrolling_up,
-          ["<c-l>"] = require'trouble.providers.telescope'.open_with_trouble,
+          ["<c-l>"] = require 'trouble.providers.telescope'.open_with_trouble,
         },
       },
       prompt_prefix = "$ ",
@@ -27,24 +26,24 @@ return function()
         sort_lastused = true,
         previewer = false,
       },
-      find_files = {theme = 'ivy', path_display = {}},
-      git_files = {theme = 'ivy', path_display = {}},
-      file_browser = {theme = 'ivy',},
-      oldfiles = {theme = 'ivy',},
-      lsp_references = {theme = 'ivy',},
-      pickers = {theme = 'ivy',},
+      find_files = { theme = 'ivy', path_display = {} },
+      git_files = { theme = 'ivy', path_display = {} },
+      file_browser = { theme = 'ivy', },
+      oldfiles = { theme = 'ivy', },
+      lsp_references = { theme = 'ivy', },
+      pickers = { theme = 'ivy', },
     },
     extensions = {
       -- Your extension config goes in here
       fzf = {
-        fuzzy = true,                    -- false will only do exact matching
+        fuzzy = true,                   -- false will only do exact matching
         override_generic_sorter = true, -- override the generic sorter
-        override_file_sorter = true,     -- override the file sorter
-        case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-                                         -- the default case_mode is "smart_case"
+        override_file_sorter = true,    -- override the file sorter
+        case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
+        -- the default case_mode is "smart_case"
       },
       ["ui-select"] = {
-        require("telescope.themes").get_ivy{
+        require("telescope.themes").get_ivy {
           -- even more opts
         }
       },

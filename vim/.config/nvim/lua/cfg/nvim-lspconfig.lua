@@ -39,7 +39,7 @@ return function()
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     -- Mappings.
-    local opts = { noremap=true, silent=true }
+    local opts = { noremap = true, silent = true }
     buf_set_keymap('n', 'gd', '<Cmd>Telescope lsp_definitions theme=get_ivy<CR>', opts)
     buf_set_keymap('n', 'gD', '<cmd>Telescope lsp_references theme=get_ivy<CR>', opts)
     buf_set_keymap('n', 'gt', '<Cmd>Telescope lsp_type_definitions theme=get_ivy<CR>', opts)
@@ -51,7 +51,9 @@ return function()
     buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
     buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
     buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float(0, {scope="line",source="always", format=function(diag) return string.format("%s [%s]", diag.message, diag.code or (diag.user_data and diag.user_data.lsp and diag.user_data.lsp.code)) end})<CR>', opts)
+    buf_set_keymap('n', '<space>e',
+      '<cmd>lua vim.diagnostic.open_float(0, {scope="line",source="always", format=function(diag) return string.format("%s [%s]", diag.message, diag.code or (diag.user_data and diag.user_data.lsp and diag.user_data.lsp.code)) end})<CR>',
+      opts)
     buf_set_keymap('n', '[e', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
     buf_set_keymap('n', ']e', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
     buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.setloclist()<CR>', opts)
@@ -105,7 +107,7 @@ return function()
           },
           diagnostics = {
             -- Get the language server to recognize the `vim` global
-            globals = {'vim'},
+            globals = { 'vim' },
           },
           workspace = {
             -- Make the server aware of Neovim runtime files
@@ -122,14 +124,15 @@ return function()
     end,
 
     ["clangd"] = function(opts)
-      opts.filetypes = {"c", "cpp"}; -- we don't want objective-c and objective-cpp!
+      opts.filetypes = { "c", "cpp" }; -- we don't want objective-c and objective-cpp!
       -- opts.cmd = {"clangd", "--background-index", "--pch-storage=disk", "--completion-style=detailed", "--clang-tidy", "--enable-config", "--offset-encoding=utf-32"}
-      opts.cmd = {"clangd", "--background-index", "--pch-storage=disk", "--completion-style=detailed", "--clang-tidy", "--enable-config"}
+      opts.cmd = { "clangd", "--background-index", "--pch-storage=disk", "--completion-style=detailed", "--clang-tidy",
+        "--enable-config" }
     end,
 
     ["ccls"] = function(opts)
-      opts.cmd = {'/opt/ccls/bin/ccls'}
-      opts.filetypes = {"c", "cpp"} -- we don't want objective-c and objective-cpp!
+      opts.cmd = { '/opt/ccls/bin/ccls' }
+      opts.filetypes = { "c", "cpp" } -- we don't want objective-c and objective-cpp!
       opts.init_options = {
         cache = {
           directory = vim.fn.expand("~/.cache/ccls")
@@ -149,7 +152,7 @@ return function()
       enhance_server_opts[server](opts)
     end
     if server == "clangd" then
-      require("clangd_extensions").setup{server = opts}
+      require("clangd_extensions").setup { server = opts }
     else
       lspconfig[server].setup(opts)
     end

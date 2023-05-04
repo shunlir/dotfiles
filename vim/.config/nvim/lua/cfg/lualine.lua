@@ -1,11 +1,11 @@
 return function()
-  return
+  if true then return end
   require('lualine').setup({
     options = {
       icons_enabled = false,
       theme = 'jellybeans',
-      component_separators = {'', ''},
-      section_separators = {'', ''},
+      component_separators = { '', '' },
+      section_separators = { '', '' },
     },
     sections = {
       lualine_a = {
@@ -21,12 +21,12 @@ return function()
       lualine_c = {
         {
           'diagnostics',
-          sources = {'nvim_diagnostic'}
+          sources = { 'nvim_diagnostic' }
         }
       },
       lualine_x = {},
-      lualine_y = {'encoding', 'fileformat', 'filetype'},
-      lualine_z = {'location'}
+      lualine_y = { 'encoding', 'fileformat', 'filetype' },
+      lualine_z = { 'location' }
     },
   })
 end

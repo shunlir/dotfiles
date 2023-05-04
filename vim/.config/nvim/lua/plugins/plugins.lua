@@ -90,6 +90,7 @@ return {
 
   -- highlight trailing whitespaces
   { 'ntpeters/vim-better-whitespace' },
+
   -- highlight current matched word when in hlsearch
   {
     'qxxxb/vim-searchhi',

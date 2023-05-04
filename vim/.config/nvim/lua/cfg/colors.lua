@@ -1,5 +1,5 @@
 return function()
-  vim.cmd[[
+  vim.cmd [[
     augroup AgWhichKey
     autocmd ColorScheme * highlight! link WhichKeyGroup Directory
     autocmd ColorScheme * highlight! link WhichKey String
@@ -7,8 +7,8 @@ return function()
     augroup END
   ]]
 
-    -- autocmd ColorScheme * highlight! TelescopeMatching ctermfg=48 guifg=SpringGreen1
-  vim.cmd[[
+  -- autocmd ColorScheme * highlight! TelescopeMatching ctermfg=48 guifg=SpringGreen1
+  vim.cmd [[
     augroup AgTelescope
     autocmd ColorScheme * highlight! TelescopePromptPrefix ctermfg=red guifg=cyan
     autocmd ColorScheme * highlight! TelescopeMatching     guifg=SpringGreen guibg=NONE gui=bold ctermfg=85 ctermbg=NONE cterm=bold
@@ -16,7 +16,7 @@ return function()
     autocmd ColorScheme * highlight! TelescopeSelection      ctermfg=226 guifg=Yellow
     augroup END
   ]]
-  vim.cmd[[
+  vim.cmd [[
     augroup AgMisc
     autocmd ColorScheme * highlight! IncSearch cterm=bold ctermfg=15 ctermbg=9 gui=bold guifg=#ffffff guibg=#f00077
     autocmd ColorScheme * highlight! CmpItemAbbrMatchFuzzy guifg=#56B6C2

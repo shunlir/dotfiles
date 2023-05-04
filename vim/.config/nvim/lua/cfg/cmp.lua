@@ -1,6 +1,6 @@
 return function()
   vim.o.pumheight = 20
-  local cmp = require'cmp'
+  local cmp = require 'cmp'
 
   local feedkey = function(key, mode)
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
@@ -116,5 +116,5 @@ return function()
   -- If you want insert `(` after select function or method item
   -- (see https://github.com/windwp/nvim-autopairs/issues/171#issuecomment-954346682)
   local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-  cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done())
+  cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 end
