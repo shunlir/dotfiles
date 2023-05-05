@@ -6,12 +6,17 @@ return {
   { 'nvim-tree/nvim-web-devicons' },
 
   { 'kyazdani42/nvim-tree.lua',   cmd = { 'NvimTreeToggle' } },
-  { "aserowy/tmux.nvim",          config = require('cfg.tmux') },
-  { 'hoob3rt/lualine.nvim',       config = require('cfg.lualine') },
-  { 'lewis6991/gitsigns.nvim',    event = { 'BufRead', 'BufNewFile' }, config = require('cfg.gitsigns') },
+  { "aserowy/tmux.nvim",          event = 'VeryLazy',        config = require('cfg.tmux') },
+  {
+    'hoob3rt/lualine.nvim',
+    lazy = true,
+    event = 'VeryLazy',
+    config = require('cfg.lualine')
+  },
+  { 'lewis6991/gitsigns.nvim', event = { 'BufRead', 'BufNewFile' }, config = require('cfg.gitsigns') },
 
   -- fuzzy search
-  { 'folke/trouble.nvim',         lazy = true,                         cmd = 'Trouble' },
+  { 'folke/trouble.nvim',      lazy = true,                         cmd = 'Trouble' },
   {
     'nvim-telescope/telescope.nvim',
     lazy = true,
@@ -35,17 +40,19 @@ return {
   { 'ggandor/lightspeed.nvim' },
 
   -- editing enhance:
-  { 'tpope/vim-surround' },                               -- surroundings manipulation
-  { 'windwp/nvim-autopairs',     config = require('cfg.nvim-autopairs') },
-  { 'tpope/vim-sleuth',          event = 'InsertEnter' }, -- heuristically indent
+  { 'tpope/vim-surround',     event = 'VeryLazy' },    -- surroundings manipulation
+  { 'windwp/nvim-autopairs',  event = 'VeryLazy',   config = require('cfg.nvim-autopairs') },
+  { 'tpope/vim-sleuth',       event = 'InsertEnter' }, -- heuristically indent
   -- coment
-  { 'numToStr/Comment.nvim',     config = function() require('Comment').setup() end },
+  { 'numToStr/Comment.nvim',  event = 'VeryLazy',   config = function() require('Comment').setup() end },
   -- ga enhance
-  { 'tpope/vim-characterize',    lazy = false,                                      keys = 'g' },
+  { 'tpope/vim-characterize', event = 'VeryLazy',   keys = 'g' },
 
   -- completion, snippet
   {
     "hrsh7th/nvim-cmp",
+    lazy = true,
+    event = 'InsertEnter',
     config = require('cfg.cmp'),
     -- lazy = true,
     -- event = "InsertEnter",
@@ -62,29 +69,59 @@ return {
   },
 
   -- lsp (diagnostics, compe source, ...)
-  { 'williamboman/mason.nvim',          build = ':MasonUpdate' },
-  { 'williamboman/mason-lspconfig.nvim' },
-  { 'neovim/nvim-lspconfig',            config = require 'cfg.nvim-lspconfig' },
-  { 'p00f/clangd_extensions.nvim' },
+  {
+    'neovim/nvim-lspconfig',
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = require 'cfg.nvim-lspconfig',
+    dependencies = {
+      { 'williamboman/mason.nvim',          build = ':MasonUpdate' },
+      { 'williamboman/mason-lspconfig.nvim' },
+      { 'p00f/clangd_extensions.nvim' },
+    }
+  },
+  {
+    'jose-elias-alvarez/null-ls.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = require 'cfg.null-ls',
+    dependencies = {
+      { 'williamboman/mason.nvim', build = ':MasonUpdate' },
+    }
+  },
   {
     'j-hui/fidget.nvim',
-    config = function()
-      require "fidget".setup {}
-    end
+    lazy = true,
+    event = 'LspAttach',
+    config = function() require "fidget".setup {} end
   },
-  { 'jose-elias-alvarez/null-ls.nvim', config = require 'cfg.null-ls' },
 
   -- dap (live-debugging)
   {
     'mfussenegger/nvim-dap',
-    ft = { 'c', 'cpp', 'cs' },
+    lazy = true,
+    cmd = {
+      "DapSetLogLevel",
+      "DapShowLog",
+      "DapContinue",
+      "DapToggleBreakpoint",
+      "DapToggleRepl",
+      "DapStepOver",
+      "DapStepInto",
+      "DapStepOut",
+      "DapTerminate",
+    },
+    -- ft = { 'c', 'cpp', 'cs' },
     config =
       require('cfg.nvim-dap')
   },
 
-  { 'folke/which-key.nvim',            config = require('cfg.which-key') },
-  { 'TimUntersberger/neogit',          config = function() require('neogit').setup {} end },
-  { 'norcalli/nvim-colorizer.lua',     config = function() require('colorizer').setup { 'xdefaults', 'tmux' } end },
+  { 'folke/which-key.nvim',           config = require('cfg.which-key') },
+
+  {
+    'TimUntersberger/neogit',
+    -- event = 'VeryLazy', -- would cause blank welcome page
+    config = function() require('neogit').setup {} end
+  },
+  { 'NvChad/nvim-colorizer.lua',      event = 'VeryLazy',               config = function() require('colorizer').setup {} end },
 
   -- highlight trailing whitespaces
   { 'ntpeters/vim-better-whitespace' },
@@ -92,6 +129,7 @@ return {
   -- highlight current matched word when in hlsearch
   {
     'qxxxb/vim-searchhi',
+    -- event = 'VeryLazy', -- would cause blank welcome page
     config = function()
       vim.cmd [[
     nmap n <Plug>(searchhi-n)
