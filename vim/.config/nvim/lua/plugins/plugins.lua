@@ -37,7 +37,7 @@ return {
     dependencies = 'nvim-treesitter/nvim-treesitter',
     event = { 'BufReadPost', 'BufNewFile', }
   }, -- % enhance
-  { 'ggandor/lightspeed.nvim' },
+  { 'ggandor/leap.nvim' , config = function() require('leap').add_default_mappings() end },
 
   -- editing enhance:
   { 'tpope/vim-surround',     event = 'VeryLazy' },    -- surroundings manipulation
@@ -139,8 +139,9 @@ return {
   },
 
   -- themes
-  { 'folke/lsp-colors.nvim' },
-  { 'joshdick/onedark.vim', config = require('cfg.colors') },
+  -- { 'folke/lsp-colors.nvim' },
+  -- { 'joshdick/onedark.vim', config = require('cfg.colors') },
+  { 'navarasu/onedark.nvim', config = require('cfg.colors') },
 
   -- treesitter
   {
