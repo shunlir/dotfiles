@@ -23,5 +23,5 @@ return function()
     autocmd ColorScheme * highlight! CmpItemAbbrMatch guifg=#56B6C2
     augroup END
   ]]
-  vim.cmd('colorscheme onedark')
+  vim.cmd([[ colorscheme onedark ]])
 end

@@ -3,7 +3,7 @@ return function()
     ensure_installed = {
       "bash",
       "c",
-      "cpp",
+      -- "cpp", -- treesitter for cpp consumes ~100ms when opening a cpp file
       "css",
       "go",
       "gomod",
@@ -24,7 +24,7 @@ return function()
     }, -- A list of parser names, or "all"
     highlight = {
       enable = true,
-      disable = {},
+      disable = {'cpp'},
       additional_vim_regex_highlighting = false,
     },
     textobjects = {

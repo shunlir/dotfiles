@@ -1,12 +1,9 @@
 return {
   -- library used by other plugins
   { "nvim-lua/plenary.nvim",      lazy = true },
-
   -- icons
   { 'nvim-tree/nvim-web-devicons' },
-
-  { 'kyazdani42/nvim-tree.lua',   cmd = { 'NvimTreeToggle' } },
-  { "aserowy/tmux.nvim",          event = 'VeryLazy',        config = require('cfg.tmux') },
+  { "aserowy/tmux.nvim",          event = 'VeryLazy', config = require('cfg.tmux') },
   {
     'hoob3rt/lualine.nvim',
     lazy = true,
@@ -37,14 +34,19 @@ return {
     dependencies = 'nvim-treesitter/nvim-treesitter',
     event = { 'BufReadPost', 'BufNewFile', }
   }, -- % enhance
-  { 'ggandor/leap.nvim' , config = function() require('leap').add_default_mappings() end },
+  { 'ggandor/leap.nvim',  config = function() require('leap').add_default_mappings() end },
 
   -- editing enhance:
-  { 'tpope/vim-surround',     event = 'VeryLazy' },    -- surroundings manipulation
-  { 'windwp/nvim-autopairs',  event = 'VeryLazy',   config = require('cfg.nvim-autopairs') },
+  { 'tpope/vim-surround', event = 'VeryLazy' }, -- surroundings manipulation
+  {
+    'windwp/nvim-autopairs',
+    event = 'VeryLazy',
+    config = require(
+      'cfg.nvim-autopairs')
+  },
   { 'tpope/vim-sleuth',       event = 'InsertEnter' }, -- heuristically indent
   -- coment
-  { 'numToStr/Comment.nvim',  event = 'VeryLazy',   config = function() require('Comment').setup() end },
+  { 'numToStr/Comment.nvim', event = 'VeryLazy' },
   -- ga enhance
   { 'tpope/vim-characterize', event = 'VeryLazy',   keys = 'g' },
 
@@ -114,14 +116,14 @@ return {
       require('cfg.nvim-dap')
   },
 
-  { 'folke/which-key.nvim',           config = require('cfg.which-key') },
+  { 'folke/which-key.nvim',          config = require('cfg.which-key') },
 
   {
     'TimUntersberger/neogit',
     -- event = 'VeryLazy', -- would cause blank welcome page
     config = function() require('neogit').setup {} end
   },
-  { 'NvChad/nvim-colorizer.lua',      event = 'VeryLazy',               config = function() require('colorizer').setup {} end },
+  { 'NvChad/nvim-colorizer.lua',     event = 'VeryLazy',               config = function() require('colorizer').setup {} end },
 
   -- highlight trailing whitespaces
   { 'ntpeters/vim-better-whitespace' },
@@ -142,6 +144,8 @@ return {
   -- { 'folke/lsp-colors.nvim' },
   -- { 'joshdick/onedark.vim', config = require('cfg.colors') },
   { 'navarasu/onedark.nvim', config = require('cfg.colors') },
+  -- { 'folke/tokyonight.nvim', config = require('cfg.colors') },
+  { 'folke/tokyonight.nvim', lazy = true },
 
   -- treesitter
   {
