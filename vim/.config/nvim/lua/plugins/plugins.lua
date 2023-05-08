@@ -46,7 +46,7 @@ return {
   },
   { 'tpope/vim-sleuth',       event = 'InsertEnter' }, -- heuristically indent
   -- coment
-  { 'numToStr/Comment.nvim', event = 'VeryLazy' },
+  { 'numToStr/Comment.nvim',  event = 'VeryLazy',   config = function() require('Comment').setup() end },
   -- ga enhance
   { 'tpope/vim-characterize', event = 'VeryLazy',   keys = 'g' },
 
