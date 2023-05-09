@@ -128,6 +128,12 @@ return function()
       -- opts.cmd = {"clangd", "--background-index", "--pch-storage=disk", "--completion-style=detailed", "--clang-tidy", "--enable-config", "--offset-encoding=utf-32"}
       opts.cmd = { "clangd", "--background-index", "--pch-storage=disk", "--completion-style=detailed", "--clang-tidy",
         "--enable-config" }
+      opts.root_dir = require('lspconfig.util').root_pattern(
+          '.git',
+          'compile_commands.json',
+          'compile_flags.txt',
+          'configure.ac'
+        )
     end,
 
     ["ccls"] = function(opts)
