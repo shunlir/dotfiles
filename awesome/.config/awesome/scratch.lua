@@ -10,9 +10,9 @@ local defaultRule = {instance = "scratch"}
 local function turn_on(c)
     local current_tag = awful.tag.selected(c.screen)
     ctags = {current_tag}
-    for k,tag in pairs(c:tags()) do
-        if tag ~= current_tag then table.insert(ctags, tag) end
-    end
+    -- for k,tag in pairs(c:tags()) do
+    --     if tag ~= current_tag then table.insert(ctags, tag) end
+    -- end
     c:tags(ctags)
     c:raise()
     client.focus = c
