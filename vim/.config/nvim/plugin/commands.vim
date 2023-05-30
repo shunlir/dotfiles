@@ -62,9 +62,10 @@ autocmd VimEnter * autocmd WinEnter * let t:zoomed = 0
 command! -nargs=0 ToggleFull call <SID>ToggleResize()
 
 " format selected range
-command! -nargs=0 FormatRange lua vim.lsp.buf.range_formatting()
+command! -nargs=0 FormatRange lua vim.lsp.buf.format{async=true, range={["start"] = vim.api.nvim_buf_get_mark(0, "<"),["end"] = vim.api.nvim_buf_get_mark(0, ">")}}
 vnoremap <silent> <leader>lf :<C-U>FormatRange<cr>
 
 " jsonc for some vscode setting json files
 autocmd BufNewFile,BufRead devcontainer.json setlocal filetype=jsonc
 autocmd BufNewFile,BufRead cmake-variants.json setlocal filetype=jsonc
+autocmd BufNewFile,BufRead CMakeLists.txt setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
