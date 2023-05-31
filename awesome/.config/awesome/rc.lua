@@ -1,3 +1,5 @@
+-- Disable the builtin notification daemon
+package.loaded["naughty.dbus"] = {}
 -- If LuaRocks is installed, make sure that packages installed through it are
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
@@ -296,6 +298,10 @@ globalkeys = gears.table.join(
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
+    awful.key({ "Control",           }, "grave", function () awful.spawn("dunstctl history-pop") end,
+              {description = "Dunst history-pop", group = "launcher"}),
+    awful.key({ "Control", "Shift"           }, "grave", function () awful.spawn("dunstctl close-all") end,
+              {description = "Dunst close-all", group = "launcher"}),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
