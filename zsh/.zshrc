@@ -37,6 +37,7 @@ fi
 
 if [[ "$(command -v nvim)" ]]; then
   export EDITOR='nvim'
+  alias v='nvim'
 fi
 
 #
@@ -98,8 +99,15 @@ elif [ "$(uname)" = "Linux" ]; then
 fi
 alias grep='grep --color=auto'
 alias gs='git status'
-type nvim 2>&1 >/dev/null && alias vim='nvim'
+# type nvim 2>&1 >/dev/null && alias vim='nvim'
+if (( $+commands[lazygit] )); then
+  alias vim='nvim'
+  alias v='nvim'
+fi
 alias weather='clear && curl wttr.in'
+if (( $+commands[lazygit] )); then
+  alias lg='lazygit'
+fi
 
 #
 export PATH=$PATH:~/.local/bin:~/.config/doomemacs/bin
