@@ -21,6 +21,7 @@ return function()
     autocmd ColorScheme * highlight! IncSearch cterm=bold ctermfg=15 ctermbg=9 gui=bold guifg=#ffffff guibg=#f00077
     autocmd ColorScheme * highlight! CmpItemAbbrMatchFuzzy guifg=#56B6C2
     autocmd ColorScheme * highlight! CmpItemAbbrMatch guifg=#56B6C2
+    autocmd ColorScheme * highlight! MatchParen cterm=underline ctermfg=39 ctermbg=none gui=underline guifg=#61afef guibg=none
     augroup END
   ]]
   vim.cmd([[ colorscheme onedark ]])
