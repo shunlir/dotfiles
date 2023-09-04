@@ -26,6 +26,8 @@ return function()
       client.server_capabilities.typeDefinitionProvider = false
       client.server_capabilities.implementationProvider = false
       client.server_capabilities.workspaceSymbolProvider = false
+      require("clangd_extensions.inlay_hints").setup_autocmd()
+      require("clangd_extensions.inlay_hints").set_inlay_hints()
     end
   end
 
@@ -157,10 +159,6 @@ return function()
     if enhance_server_opts[server] then
       enhance_server_opts[server](opts)
     end
-    if server == "clangd" then
-      require("clangd_extensions").setup { server = opts }
-    else
-      lspconfig[server].setup(opts)
-    end
+    lspconfig[server].setup(opts)
   end
 end
