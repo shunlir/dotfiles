@@ -1,0 +1,56 @@
+@import "mocha.css";
+
+/* Reset all styles */
+* {
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+    margin: 0px;
+    padding: 0;
+}
+
+* {
+  color: @text;
+}
+
+/* The whole bar */
+#waybar {
+    background: #323232;
+    color: @text;
+    background-color: @base;
+    font-size: 16px;
+}
+
+#workspaces {
+    font-size:16px;
+}
+
+#workspaces button {
+    border: 1px solid #333333;
+    background: #222222;
+    color: #888888;
+}
+
+#workspaces button.active {
+    border: 1px solid #4c7899;
+    background: #285577;
+    color: #ffffff;
+}
+
+#workspaces button.urgent {
+    border: 1px solid #2f343a;
+    background: #900000;
+    color: #ffffff;
+}
+
+#tray {
+    padding-left: 8px;
+    padding-right:8px;
+    min-width: 48px;
+    background-color: @overlay1;
+}
+#tray menu {
+    padding-left: 8px;
+    padding-right:8px;
+    background-color: @base;
+}
