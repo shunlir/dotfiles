@@ -28,7 +28,7 @@
 ;;; Code:
 (defvar chemacs-version "2.0")
 (defvar config-home (or (getenv "XDG_CONFIG_HOME") "~/.config"))
-(defvar chemacs-profiles-paths (list "~/.emacs-profiles.el" (format "%s/%s" config-home "chemacs/profiles.el" )))
+(defvar chemacs-profiles-paths (list "~/.emacs-profiles.el" (format "%s/%s" config-home "chemacs/profiles.el")))
 (defvar chemacs-default-profile-paths (list "~/.emacs-profile" (format "%s/%s" config-home "chemacs/profile")))
 (defvar chemacs-profile-env-var "CHEMACS_PROFILE")
 
@@ -46,27 +46,29 @@
 (defvar chemacs-default-profile-path (or (car (chemacs--seq-filter #'file-exists-p chemacs-default-profile-paths))
                                          (car chemacs-default-profile-paths)))
 
-(defun chemacs-handle-command-line (args)
+(defun chemacs-handle-command-line (args &optional pos)
+  "Handles either --with-profile profilename or --with-profile=profilename.
+Removes them from the command-line-args variable, and returns the
+selected profile (if any)."
   (when args
-    ;; Handle either --with-profile profilename or
-    ;; --with-profile=profilename
+    (or pos (setq pos 0))
     (let ((s (split-string (car args) "=")))
       (cond ((equal (car args) "--with-profile")
-             ;; This is just a no-op so Emacs knows --with-profile
-             ;; is a valid option. If we wait for
-             ;; command-switch-alist to be processed then
-             ;; after-init-hook has already run.
-             (add-to-list 'command-switch-alist
-                          '("--with-profile" .
-                            (lambda (_) (pop command-line-args-left))))
+             ;; remove 2 args and return the second of them
+             (chemacs-remove-command-line-args pos 2)
              (cadr args))
 
-            ;; Similar handling for `--with-profile=profilename'
             ((equal (car s) "--with-profile")
-             (add-to-list 'command-switch-alist `(,(car args) . (lambda (_))))
+             ;; remove 1 arg and return the second part of it
+             (chemacs-remove-command-line-args pos 1)
              (mapconcat 'identity (cdr s) "="))
 
-            (t (chemacs-handle-command-line (cdr args)))))))
+            (t (chemacs-handle-command-line (cdr args) (1+ pos)))))))
+
+(defun chemacs-remove-command-line-args (position number)
+  "Removes NUMBER elements from the `command-line-args' variable, starting on position POSITION."
+  (setf (nthcdr position command-line-args)
+        (nthcdr (+ position number) command-line-args)))
 
 (defvar chemacs--with-profile-value
   (let* ((value (chemacs-handle-command-line command-line-args))
@@ -103,19 +105,20 @@
           (env-profile-value env-profile-value)
           (t chemacs-default-profile-name))))
 
+(defvar chemacs-profiles
+  (with-temp-buffer
+    (insert-file-contents chemacs-profiles-path)
+    (goto-char (point-min))
+    (condition-case err
+        (read (current-buffer))
+      (error
+       (error "Failed to parse %s: %s" chemacs-profiles-path (error-message-string err))))))
+
 (defvar chemacs-profile
   (if (and chemacs--with-profile-value
            (listp chemacs--with-profile-value))
       chemacs--with-profile-value
-    (let ((profiles
-           (with-temp-buffer
-             (insert-file-contents chemacs-profiles-path)
-             (goto-char (point-min))
-             (condition-case err
-                 (read (current-buffer))
-               (error
-                (error "Failed to parse %s: %s" chemacs-profiles-path (error-message-string err)))))))
-      (cdr (assoc chemacs-profile-name profiles)))))
+      (cdr (assoc chemacs-profile-name chemacs-profiles))))
 
 (unless chemacs-profile
   (error "No profile `%s' in %s" chemacs-profile-name chemacs-profiles-path))
@@ -139,10 +142,28 @@
           (setenv (car env) (cdr env)))
         (chemacs-profile-get 'env))
 
+;; Insinuate a nix elisp dependency bundle, if specified. In Emacs 27, the
+;; startup.el looks through the load-path for any directory named site-lisp with
+;; a subdirectory named elpa. If found, it activates them as packages. Starting
+;; in Emacs 28, it instead relies on package-directory-list. It seems we can
+;; distinguish these by whether package-directory-list is already bound in
+;; early-init.
+(let ((dir (chemacs-profile-get 'nix-elisp-bundle)))
+  (when dir
+    (if (boundp 'package-directory-list)
+	(add-to-list 'package-directory-list
+		     (expand-file-name "share/emacs/site-lisp/elpa" dir))
+      (add-to-list 'load-path
+		   (expand-file-name "share/emacs/site-lisp" dir)))
+    (when (boundp 'native-comp-eln-load-path)
+      (add-to-list 'native-comp-eln-load-path
+		   (expand-file-name "share/emacs/native-lisp/" dir)))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun chemacs-load-user-early-init ()
   (let ((early-init-file (expand-file-name "early-init.el" user-emacs-directory)))
+    (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
     (load early-init-file t t)))
 
 (defun chemacs-load-user-init ()
