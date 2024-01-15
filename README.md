@@ -69,6 +69,17 @@ cd ~/.dotfiles && git submodule update --init --recursive
 # install stow or xstow
 ```
 
+### Doom Emacs
+```sh
+cd .dotfiles/emacs/.config/doomemacs
+# optionally pull doomemacs for doom upgrade
+git pull
+doom clean
+doom sync
+```
+Run `M-x nerd-icons-install-font` for new installation. (`all-the-icons` is not used anymore)
+
+
 ## Navigation
 
 | Action        | i3(Super)               | Tmux(Alt)          | Vim                    |
