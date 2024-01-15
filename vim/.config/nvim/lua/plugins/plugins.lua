@@ -2,7 +2,8 @@ return {
   -- library used by other plugins
   { "nvim-lua/plenary.nvim",      lazy = true },
   -- icons
-  { 'nvim-tree/nvim-web-devicons' },
+  { 'nvim-tree/nvim-web-devicons' }, -- It requires a pached front, such as 'Hack Nerd Font',
+                                     -- and the terminal must be configured to use that font
   { "aserowy/tmux.nvim",          event = 'VeryLazy', config = require('cfg.tmux') },
   {
     'hoob3rt/lualine.nvim',
