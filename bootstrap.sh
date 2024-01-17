@@ -63,7 +63,7 @@ main() {
 
   $STOW -v -t ~ -d $DOT_ROOT dircolors emacs git tmux vim zsh
   if [ "$(uname)" == "Linux" ]; then
-    $STOW -v -t ~ -d $DOT_ROOT x i3 urxvt dunst
+    $STOW -v -t ~ -d $DOT_ROOT x i3 urxvt dunst wayland
   fi
   success "[DONE]\n"
   success "Please re-login to take effect.\n"
