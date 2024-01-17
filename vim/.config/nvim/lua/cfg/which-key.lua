@@ -67,7 +67,8 @@ return function()
       "Files in current dir"
     },
     ["<leader>*"]        = { "<cmd>Telescope grep_string theme=get_ivy<cr>", "Search current word in project" },
-    ["<leader>\""]       = { "<cmd>TroubleToggle<cr>", "Toggle trouble list" },
+    -- ["<leader>\""]       = { "<cmd>TroubleToggle<cr>", "Toggle trouble list" },
+    ["<leader>\""]       = { "<cmd>lua require('telescope.builtin').pickers()<CR>", "Toggle resume pickers" },
     ["<leader>'"]        = { "<cmd>Telescope resume theme=get_ivy<cr>", "Telescope resume" },
     ["<leader>F"]        = { "<Cmd>lua require('my.utils').which_func()<CR>", "Show Current Function" },
     ["<leader>R"]        = {
