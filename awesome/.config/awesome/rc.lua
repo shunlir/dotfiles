@@ -516,6 +516,13 @@ awful.rules.rules = {
       callback = function (c) awful.placement.centered(c, {honor_workarea=true}) end
     },
 
+    -- Floating zoom notification window.
+    {
+      rule = { class = "zoom", name = "zoom"},
+      properties = { floating = true, focus = false },
+      callback = function (c) awful.placement.centered(c, {honor_workarea=true}) end
+    },
+
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
       }, properties = { titlebars_enabled = false }
