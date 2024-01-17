@@ -30,7 +30,7 @@ return function()
       git_files = { theme = 'ivy', path_display = {} },
       file_browser = { theme = 'ivy', },
       oldfiles = { theme = 'ivy', },
-      lsp_references = { theme = 'ivy', },
+      lsp_references = { theme = 'ivy', fname_width = 60, },
       pickers = { theme = 'ivy', },
     },
     extensions = {
