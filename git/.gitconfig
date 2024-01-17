@@ -15,19 +15,29 @@
     vg = !gitk
     lg  = log --graph --pretty=format:'%Cred%h%Creset %C(bold yellow)<%an>%Creset -%Cgreen%cr%Creset %s' --abbrev-commit
     lg2 = log --graph --pretty=format:'%Cred%h%Cgreen(%cd)%Cblue(%cd)%Creset -%C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset %C(blue)<%cn>%Creset' --abbrev-commit --date=format:'%y-%m-%d %H:%M'
-[include]
-    path = .gitconfig_local
+    p4 = !~/.local/bin/git-p4.py
 
-; delta
 [interactive]
     diffFilter = delta --color-only
 [merge]
     conflictstyle = diff3
+    renameLimit = 999999
 [diff]
     colorMoved = default
+    tool = meld
+    renameLimit = 999999
 [delta]
     navigate = true
     syntax-theme = gruvbox-dark
-    minus-style = syntax "#301b1d" # adjust for gruvbox-dark background
+    ; minus-style = syntax "#301b1d" # adjust for gruvbox-dark background
     file-style = bold yellow ul
     keep-plus-minus-markers = true
+
+[pull]
+    ff = only
+[pack]
+    windowMemory = 100m
+    packSizeLimit = 100m
+    threads = 1
+[include]
+    path = .gitconfig_local
