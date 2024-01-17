@@ -296,7 +296,7 @@ globalkeys = gears.table.join(
               {description = "Lock screen", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit,
+    awful.key({ modkey, "Shift"   }, "e", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
     awful.key({ "Control",           }, "grave", function () awful.spawn("dunstctl history-pop") end,
               {description = "Dunst history-pop", group = "launcher"}),
