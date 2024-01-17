@@ -225,12 +225,12 @@ exec --no-startup-id picom -CG --experimental-backends
 exec --no-startup-id fcitx
 
 # drop-down terminal
-bindsym $mod+i exec xfce4-terminal --drop-down
+#bindsym $mod+i exec xfce4-terminal --drop-down
 
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+minus move scratchpad
 # toggle visibility of the first scratchpad window
-bindsym $mod+Shift+s scratchpad show
+bindsym $mod+i scratchpad show
 
 # MS Teams, see https://www.reddit.com/r/i3wm/comments/ebfiu7/microsoft_teams_notification_banner/
 for_window [title="Microsoft Teams Notification"] floating enable
@@ -248,3 +248,7 @@ mode $trapmode {
 }
 bindsym $mod+x nop
 bindsym $mod+x mode $trapmode; bar mode invisible bar-hide
+
+bindsym $mod+grave workspace back_and_forth
+bindsym $mod+o exec --no-startup-id i3lock -c 79740e
+bindsym $mod+p exec --no-startup-id flameshot gui
