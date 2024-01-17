@@ -16,7 +16,7 @@ return {
   -- fuzzy search
   { 'folke/trouble.nvim',      lazy = true,                         cmd = 'Trouble' },
   {
-    'nvim-telescope/telescope.nvim',
+    'nvim-telescope/telescope.nvim', branch = '0.1.x',
     lazy = true,
     cmd = 'Telescope',
     config = require('cfg.telescope'),
@@ -87,7 +87,8 @@ return {
     }
   },
   {
-    'jose-elias-alvarez/null-ls.nvim',
+    -- 'jose-elias-alvarez/null-ls.nvim',
+    'nvimtools/none-ls.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     config = require 'cfg.null-ls',
     dependencies = {
@@ -96,6 +97,7 @@ return {
   },
   {
     'j-hui/fidget.nvim',
+    tag = 'legacy',
     lazy = true,
     event = 'LspAttach',
     config = function() require "fidget".setup {} end
