@@ -423,6 +423,10 @@ call plug#begin('~/.vim/plugged')
 
     "VimTuiMetaKey {{{
     " set keycode of some <M-?> to use <ESC> prefix, see :map-alt-keys
+    " TODO: this mapping may not be needed anymore, since modifyOtherKeys enabled by default since 8.2,
+    " see https://github.com/vim/vim/commit/4b57018ee4e6d608e3a28e0ee4fdd2f057cc0e89#diff-f35d708d4c55517f9599b4a8f7a37a2089f32f421791055318bf1a3529b7abd9
+    " however tmux doesn't have it enabled by default yet (see extended-keys),
+    " also the tmux-navigator / tmux-resizer related settings in vim and tmux need extra tweaks
     function! TUI_MetaUseEsc()
         set ttimeout
         if !empty($TMUX)       "tmux is expected to set its own escape-time to 50
@@ -443,6 +447,7 @@ call plug#begin('~/.vim/plugged')
             call s:metacode(nr2char(char2nr('a') + i))
             call s:metacode(nr2char(char2nr('A') + i))
         endfor
+        set <M-P>=\eP " workaround the issue that characters 67 are written to buffer when vim is opened
         for c in [',', '.', '/', ';']
             call s:metacode(c)
         endfor
