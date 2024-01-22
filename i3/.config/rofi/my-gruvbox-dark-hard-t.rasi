@@ -60,6 +60,14 @@
     selected-urgent-foreground:  @urgent-foreground;
 }
 
+/* ==========================================================================
+   File: gruvbox-common.rasi
+   Desc: Shared rules between all gruvbox themes
+   Author: bardisty <b@bah.im>
+   Source: https://github.com/bardisty/gruvbox-rofi
+   Modified: Mon Feb 12 2018 06:06:47 PST -0800
+   ========================================================================== */
+
 window {
     background-color: @background;
     border:           2;
@@ -182,4 +190,12 @@ textbox-prompt-sep {
     str:        ":";
     text-color: @normal-foreground;
     margin:     0 0.3em 0 0;
+}
+
+element-text {
+    text-color: white;
+}
+
+element-icon {
+    size: 0.75em;
 }

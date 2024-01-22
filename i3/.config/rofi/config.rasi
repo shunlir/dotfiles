@@ -1,3 +1,5 @@
 configuration {
-	theme: "my-gruvbox-dark-hard-t";
+  show-icons: true;
 }
+
+@theme "my-gruvbox-dark-hard-t"

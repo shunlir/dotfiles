@@ -13,10 +13,8 @@
 
 * {
     /* Theme settings */
-    /* highlight: bold italic; */
-    highlight: Bold SpringGreen;
+    highlight: bold italic;
     scrollbar: true;
-    font:      "Times New Roman 14";
 
     /* Gruvbox dark colors */
     gruvbox-dark-bg0-hard:     #1d2021;
@@ -59,6 +57,14 @@
     selected-urgent-background:  @gruvbox-dark-red-light;
     selected-urgent-foreground:  @urgent-foreground;
 }
+
+/* ==========================================================================
+   File: gruvbox-common.rasi
+   Desc: Shared rules between all gruvbox themes
+   Author: bardisty <b@bah.im>
+   Source: https://github.com/bardisty/gruvbox-rofi
+   Modified: Mon Feb 12 2018 06:06:47 PST -0800
+   ========================================================================== */
 
 window {
     background-color: @background;
