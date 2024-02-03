@@ -19,7 +19,7 @@
 	"sort-by-number": true
     },
     "hyprland/window": {
-        "format": "👉 {}",
+        "format": "{}",
 	"max-length": 200,
         "separate-outputs": true
     },
