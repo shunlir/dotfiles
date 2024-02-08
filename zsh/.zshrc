@@ -78,16 +78,23 @@ compinit
 zinit cdreplay -q
 
 # p <project>
+local ws
 if [ -e /workspaces ]; then
-    _p () {
-        local commands
-        commands=(`ls /workspaces`)
-        _describe -t commands 'command' commands
-    }
-    function p () {
-        cd /workspaces/$1
-    }
-    compdef _p p
+  ws=/workspaces
+elif [ -e ~/repo ]; then
+  ws=~/repo
+fi
+
+if [ -e "$ws" ]; then
+  _p () {
+    local commands
+    commands=(`ls "$ws"`)
+    _describe -t commands 'command' commands
+  }
+  function p () {
+      cd "$ws/$1"
+  }
+  compdef _p p
 fi
 
 # aliases
