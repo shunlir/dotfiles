@@ -61,7 +61,7 @@ main() {
     exit 1
   fi
 
-  $STOW -v -t ~ -d $DOT_ROOT dircolors emacs git tmux vim zsh
+  $STOW -v -t ~ -d $DOT_ROOT dircolors emacs git tmux zsh
   if [ "$(uname)" == "Linux" ]; then
     $STOW -v -t ~ -d $DOT_ROOT x i3 urxvt dunst wayland
   fi
