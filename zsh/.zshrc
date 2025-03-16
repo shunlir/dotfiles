@@ -16,6 +16,7 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
 # some useful functions/settings from oh-my-zsh
+zinit snippet OMZ::lib/async_prompt.zsh # dependency of lib/git.zsh
 zinit snippet OMZ::lib/completion.zsh
 zinit snippet OMZ::lib/git.zsh
 zinit snippet OMZ::lib/history.zsh
