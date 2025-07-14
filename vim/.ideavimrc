@@ -1,0 +1,114 @@
+" .ideavimrc is a configuration file for IdeaVim plugin. It uses
+"   the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+let mapleader = " "
+
+" Plugins
+"   Enable IdeaVim plugins https://jb.gg/ideavim-plugins
+" Highlight copied text
+Plug 'machakann/vim-highlightedyank'
+" Commentary plugin
+Plug 'tpope/vim-commentary'
+Plug 'airblade/vim-gitgutter'
+
+set which-key
+set surround        "bundled with ideavim
+set highlightedyank "bundle with ideavim
+set quickscope
+
+" QuickScope
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+
+" Searching.
+set incsearch
+set ignorecase
+set smartcase
+set hlsearch
+
+" which-key popup no timeout
+set notimeout
+
+set visualbell
+set showmode
+set showcmd
+set relativenumber
+
+" Open search everywhere and paste word under cursor (Not working)
+nnoremap <Leader>* "zyiw:action SearchEverywhere<CR><C-R>z<CR>
+
+map <leader><leader> <Action>(SearchEverywhere)
+
+inoremap jk <Esc>
+
+" Jump between methods
+"nnoremap [[ <Action>(MethodUp)   " not working
+"nnoremap ]] <Action>(MethodDown) " not working
+:action MethodUp<CR>
+:action MethodDown<CR>
+
+" vim-gitgutter
+nmap ]c <Action>(VcsShowNextChangeMarker)
+nmap [c <Action>(VcsShowPrevChangeMarker)
+
+nmap ]e <Action>(GotoNextError)
+nmap [e <Action>(GotoPreviousError)
+nmap <leader>e <Action>(ShowErrorDescription)
+
+nmap K <Action>(ShowHoverInfo)
+
+" Go to code
+nmap gd <Action>(GotoDeclaration)
+nmap gD <Action>(ShowUsages)
+nmap gi <Action>(GotoImplementation)
+nmap gu <Action>(FindUsages)
+nmap <leader>gc <Action>(CallHierarchy)
+nmap <leader>gh <Action>(TypeHierarchy)
+nmap <leader>gf <Action>(Back)
+nmap <leader>gb <Action>(Forward)
+
+" Code
+map <leader>lr <Action>(RenameElement)
+map <leader>lc <Action>(GenerateCopyright)
+map <leader>lC <Action>(UpdateCopyright)
+map <leader>lF <Action>(ReformatCode)
+
+" Popup navigation
+inoremap <C-j> <Action>(PopupMenu-selectNext)
+inoremap <C-k> <Action>(PopupMenu-selectPrev)
+
+" File navigation
+map <leader>ff <action>(GotoFile)
+map <leader>fr <action>(RecentFiles)
+map <leader>fc <action>(FindInPath)
+map <leader>fl <action>(RecentLocations)
+map <leader>fs <action>(FileStructurePopup)
+map <leader>fR <action>(IdeaVim.ReloadVimRc.reload)
+
+" Show
+map <leader>ss <action>(ShowSettings)
+map <leader>sf <action>(SelectInProjectView)
+map <leader>tb <Action>(Git.Branches)
+map <leader>tt <Action>(ActivateTerminalToolWindow)
+
+" toggle
+map <leader>tf <action>(ToggleFullScreen)
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+"" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+"" Map \r to the Reformat Code action
+"map \r <Action>(ReformatCode)
+
+"" Map <leader>d to start debug
+"map <leader>d <Action>(Debug)
+
+"" Map \b to toggle the breakpoint on the current line
+"map \b <Action>(ToggleLineBreakpoint)

@@ -6,12 +6,12 @@ return function()
         i = {
           ["<C-f>"] = require('telescope.actions').results_scrolling_down,
           ["<C-b>"] = require('telescope.actions').results_scrolling_up,
-          ["<c-l>"] = require 'trouble.providers.telescope'.open_with_trouble,
+          ["<c-l>"] = require("trouble.sources.telescope").open,
         },
         n = {
           ["<C-f>"] = require('telescope.actions').results_scrolling_down,
           ["<C-b>"] = require('telescope.actions').results_scrolling_up,
-          ["<c-l>"] = require 'trouble.providers.telescope'.open_with_trouble,
+          ["<c-l>"] = require("trouble.sources.telescope").open,
         },
       },
       prompt_prefix = "$ ",
